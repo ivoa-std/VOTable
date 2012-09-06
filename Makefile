@@ -30,6 +30,7 @@ C_OPT = -O
 SYS =
 CFLAGS = $(C_OPT) $(DEBUG) $(SYS) -I. -I$(INCDIR)
 COMPILE= $(CC) $(CFLAGS) -c
+CGIPRINT = cgiprint/bin/cgiprint
 
 # Files
 GIFs = circ2.gif leadsto2.gif oplus.gif serial.gif binary.gif
@@ -42,8 +43,8 @@ votable.pdf: votable.tex VOTable-1.2.attr.tex  VOTable-1.2.elem.tex \
 	pdflatex votable
 	pdflatex votable
 
-votable.html: votable.tex votable.htx
-	cgiprint votable.htx > votable.html
+votable.html: votable.tex votable.htx $(CGIPRINT)
+	$(CGIPRINT) votable.htx > votable.html
 
 votable.tar: votable.html votable.htx votable.pdf $(GIFs) $(XSD)
 	$(MAKE) votable.html
@@ -54,6 +55,12 @@ votable.tar: votable.html votable.htx votable.pdf $(GIFs) $(XSD)
 	tar cvf $@ votable.html votable.pdf $(GIFs) $(XSD)
 	gzip -v9 $@ 
 
+cgiprint/bin/cgiprint:
+	cd cgiprint && \
+        ./configure --prefix=`pwd` && \
+        make && \
+        make install
+
 # Make export tar
 export:	CLEAN
 	h=`pwd`;d=`basename $$h`; tar cvf /tmp/$$d.tar -C .. $$d; \
@@ -62,7 +69,11 @@ export:	CLEAN
 # Remove useless files:
 clean: 
 	rm -f *.log *.aux *.out
+	cd cgiprint && rm -f cgiprint cgigraph cgiparm
 
 # Remove depedent files:
 CLEAN: clean
 	rm -f votable.toc votable.pdf votable.html
+	cd cgiprint && rm -rf include lib bin
+	cd cgiprint && rm -f config.log config.status Makefile
+	cd cgiprint && rm -f cgiprint.lis versions
