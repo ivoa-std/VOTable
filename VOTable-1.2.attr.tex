@@ -1,0 +1,265 @@
+\def\attrx#1{{\em\fg{DarkRed}#1}}
+\begin{tabular}{cccccc}
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{VOTABLE}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:VOTABLE}{definition})}}\\ \hline{}
+   \attr{ID}\\		%%% what could be the usage of ID here ?
+   \attr{version}\\
+\hline\end{tabular}
+&
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{RESOURCE}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:RESOURCE}{definition})}}\\ \hline{}
+   \attr{ID}\\
+   \attr{name}\\
+   \attr{type}\\
+   \attr{utype}\\
+\hline\end{tabular}
+&
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{TABLE}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:TABLE}{definition})}}\\ \hline{}
+   \attr{ID}\\
+   \attr{name}\\
+   \attr{ucd}\\
+   \attr{utype}\\
+   \attr{ref}\\
+   \attr{nrows}\\
+\hline\end{tabular}
+&
+%%%%%%%%%%%% INFO %%%%%%%%%%%%%%%%%%%
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{INFO}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:INFO}{definition})}}\\ \hline{}
+   \attr{ID}\\
+   \requiredattr{name}\\
+   \requiredattr{value}\\
+   \attr{\underline{xtype}}\\
+   \attr{\underline{ref}}\\
+   \attr{\underline{unit}}\\
+   \attr{\underline{ucd}}\\
+   \attr{\underline{utype}}\\
+\hline\end{tabular}
+&
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{STREAM}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:STREAM}{definition})}}\\ \hline{}
+   \attr{type}\\
+   \attr{href}\\
+   \attr{actuate}\\
+   \attr{encoding}\\
+   \attr{expires}\\
+   \attr{rights}\\
+\hline\end{tabular}
+&
+\begin{tabular}{@{}c@{}}	%%% This cell has 2 tables
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{FITS}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:FITS}{definition})}}\\ \hline{}
+   \attr{extnum}\\
+\hline\end{tabular}
+	\\ \\
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{TR}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:TR}{definition})}}\\ \hline{}
+     \attrx{ID}\\
+\hline\end{tabular}
+	\\ \\
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{TD}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:TD}{definition})}}\\ \hline{}
+   %\attr{ref}\\
+   \attrx{encoding}\\
+\hline\end{tabular}
+\end{tabular}			%%% This cell has 2 tables (end)
+%&
+%\begin{tabular}{|l|}\hline
+%\multicolumn{1}{|c|}{\elem{COOSYS}}\\
+%\multicolumn{1}{|c|}{{\em(\Aref{elem:COOSYS}{definition})}}\\ \hline{}
+%   \requiredattr{ID}\\
+%   \attr{equinox}\\
+%   \attr{epoch}\\
+%   \attr{system}\\
+%\hline\end{tabular}
+\\ \\
+\\ \\
+%\begin{tabular}{|l|}\hline
+%\multicolumn{1}{|c|}{\elem{DESCRIPTION}}\\
+%\multicolumn{1}{|c|}{{\em(\Aref{elem:DESCRIPTION}{definition})}}\\ \hline{}
+%\hline\end{tabular}
+%
+%\begin{tabular}{|l|}\hline
+%\multicolumn{1}{|c|}{\elem{DEFINITIONS}}\\
+%\multicolumn{1}{|c|}{{\em(\Aref{elem:DEFINITIONS}{definition})}}\\ \hline{}
+%\hline\end{tabular}
+%
+\begin{tabular}{@{}c@{}}	%{===========
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{GROUP}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:GROUP}{definition})}}\\ \hline{}
+   \attr{ID}\\
+   \attr{name}\\
+   \attr{ref}\\
+   \attr{ucd}\\
+   \attr{utype}\\
+\hline\end{tabular}
+\\ \\
+%\begin{tabular}{|l|}\hline
+%\multicolumn{1}{|c|}{\elem{FIELDref}}\\
+%\multicolumn{1}{|c|}{{\em(\Aref{elem:FIELDref}{definition})}}\\ 
+%   \hline{}
+%   \requiredattr{ref}\\
+%\hline\end{tabular}
+%\\ \\
+%\begin{tabular}{|l|}\hline
+%\multicolumn{1}{|c|}{\elem{PARAMref}}\\
+%\multicolumn{1}{|c|}{{\em(\Aref{elem:PARAMref}{definition})}}\\ 
+%   \hline{}
+%   \requiredattr{ref}\\
+%\hline\end{tabular}
+\end{tabular}			%}=============
+&
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{PARAM}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:PARAM}{definition})}}\\ \hline{}
+   \attr{ID}\\
+   \attr{unit}\\
+   \requiredattr{datatype}\\
+   \attr{precision}\\
+   \attr{width}\\
+   \attr{\underline{xtype}}\\
+   \attr{ref}\\
+   \requiredattr{name}\\
+   \attr{ucd}\\
+   \attr{utype}\\
+   \attr{arraysize}\\
+   \requiredattr{value}\\
+\hline\end{tabular}
+&
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{FIELD}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:FIELD}{definition})}}\\ \hline{}
+   \attr{ID}\\
+   \attr{unit}\\
+   \requiredattr{datatype}\\
+   \attr{precision}\\
+   \attr{width}\\
+   \attr{\underline{xtype}}\\
+   \attr{ref}\\
+   \requiredattr{name}\\
+   \attr{ucd}\\
+   \attr{utype}\\
+   \attr{arraysize}\\
+   \attrx{type}\\
+\hline\end{tabular}
+&
+\begin{tabular}{@{}c@{}}	%{===========
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{FIELDref}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:FIELDref}{definition})}}\\ 
+   \hline{}
+   \requiredattr{ref}\\
+   \attr{ucd}\\
+   \attr{utype}\\
+\hline\end{tabular}
+\\ \\
+\\ \\
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{PARAMref}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:PARAMref}{definition})}}\\ 
+   \hline{}
+   \requiredattr{ref}\\
+   \attr{ucd}\\
+   \attr{utype}\\
+\hline\end{tabular}
+\end{tabular}			%}=============
+%%%%%%%%%%%% INFO %%%%%%%%%%%%%%%%%%%
+%\begin{tabular}{|l|}\hline
+%\multicolumn{1}{|c|}{\elem{INFO}}\\
+%\multicolumn{1}{|c|}{{\em(\Aref{elem:INFO}{definition})}}\\ \hline{}
+%   \attr{ID}\\
+%   \requiredattr{name}\\
+%   \requiredattr{value}\\
+%   \attr{ref}\\
+%   \attr{unit}\\
+%   \attr{ucd}\\
+%   \attr{utype}\\
+%\hline\end{tabular}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+&
+\begin{tabular}{@{}c@{}}
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{MIN}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:MIN}{definition})}}\\ \hline{}
+   \requiredattr{value}\\
+   \attr{inclusive}\\
+\hline\end{tabular}
+	\\ \\
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{MAX}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:MAX}{definition})}}\\ \hline{}
+   \requiredattr{value}\\
+   \attr{inclusive}\\
+\hline\end{tabular}
+	\\ \\
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{OPTION}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:OPTION}{definition})}}\\ \hline{}
+   \attr{name}\\
+   \requiredattr{value}\\
+\hline\end{tabular}
+\end{tabular}
+&
+\begin{tabular}{@{}c@{}}	%{===========
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{VALUES}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:VALUES}{definition})}}\\ \hline{}
+   \attr{ID}\\
+   \attr{type}\\
+   \attr{null}\\
+   \attr{ref}\\
+   %\attr{invalid}\\
+\hline\end{tabular}
+%%%%%%%%%%%% INFO %%%%%%%%%%%%%%%%%%%
+%\begin{tabular}{|l|}\hline
+%\multicolumn{1}{|c|}{\elem{INFO}}\\
+%\multicolumn{1}{|c|}{{\em(\Aref{elem:INFO}{definition})}}\\ \hline{}
+%   \attr{ID}\\
+%   \requiredattr{name}\\
+%   \requiredattr{value}\\
+%\hline\end{tabular}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\\ \\
+\begin{tabular}{|l|}\hline
+\multicolumn{1}{|c|}{\elem{LINK}}\\
+\multicolumn{1}{|c|}{{\em(\Aref{elem:LINK}{definition})}}\\ \hline{}
+   \attr{ID}\\
+   \attr{content-role}\\
+   \attr{content-type}\\
+   \attr{title}\\
+   \attr{value}\\
+   \attr{href}\\
+   %\attr{gref}\\
+   \attrx{action}\\
+\hline\end{tabular}
+\end{tabular}			%}=============
+\\
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{tabular}{|l|}\hline
+%\multicolumn{1}{|c|}{\elem{DATA}}\\
+%\multicolumn{1}{|c|}{{\em(\Aref{elem:DATA}{definition})}}\\ \hline{}
+%\hline\end{tabular}
+%
+%\begin{tabular}{|l|}\hline
+%\multicolumn{1}{|c|}{\elem{TABLEDATA}}\\
+%\multicolumn{1}{|c|}{{\em(\Aref{elem:TABLEDATA}{definition})}}\\ \hline{}
+%\hline\end{tabular}
+%
+
+%\begin{tabular}{|l|}\hline
+%\multicolumn{1}{|c|}{\elem{BINARY}}\\
+%\multicolumn{1}{|c|}{{\em(\Aref{elem:BINARY}{definition})}}\\ \hline{}
+%\hline\end{tabular}
+%
+
+\end{tabular}

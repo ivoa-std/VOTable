@@ -1,0 +1,139 @@
+%%% Illustration of VOTable definitions
+%%% \oplus = required order 
+%%% \opt{elem} = optional element
+
+% Version 1.1
+%\def\reste
+\def\element#1{\elemdef{#1}{}}
+%\def\optelem#1{{\em \elemdef{#1}{}}}
+\def\optelem#1{{\fg{blue}$<$}{\footnotesize\em{\fg{DarkRed}#1}}{\fg{blue}$>$}}
+\def\mv{\quad}
+\def\paramonly{}
+
+\noindent\begin{tabular}{cccc}
+\begin{tabular}{|l|}\hline
+\element{VOTABLE}			\\
+\order \optelem{DESCRIPTION} 	\\
+\deprecated {\small \optelem{COOSYS}$\cdots$} \\
+\unorder \underline{\optelem{INFO}}$\cdots$  \\
+\unorder \optelem{PARAM}$\cdots$ \\
+\unorder \optelem{GROUP}{\paramonly}$\cdots$ \\
+\order \underline{\element{RESOURCE}}$\cdots$ 	\\
+\order \underline{\optelem{INFO}}$\cdots$  \\
+\element{\slash VOTABLE}\\
+\hline\end{tabular} 
+&
+\begin{tabular}{|l|}\hline
+\element{RESOURCE}\\
+\order \optelem{DESCRIPTION}	\\
+%%% Changed March 2004 \order --> \unorder
+\unorder \underline{\optelem{INFO}}$\cdots$	\\
+\deprecated \optelem{COOSYS}$\cdots$ 	\\
+\unorder \underline{\optelem{GROUP}{\paramonly}}$\cdots$ \\
+\unorder \underline{\optelem{PARAM}}$\cdots$	\\
+%%% End of Change
+\order {\optelem{LINK}}$\cdots$	\\
+\order \underline{\optelem{TABLE}}$\cdots$	\\
+\order \underline{\optelem{RESOURCE}}$\cdots$	\\
+\order \underline{\optelem{INFO}}$\cdots$  \\
+\element{\slash RESOURCE}\\
+\hline\end{tabular}
+&
+\begin{tabular}{|l|}\hline
+\element{TABLE}	\\
+\order \optelem{DESCRIPTION}	\\
+\unorder    \underline{\optelem{FIELD}}$\cdots$	\\
+\unorder    \underline{\optelem{PARAM}}$\cdots$	\\
+\unorder    \underline{\optelem{GROUP}}$\cdots$	\\
+\order \optelem{LINK}$\cdots$	\\
+\order \underline{\optelem{DATA}}	\\
+\order \underline{\optelem{INFO}}$\cdots$ \\
+\element{\slash TABLE}	\\
+\hline\end{tabular}
+&
+\begin{tabular}{@{}c@{}}        %%% This cell has 2 tables
+\begin{tabular}{|l|}\hline
+\element{FIELD}	\\
+\order \optelem{DESCRIPTION}	\\
+\order \underline{\optelem{VALUES}}	\\
+\order \optelem{LINK}$\cdots$	\\
+\element{\slash FIELD}\\
+\hline\end{tabular}
+\\ \\
+\begin{tabular}{|l|}\hline
+\element{PARAM} \\
+\order \optelem{DESCRIPTION}    \\
+\order \underline{\optelem{VALUES}}     \\
+\order \optelem{LINK}$\cdots$   \\
+\element{\slash PARAM}\\
+\hline\end{tabular}
+\end{tabular}                   %%% This cell has 2 tables (end)
+\\
+\begin{tabular}{|l|} \hline
+  \element{DATA}     \\
+    \choice {\element{TABLEDATA}} \\ 
+        \mv\order \optelem{TR}$\cdots$ \\
+        \mv\mv\order \element{TD}$\cdots$ \\
+    \choice {\element{BINARY}} \\ 
+        \mv\order \element{STREAM}\\
+    \choice {\element{FITS}}\\
+        \mv\order \element{STREAM}\\
+  \element{\slash DATA}\\
+  \order \underline{\optelem{INFO}}$\cdots$  \\
+\hline\end{tabular}
+&
+\begin{tabular}{|l|}\hline
+\element{GROUP} \\
+\order \optelem{DESCRIPTION}	\\
+%\unorder    \underline{\optelem{FIELD}}$\cdots$	\\
+\unorder    \underline{\optelem{FIELDref}}$\cdots^{(t)}$ \\
+\unorder    \underline{\optelem{PARAM}}$\cdots$	\\
+\unorder    \underline{\optelem{PARAMref}}$\cdots$	\\
+\unorder    \underline{\optelem{GROUP}}$\cdots$	\\
+\element{\slash GROUP}\\
+\hline
+{{\footnotesize\em(t) only within \element{TABLE}}}\\
+\hline\end{tabular}
+&
+\begin{tabular}{|l|}\hline
+\element{INFO}	\\
+\order \optelem{DESCRIPTION}	\\
+\order \underline{\optelem{VALUES}}	\\
+\order \optelem{LINK}$\cdots$	\\
+\element{\slash INFO}\\
+\hline\end{tabular}
+& 
+\begin{tabular}{|l|}\hline
+\element{VALUES}	\\
+\order \optelem{MIN}	\\
+\order \optelem{MAX}	\\
+\order \optelem{OPTION}$\cdots$	\\
+\mv\unorder\optelem{OPTION}$\cdots$\\
+\element{\slash VALUES}\\
+\hline\end{tabular}
+\\ \\
+%\begin{tabular}{|l|}\hline
+%\element{TABLEDATA}	\\
+%\order \optelem{TR}$\cdots$ \\
+%\mv\order \element{TD}$\cdots$ \\
+%\element{\slash TABLEDATA} \\
+%\hline\end{tabular}
+%&
+%\begin{tabular}{|l|}\hline
+%\element{BINARY}	\\
+%\order \element{STREAM} \\
+%\element{\slash BINARY} \\
+%\hline\end{tabular}
+%&
+%\begin{tabular}{|l|}\hline
+%\element{FITS}  \\
+%\order \element{STREAM} \\
+%\element{\slash FITS} \\
+%\hline\end{tabular}
+%&
+%\begin{tabular}{|l|}\hline
+%\element{LINK}	\\
+%\element{\slash LINK} \\
+%\hline\end{tabular}
+\\
+\end{tabular}

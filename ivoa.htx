@@ -1,0 +1,83 @@
+######### IVOA PROPOSED RECOMMENDATION
+# Option to disable the output -- is enabled by \maketitle
+-nooutput
+#########
+\url #1{\A{#1}{#1}}
+\fghead		\fg{SteelBlue}
+\title 		#1{\def\Vtitle{#1}}
+\ivoatype 	#1{\def\Vtype{#1}}
+\version 	#1{\def\Vversion{#1}}
+\date 		#1{\def\Vdate{#1}}
+\urlthisversion #1{\def\Vurlthisversion{#1}}
+\urllastversion #1{\def\Vurllastversion{#1}}
+\previousversion #1{\def\Vpreviousversion{#1}}
+\editor 	#1{\def\Veditor{#1}}
+\author		#1{\def\Vauthor{#1}}
+\makebox #3{#3}
+\name	#1{\qquad #1 &}
+######################################################
+\maketitle #0{\enableoutput\tag{!DOCTYPE html PUBLIC 
+	"-//W3C//DTD XHTML 1.0 Strict//EN" 
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"}
+ \opentag{html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"}
+ \begin{HEAD}
+  \tagged{title}{IVOA Documents - \Vtitle}\\
+  \tag{meta name="title" content="IVOA Notes"}
+  \tag{meta name="keywords" content="IVOA, International, Virtual, Observatory, 
+       Alliance, VOTable, Format, Specification"}
+  \tag{meta http-equiv="content-type" content="text/html; charset=iso-8859-1"}
+  %\tag{meta name="author" content="Marco Leoni, marco.leoni@eso.org"}
+  %\tag{meta name="maintainedBy" content="Marco Leoni, mleoni@eso.org"}
+  \ifmatch{*roposed*commend*}{\Vtype}
+  \tag{link href="http://www.ivoa.net/misc/ivoa_pr.css" rel="stylesheet" 
+       type="text/css"}
+  \elsifmatch{*commend*}{\Vtype}
+  \tag{link href="http://www.ivoa.net/misc/ivoa_rec.css" rel="stylesheet" 
+       type="text/css"}
+  \else
+  \tag{link href="http://www.ivoa.net/misc/ivoa_wg.css" rel="stylesheet" 
+       type="text/css"}
+  \fi
+ \end{HEAD}
+ \begin{BODY bgcolor="white"}
+ \JavaPop
+ \begin{DIV class="head"}
+ \begin{HTML}
+ <table cellspacing="0" cellpadding="0" width="450">
+    <tr>
+      <td><a href="http://www.ivoa.net/"><img height="169" alt="IVOA" src="http://www.ivoa.net/icons/IVOA_wb_300.jpg" width="300" border="0"></a></td>
+      <td>
+      <div style="padding: 3.6pt 7.2pt;">
+      <p><b><i><span style="font-size: 14pt; color: rgb(0, 90, 156);"><span>&nbsp;</span>I</span></i></b><i><span
+ style="font-size: 14pt; color: rgb(0, 90, 156);">nternational</span></i></p>
+      <p><b><i><span style="font-size: 14pt; color: rgb(0, 90, 156);"><span>&nbsp;&nbsp;&nbsp;
+      </span>V</span></i></b><i><span
+ style="font-size: 14pt; color: rgb(0, 90, 156);">irtual</span></i></p>
+      <p><b><i><span style="font-size: 14pt; color: rgb(0, 90, 156);"><span>&nbsp;</span>
+      <span>&nbsp;&nbsp;</span>O</span></i></b><i><span
+ style="font-size: 14pt; color: rgb(0, 90, 156);">bservatory</span></i></p>
+      <p><b><i><span style="font-size: 14pt; color: rgb(0, 90, 156);">A</span></i></b><i><span
+ style="font-size: 14pt; color: rgb(0, 90, 156);">lliance</span></i><i>
+      </i></p>
+      </div>
+      <i></i></td>
+    </tr>
+ </table>
+ <br>
+ \end{HTML}
+ \tagged{h1}{\Vtitle \br Version \Vversion}
+ \tagged{h2}{\Vtype{ }\Vdate}
+
+ \begin{glossary}
+ \par\term{{\bf This version}:} \Vurlthisversion
+ \par\term{{\bf Latest version}:} \Vurllastversion
+ \par\term{{\bf Previous version(s)}:} \Vpreviousversion
+ \par\term{{\bf Editor(s)}:} \Veditor
+ \par\term{{\bf Author(s)}:} 
+ \begin{tabular}{ll}
+ \Vauthor
+ \end{tabular}
+ \end{glossary}
+ \end{DIV}
+ \hr
+}
