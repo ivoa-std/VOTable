@@ -94,6 +94,11 @@
   %\def\A#1#2{{#2}\footnote{#1}}
   \let\A=\href
   %\def\A#1#2{\href{#1}{#2}}
+  \def\Aref#1#2{section~\ref{#1}}
+  \def\Arefs#1#2{section~\ref{#1}}
+  \def\Arefx#1#2{appendix~\ref{#1}}
+  \def\Tref#1#2{Table~\ref{#1}}
+  \def\Fref#1#2{Figure~\ref{#1}}
 \fi
 
 \let\fg=\color                  % fg = foreground color
@@ -118,12 +123,7 @@
 \def\elem#1{{\tt{\fg{DarkRed}#1}}}
 \def\attrval#1#2{{\tt{\fg{DarkRed}#1}="{\fg{DarkPurple}#2}"}}
 \def\elemdef#1#2{{\fg{blue}$<$}{\tt{\fg{DarkRed}#1}#2}{\fg{blue}$>$}}
-\def\Aref#1#2{section~\ref{#1}}
 %\def\ArefS#1{Section~\ref{#1}}
-\def\Arefs#1#2{section~\ref{#1}}
-\def\Arefx#1#2{appendix~\ref{#1}}
-\def\Tref#1#2{Table~\ref{#1}}
-\def\Fref#1#2{Figure~\ref{#1}}
 \def\value#1{{\tt"}{\fg{DarkPurple}#1}{\tt"}}
 \def\order{$\oplus$ }
 \def\unorder{{\large $\circ$ }}
