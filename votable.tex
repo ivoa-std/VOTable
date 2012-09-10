@@ -34,7 +34,7 @@
 \xtag    #1{\elemdef{#1}{}}
 \attrval #2{{\tt{\fg{DarkRed}#1}="{\fg{DarkMagenta}#2}"}}
 \elemdef #2{{\fg{blue}<}{\tt{\fg{DarkRed}#1}#2}{\fg{blue}>}}
-\value   #1{"{\fg{DarkMagenta}#1}"}
+\literalvalue   #1{"{\fg{DarkMagenta}#1}"}
 {comment} #1{{\fg{darkblue}\em(#1)} }{}
 \Plain #1{\plain{#1}}
 \order  {~\image{oplus.gif} }
@@ -124,7 +124,7 @@
 \def\attrval#1#2{{\tt{\fg{DarkRed}#1}="{\fg{DarkPurple}#2}"}}
 \def\elemdef#1#2{{\fg{blue}$<$}{\tt{\fg{DarkRed}#1}#2}{\fg{blue}$>$}}
 %\def\ArefS#1{Section~\ref{#1}}
-\def\value#1{{\tt"}{\fg{DarkPurple}#1}{\tt"}}
+\def\literalvalue#1{{\tt"}{\fg{DarkPurple}#1}{\tt"}}
 \def\order{$\oplus$ }
 \def\unorder{{\large $\circ$ }}
 \def\deprecated {$\dagger$ }
@@ -279,6 +279,7 @@ the functionality and interoperability inside the Astronomical Community.
 %\A{http://ivoa.net/Documents/}{http://ivoa.net/Documents/}
 It is an IVOA Recommendation. 
 
+\tracingmacros=2
 \begin{quote}\em
 This document has been produced by the 
 \A{http://www.ivoa.net/cgi-bin/twiki/bin/view/IVOA/IvoaVOTable}
@@ -498,7 +499,7 @@ exception for the {\attr{ID}}
 attribute). 
 Element and attribute names are further distinguished in
 this paper by being typed with a {\attr{red fixed-width}} font,
-and the values of the attributes typed in \value{magenta}.
+and the values of the attributes typed in \literalvalue{magenta}.
 
 \section{Data Model}
 
@@ -539,7 +540,7 @@ that can be found at the
 top of the column in a paper version of the table: 
 in the example introduced in \Aref{example1}{the
 section} below, the first \elem{FIELD} has its \attr{name} attribute
-set to \value{RA}. The Field can be thought of as a class definition,
+set to \literalvalue{RA}. The Field can be thought of as a class definition,
 and the table cells below it are the instances of that class.
 
 A parameter ({\elem{PARAM}})
@@ -585,18 +586,18 @@ and associated parameters (\elem{PARAM}).
   {\attr{datatype}} & Meaning & \attr{FITS} &
       { Bytes} \\
  \hline
- \value{boolean}      & Logical         &\value{L}& 1  \\
- \value{bit}          & Bit             &\value{X}& *  \\
- \value{unsignedByte} & Byte (0 to 255) &\value{B}& 1  \\
- \value{short}        & Short Integer   &\value{I}& 2  \\
- \value{int}          & Integer         &\value{J}& 4  \\
- \value{long}         & Long integer    &\value{K}& 8  \\
- \value{char}         & ASCII Character &\value{A}& 1  \\
- \value{unicodeChar}  & Unicode Character&        & 2 \\
- \value{float}        & Floating point  &\value{E}& 4  \\
- \value{double}       & Double          &\value{D}& 8  \\
- \value{floatComplex} & Float Complex   &\value{C}& 8  \\
- \value{doubleComplex}& Double Complex  &\value{M}& 16 \\
+ \literalvalue{boolean}      & Logical         &\literalvalue{L}& 1  \\
+ \literalvalue{bit}          & Bit             &\literalvalue{X}& *  \\
+ \literalvalue{unsignedByte} & Byte (0 to 255) &\literalvalue{B}& 1  \\
+ \literalvalue{short}        & Short Integer   &\literalvalue{I}& 2  \\
+ \literalvalue{int}          & Integer         &\literalvalue{J}& 4  \\
+ \literalvalue{long}         & Long integer    &\literalvalue{K}& 8  \\
+ \literalvalue{char}         & ASCII Character &\literalvalue{A}& 1  \\
+ \literalvalue{unicodeChar}  & Unicode Character&        & 2 \\
+ \literalvalue{float}        & Floating point  &\literalvalue{E}& 4  \\
+ \literalvalue{double}       & Double          &\literalvalue{D}& 8  \\
+ \literalvalue{floatComplex} & Float Complex   &\literalvalue{C}& 8  \\
+ \literalvalue{doubleComplex}& Double Complex  &\literalvalue{M}& 16 \\
  %logical & 1 \\
  %bit & * \\
  %byte & 1\\
@@ -1082,13 +1083,13 @@ It has an \attr{ID} attribute --- required if the
 \elem{COOSYS} element has to be referred to via the \attr{ref} attribute
 of the position components, which is generally the case ---
 a  \attr{system} attribute which specifies the coordinate system
-among \value{ICRS}, \value{eq\_FK5},  \value{eq\_FK4}, \value{ecl\_FK4},
-    \value{ecl\_FK5}, \value{galactic}, \value{supergalactic},
-    \value{barycentric}, \value{geo\_app} and a user-defined \value{xy}
+among \literalvalue{ICRS}, \literalvalue{eq\_FK5},  \literalvalue{eq\_FK4}, \literalvalue{ecl\_FK4},
+    \literalvalue{ecl\_FK5}, \literalvalue{galactic}, \literalvalue{supergalactic},
+    \literalvalue{barycentric}, \literalvalue{geo\_app} and a user-defined \literalvalue{xy}
     value. \attr{equinox} is the parameter required to fix the 
-    equatorial or ecliptic systems (as e.g. \value{J2000} as
-    the default \value{eq\_FK5} or \value{B1950} as the default 
-    \value{eq\_FK4}), and \attr{epoch} specifies the epoch of the positions
+    equatorial or ecliptic systems (as e.g. \literalvalue{J2000} as
+    the default \literalvalue{eq\_FK5} or \literalvalue{B1950} as the default 
+    \literalvalue{eq\_FK4}), and \attr{epoch} specifies the epoch of the positions
     if necessary.
 
 Note that %As mentioned above, 
@@ -1165,21 +1166,21 @@ element may be part of a {\elem{RESOURCE}},
 {\elem{TABLE}}, \elem{GROUP}, {\elem{FIELD}} or \elem{PARAM} elements. 
 The {\attr{href}}
 attribute of the {\elem{LINK}} element can utilize any arbitrary protocol,
-for example \value{http://server/file} or \value{bizarre://server/file}.
+for example \literalvalue{http://server/file} or \literalvalue{bizarre://server/file}.
 VOTable parsers are not required to understand arbitrary protocols,
 but are required to understand the following three common protocols:
-\value{file:}, \value{http:} and \value{ftp:}.
+\literalvalue{file:}, \literalvalue{http:} and \literalvalue{ftp:}.
 \iffalse        %%% OLD
 is meant to provide a URL that is at least valid syntactically, even
 though there need be no assurance that the link will actually connect
 and deliver data. It may be that a strange protocol is implied that
-the parser does not know about, for example {\value{httpg://server/file}}.
-However, parsers are expected to understand at least the {\value{file}},
-{\value{http}} and {\value{ftp}} protocols.
+the parser does not know about, for example {\literalvalue{httpg://server/file}}.
+However, parsers are expected to understand at least the {\literalvalue{file}},
+{\literalvalue{http}} and {\literalvalue{ftp}} protocols.
 \fi             %%% OLD
 
 A GLU reference [5] is an additional high-level protocol 
-introduced by a \value{glu:} value of the \attr{href} attribute:
+introduced by a \literalvalue{glu:} value of the \attr{href} attribute:
 this way of referencing a  GLU is preferred %in this version of VOTable
 to the \attr{gref} attribute defined in the original version of VOTable.
 %of the previous version.
@@ -1530,7 +1531,7 @@ Two attributes were retained for this purpose:
 \end{itemize}
 \iffalse
 But there is a semantic difference between a number written as
-\value{5.12} and one that is written \value{5.1200}, in that
+\literalvalue{5.12} and one that is written \literalvalue{5.1200}, in that
 the former implies three significant digits of accuracy, and the
 latter five digits. Therefore the number of digits to show is not
 purely a presentation matter, but part of the metadata content of the
@@ -1661,10 +1662,10 @@ is currently evolving [4].}
  are}{taken from the original UCD design}:
 
 \begin{tabular}{ll}
-{\value{phot.mag;em.opt.B}}        &  Blue magnitude \\
-{\value{src.orbital.eccentricity}} &  Orbital eccentricity \\
-{\value{time.period;stat.median}}  &  Median Value of the Period \\
-{\value{instr.det.qe}}             &  Detector's Quantum Efficiency \\
+{\literalvalue{phot.mag;em.opt.B}}        &  Blue magnitude \\
+{\literalvalue{src.orbital.eccentricity}} &  Orbital eccentricity \\
+{\literalvalue{time.period;stat.median}}  &  Median Value of the Period \\
+{\literalvalue{instr.det.qe}}             &  Detector's Quantum Efficiency \\
 \end{tabular}
 
 %\noindent but the contents of the
@@ -1697,7 +1698,7 @@ and the \attr{utype} attribute is also legal in \elem{RESOURCE},
 In order to avoid name collisions, the data model identification
 should be introduced following the XML namespace conventions,
 as \attrval{utype}{{\rm\em datamodel\_identifier:role\_identifier}}.
-The mapping of \value{datamodel\_identifier} to an xml-type attribute
+The mapping of \literalvalue{datamodel\_identifier} to an xml-type attribute
 is recommended, by means of the {\tt xmlns} convention
 which specifies the URI of the data model cited, as done
 in the example of \Arefs{example1}{section 3.1}.
@@ -1790,9 +1791,9 @@ data types.
 %is being used. 
 Some of the primitive data types have one or more representations of the
 {\em null} value %{\em null} values defined
-(for the \value{char}, \value{float} and \value{double}
-types an empty cell may be used). Other types (\value{boolean}, 
-\value{unsignedByte}, \value{short}, and \value{int}) have no default
+(for the \literalvalue{char}, \literalvalue{float} and \literalvalue{double}
+types an empty cell may be used). Other types (\literalvalue{boolean}, 
+\literalvalue{unsignedByte}, \literalvalue{short}, and \literalvalue{int}) have no default
 {\em null} value defined, and thus, when they are needed, they must be defined 
 explicitly via the \elem{VALUES} element.
 \else
@@ -1801,7 +1802,7 @@ the default representation of a {\em null} value is an empty column
 (i.e. \verb+<TD></TD>+);
 for fields containing arrays, individual {\em null} elements of the array
 can be specified either by the value specified in the \attr{null}
-attribute, or by the \value{NaN} or \value{nan} text in place of the expected
+attribute, or by the \literalvalue{NaN} or \literalvalue{nan} text in place of the expected
 numeric value.
 \fi
 
@@ -2055,7 +2056,7 @@ delimiters.
 %number of {\elem{FIELD}} elements having \attr{datatype} attributes
 %declaring the table; when there are
 %less {\elem{TD}}'s than expected, the corresponding values are set
-%to \value{null}s; superfluous {\elem{TD}}'s are ignored.
+%to \literalvalue{null}s; superfluous {\elem{TD}}'s are ignored.
 
 %While this serialization has a high overhead in the number of
 %bytes, it has the advantage that XML tools can manipulate and present
@@ -2076,7 +2077,7 @@ description of datatypes}.
 
 \iffalse
 The reader may not succeed, for example if we try to parse the
-string \value{36.9H9}
+string \literalvalue{36.9H9}
 into a float, where the alphabetic character is obviously a problem. 
 In this case, the parser may choose to insert the {\attr{null}}
 value (no data available), or it may use a NaN (not a number), or it
@@ -2130,8 +2131,8 @@ designates the characters {\em space} [{\tt{x20}}], {\em tab} [{\tt{x09}}],
 while for numeric data types
 the amount of white spaces does not matter (the elements
 of an array of numbers may for instance be written on several lines),
-the white space is significant for \value{char} or
-\value{unicodeChar} datatypes, and for instance
+the white space is significant for \literalvalue{char} or
+\literalvalue{unicodeChar} datatypes, and for instance
 {\fg{DarkPurple}\verb+<TD>Apple</TD>+} and 
 {\fg{DarkPurple}\verb+<TD> Apple</TD>+} are {\em not} identical.
 
@@ -2329,11 +2330,11 @@ in a URL-type syntax, for example:
 
 
 The examples are the well-known anonymous FTP and HTTP protocols.
-\value{httpg} is an example of a Grid-based access to data through HTTPG;
-finally, \value{file} is a reference to a local file.
+\literalvalue{httpg} is an example of a Grid-based access to data through HTTPG;
+finally, \literalvalue{file} is a reference to a local file.
 VOTable parsers are not required to understand arbitrary protocols,
 but are required to understand the  three common protocols
-\value{file:}, \value{http:} and \value{ftp:}.
+\literalvalue{file:}, \literalvalue{http:} and \literalvalue{ftp:}.
 
 There are further attributes of the {\elem{STREAM}}
 element that may be useful. The {\attr{expires}}
@@ -2357,9 +2358,9 @@ encrypted, this attribute could be used to store a password.
 
 The {\attr{actuate}}
 attribute is borrowed from the XML Xlink specification, expressing
-when the remote link should be actuated. The default is {\value{onRequest}},
+when the remote link should be actuated. The default is {\literalvalue{onRequest}},
 meaning that the data is only fetched when explicitly requested (like
-a link on an HTML page), and the {\value{onLoad}}
+a link on an HTML page), and the {\literalvalue{onLoad}}
 value means that data should be fetched as soon as possible (like an
 embedded image on an HTML page).
 
@@ -2372,29 +2373,29 @@ and their representations in the \elem{BINARY}
 and \elem{TABLEDATA} serializations 
 (see \Aref{sec:TABLEDATA}{section 5}).
 In the following, the term ``hexadigit'' designates the ASCII numbers
-\value{0} to \value{9}, or the ASCII lower- or upper-case letters
-\value{a} to \value{f} (i.e. a digit in a hexadecimal representation
+\literalvalue{0} to \literalvalue{9}, or the ASCII lower- or upper-case letters
+\literalvalue{a} to \literalvalue{f} (i.e. a digit in a hexadecimal representation
 of a number).
 %; in this section we write the hexadecimal representation
 %as {\bf 0x} followed by hexadigits.
 
 \begin{itemize}
 \item {\bf Logical}\quad If the value of the {\attr{datatype}}
-attribute specifies data type {\value{boolean}},
+attribute specifies data type {\literalvalue{boolean}},
 the contents of the field{ }shall consist of the \elem{BINARY} serialization of
-ASCII \value{T}, \value{t},  or \value{1} indicating true, and
-ASCII \value{F}, \value{f}, or \value{0} indicating false.
+ASCII \literalvalue{T}, \literalvalue{t},  or \literalvalue{1} indicating true, and
+ASCII \literalvalue{F}, \literalvalue{f}, or \literalvalue{0} indicating false.
 The {\em null} value is indicated by an ascii NULL [0x00],
 a space [0x20]
-or a question mark \value{?} [0x3f].
+or a question mark \literalvalue{?} [0x3f].
 The acceptable representations in the \elem{TABLEDATA} serialization
 also include any capitalisation variation of the 
-strings \value{true}  and \value{false} (e.g. \value{tRUe} or \value{FalsE});
+strings \literalvalue{true}  and \literalvalue{false} (e.g. \literalvalue{tRUe} or \literalvalue{FalsE});
 the default representation of a {\em null} value is an empty cell
 (see \Aref{sec:values}{VALUES definitions above})
 
 \item {\bf Bit Array} \quad If the value of the {\attr{datatype}}
-attribute specifies data type {\value{bit}},
+attribute specifies data type {\literalvalue{bit}},
 the contents of the field{ }in the \elem{BINARY} serialization shall consist of
 a sequence of bits starting with the most significant bit; the bits
 following shall be in order of decreasing significance, ending with
@@ -2402,10 +2403,10 @@ the least significant bit. A bit field shall be composed of the
 smallest number of bytes that can accommodate the number of elements
 in the field. Padding bits shall be 0.
 The representation of a bit array in the \elem{TABLEDATA} serialization
-is made by a sequence of ASCII \value{0} and \value{1} characters.
+is made by a sequence of ASCII \literalvalue{0} and \literalvalue{1} characters.
 
 \item {\bf Byte}\quad If the value of the {\attr{datatype}}
-attribute specifies data type {\value{unsignedByte}},
+attribute specifies data type {\literalvalue{unsignedByte}},
 the field shall contain in the \elem{BINARY} serialization a byte 
 (8-bits) representing a number in the
 range 0 to 255. 
@@ -2427,7 +2428,7 @@ has to be defined via the \attr{null} attribute of the \elem{VALUES} element
 (\Aref{sec:values}{section 4.7}).
 
 \item {\bf Character}\quad If the value of the {\attr{datatype}}
-attribute specifies data type {\value{char}},
+attribute specifies data type {\literalvalue{char}},
 the field shall contain in the \elem{BINARY} serialization an ASCII 
 (7-bit) character. 
 The \attr{arraysize} attribute
@@ -2460,7 +2461,7 @@ in the \elem{TABLEDATA} serialization
 \fi
 
 \item {\bf Unicode Character}\quad If the value of the {\attr{datatype}}
-attribute specifies data type {\value{unicodeChar}},
+attribute specifies data type {\literalvalue{unicodeChar}},
 the field shall contain a Unicode character.
 The \attr{arraysize} attribute
 indicates a string composed of Unicode text,
@@ -2480,7 +2481,7 @@ in the \elem{TABLEDATA} serialization
 
 
 \item {\bf 16-Bit Integer}\quad If the value of the {\attr{datatype}}
-attribute specifies datatype {\value{short}}, 
+attribute specifies datatype {\literalvalue{short}}, 
 the data in the \elem{BINARY} serialization shall consist of
 big-endian twos-complement signed 16-bit integers 
 (the most significant byte first). 
@@ -2494,7 +2495,7 @@ has to be defined via the \attr{null} attribute of the \elem{VALUES} element
 (\Aref{sec:values}{section 4.7}).
 
 \item {\bf 32-Bit Integer }\quad If the value of the {\attr{datatype}}
-attribute specifies datatype {\value{int}},
+attribute specifies datatype {\literalvalue{int}},
 the data in the \elem{BINARY} serialization shall consist of 
 big-endian twos-complement signed 32-bit
 integer contained in four bytes, with the most significant first, 
@@ -2509,7 +2510,7 @@ has to be defined via the \attr{null} attribute of the \elem{VALUES} element
 (\Aref{sec:values}{section 4.7}).
 
 \item {\bf 64-Bit Integer}\quad If the value of the {\attr{datatype}}
-attribute specifies datatype {\value{long}},
+attribute specifies datatype {\literalvalue{long}},
 the data in the \elem{BINARY} serialization shall consist of 
 big-endian twos-complement signed 64-bit integers
 contained in eight bytes, with the most significant byte first,
@@ -2528,7 +2529,7 @@ has to be defined via the \attr{null} attribute of the \elem{VALUES} element
 
 
 \item {\bf Single Precision Floating Point}\quad If
-the value of the {\attr{datatype}} attribute specifies datatype {\value{float}},
+the value of the {\attr{datatype}} attribute specifies datatype {\literalvalue{float}},
 the data in the \elem{BINARY} serialization shall consist of 
 ANSI/IEEE-754 32-bit floating point numbers in big-endian order. 
 All IEEE special values are recognized. The IEEE {NaN}
@@ -2536,19 +2537,19 @@ pattern is used to represent {\em null} values.
 The representation of a Floating Point number in the 
 \elem{TABLEDATA} serialization is made of an optional {\tt-} or {\tt+},
 followed by the ASCII representation of a positive decimal number,
-and followed eventually by the ASCII letter \value{E} or  \value{e}
+and followed eventually by the ASCII letter \literalvalue{E} or  \literalvalue{e}
 introducing the base-10 exponent made of an optional {\tt-} or {\tt+}
 followed by 1 or 2 digits. The number must be within the limits of the
 IEEE floating-point definition (around $\pm3.4\cdot10^{38}$; numbers with
 absolute value less than about $1.4\cdot10^{-45}$ are equated to zero);
 the default representation of a {\em null} value is an empty cell
 (see \Aref{sec:values}{VALUES definitions above}), and the special
-values \value{+Inf}, \value{-Inf}, and \value{NaN} are accepted.
+values \literalvalue{+Inf}, \literalvalue{-Inf}, and \literalvalue{NaN} are accepted.
 
 
 \item {\bf Double Precision Floating Point}\quad If
 the value of the {\attr{datatype}}
-attribute specifies datatype {\value{double}},
+attribute specifies datatype {\literalvalue{double}},
 the data in the \elem{BINARY} serialization shall consist of ANSI/IEEE-754
 64-bit double precision floating point numbers in big-endian order. 
 All IEEE special values are recognized. The IEEE {NaN}
@@ -2556,23 +2557,23 @@ pattern is used to represent {\em null} values.
 The representation of a Double number in the 
 \elem{TABLEDATA} serialization is made of an optional {\tt-} or {\tt+},
 followed by the ASCII representation of a positive decimal number,
-and followed eventually by the ASCII letter \value{E} or  \value{e}
+and followed eventually by the ASCII letter \literalvalue{E} or  \literalvalue{e}
 introducing the base-10 exponent made of an optional {\tt-} or {\tt+}
 followed by 1 to 3 digits. The number must be within the limits of the
 IEEE floating-point definition (around $\pm1.7\cdot10^{308}$; numbers with
 absolute value less than about $5\cdot10^{-324}$ are equated to zero);
 the default representation of a {\em null} value is an empty cell
 (see \Aref{sec:values}{VALUES definitions above}), and the special
-values \value{+Inf}, \value{-Inf}, and \value{NaN} are accepted.
+values \literalvalue{+Inf}, \literalvalue{-Inf}, and \literalvalue{NaN} are accepted.
 
 \item {\bf Single Precision Complex}\quad If the value of the {\attr{datatype}}
-attribute specifies datatype {\value{floatComplex}},
+attribute specifies datatype {\literalvalue{floatComplex}},
 the data in the \elem{BINARY} serialization shall consist of a sequence of 
 pairs of 32-bit single precision floating point numbers in big-endian order. 
 The first member of each
 pair shall represent the real part of a complex number and the
 second member shall represent the imaginary part of that complex
-number. If either member contains a \value{NaN},
+number. If either member contains a \literalvalue{NaN},
 the entire complex value is {\em null}.
 The representation of a Floating Complex number in the 
 \elem{TABLEDATA} serialization is made of two representations
@@ -2583,14 +2584,14 @@ the default representation of a {\em null} value is an empty cell
 
 \item {\bf Double Precision Complex}\quad If the
 value of the {\attr{datatype}}
-attribute specifies datatype {\value{doubleComplex}},
+attribute specifies datatype {\literalvalue{doubleComplex}},
 the data in the \elem{BINARY} serialization  shall consist of a
 sequence of pairs of 64-bit double precision floating point numbers
 in big-endian order.
 The first member of each pair shall represent the real part of a
 complex number and the second member of the pair shall represent the
 imaginary part of that complex number. If either member contains a
-\value{NaN}, the entire complex
+\literalvalue{NaN}, the entire complex
 value is {\em null}.
 The representation of a Double Complex number in the 
 \elem{TABLEDATA} serialization is made of two representations
@@ -2903,18 +2904,18 @@ of the table to further information resources.
 
 
 The purpose of the link is defined by the {\attr{content-role}}
-attribute. The allowed values are {\value{query}} 
+attribute. The allowed values are {\literalvalue{query}} 
 (see \Aref{query}{query mechanism}), 
-{\value{hints}} for information for use by the application,
-and {\value{doc}} for  human-readable documentation.
+{\literalvalue{hints}} for information for use by the application,
+and {\literalvalue{doc}} for  human-readable documentation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Question: laisser un simple string dans l'attribut content-role ???
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %The first implies that string substitution should be used as defined
 %above, and the latter two imply first that no substitution is needed,
 %and that the link points to either information for use by the
-%application ({\value{hints}})
-%or human-readable documentation ({\value{doc}}).
+%application ({\literalvalue{hints}})
+%or human-readable documentation ({\literalvalue{doc}}).
 
 The column names invoked in the pattern of the \attr{href} attribute
 of the \elem{LINK} element should exist in the document to 
@@ -2953,8 +2954,8 @@ paired in the form {\it name}{{\tt=}}{\it value},
 where {\it name} is the contents of the
 \attr{name} attribute of a \elem{FIELD} or \elem{PARAM}, 
 and  {\it value} represents a constraint
-written with the ASU conventions (e.g. \value{$<8$}
- or {\value{12.0..12.5}}
+written with the ASU conventions (e.g. \literalvalue{$<8$}
+ or {\literalvalue{12.0..12.5}}
 which denotes a range of values). 
 Such pairs are  appended to the
 {\attr{action}} specified in the {\elem{LINK}}
