@@ -228,7 +228,6 @@
 \section*{Abstract}
 This document describes the structures making up the version 1.2 of 
 the VOTable standard,
-% adopted for the version 1.1 of the VOTable format, 
 which supersedes the version 1.1 of 08 August 2004.
 The differences between versions 1.1 and 1.2 are summarized in 
 \Aref{diff}{the last section}.
@@ -239,44 +238,7 @@ which have been proposed and/or discussed, but which are not part of
 the standard.
 
 \section*{Status of This Document}
-\iffalse
 
-This document has been produced by the VOTable Working Group.
-
-This is an IVOA Proposed Recommendation made available for public review. It is appropriate to reference this document only as a recommended standard that is under review and which may be changed before it is accepted as a full recommendation.
-
-This is an IVOA Working Draft for review by IVOA members and other interested parties.
-It is a draft document and may be updated, replaced, or obsoleted by 
-other documents at any time. It is inappropriate to use IVOA Working Drafts
-as reference materials or to cite them as other than {\em``work in progress''}.
-\fi
-
-\iffalse
-\begin{quote}
-{\em This document has been produced by the }
-\A{http://www.ivoa.net/twiki/bin/view/IVOA/IvoaVOTable}{IVOA 
-   VOTable Working Group}.
-
-\em
-It has been reviewed by IVOA Members and other interested parties, and
-has been endorsed by the IVOA Executive Committee as an IVOA
-Recommendation. It is a stable document and may be used as reference
-material or cited as a normative reference from another document. IVOA's
-role in making the Recommendation is to draw attention to the
-specification and to promote its widespread deployment. This enhances
-the functionality and interoperability inside the Astronomical Community.
-\else
-%This proposed recommendation is made available for public review.
-%Comments to this document should be sent to 
-%\A{mailto:votable@ivoa.net}{votable@ivoa.net}, a mailing list with a 
-%\A{http://ivoa.net/forum/votable/}{public archive}.
-%It is appropriate to reference this document only as a recommended
-%standard that is under review and which may be changed
-%before it is accepted as a full recommendation.
-%
-%A list of current IVOA Recommendations and other technical documents
-%can be found at\\
-%\A{http://ivoa.net/Documents/}{http://ivoa.net/Documents/}
 It is an IVOA Recommendation. 
 
 \begin{quote}\em
@@ -295,21 +257,11 @@ A list of current IVOA Recommendations and other technical documents
 can be found at \ifhtx\else \\ \fi
 \A{http://www.ivoa.net/Documents/}{http://www.ivoa.net/Documents/}.
 
-\fi
-
-%It is appropriate to reference this document only as a recommended standard 
-%that is under review and which may be changed before it is accepted as a full 
-%recommendation. A list of {current IVOA Recommendations 
-%and other technical documents} can be found at
-%\url{http://www.ivoa.net/Documents/}.
-
 \end{quote}
 
 \section*{Acknowledgments}
 This document is based on the W3C documentation standards as adapted for the 
 IVOA.
-%This document is based on the W3C documentation standards, but has been adapted
-%for the IVOA.
 
 
 \clearpage
@@ -343,9 +295,6 @@ VOTable is designed as a flexible storage and exchange format for
 tabular data, with particular emphasis on astronomical tables.
 
 Interoperability is encouraged through the use of standards (XML).
-%because physical quantities are tagged not only with units, but also
-%through a Uniform Content Descriptor (UCD) that expresses the nature
-%of the quantity (eg. Gunn J magnitude, declination). The XML fabric
 The XML fabric
 allows applications to easily validate an input document, as well as
 facilitating transformations through XSLT (eXtensible Style Language
@@ -405,9 +354,6 @@ VOTable structure can be sent to a server, which can then open a
 high-bandwidth connection to receive the actual data, using the
 previously-digested structure as a way to interpret the stream of
 bytes from the data socket. 
-%Alternatively, the metadata can be sent
-%alone as an implicit query to a server, which will respond with the
-%data part of the table filled in.
 
 VOTable can be used for small numbers of small records (pure XML
 tables), or for large numbers of simple records (streaming data), or
@@ -416,41 +362,6 @@ case, there will be software to spread large data blocks among
 multiple processors on the Grid. Currently the most complex structure
 that can be in a VOTable Cell is a multidimensional array. 
 
-
-\iffalse
-\subsubsection*{Future}
-In future versions of the VOTable format, we expect to benefit
-from both experience  and tool-building. Such tools include presentation
-and transformations of the metadata (and data too, when it is in
-XML), using XML transformation language and software: XSL and XSLT.
-We would like to migrate to the more powerful document validation
-provided by XSchema [7] rather than DTD -- a draft version of the
-VOTable format in XSchema is included as \Aref{xsd}{Appendix}.
-
-We also expect XSchema to allow better modularization of the
-document schema, so that, for example, users might put whatever
-serialized objects they wish into the table cells. In this way, we
-expect to use VOTable for handling the flow of large data objects
-through Grid resources, objects such as FITS files or XDF [7]
-documents. Also, it would also mean, for example, that the description of a
-table could contain arbitrary HTML instead of the current version --
-plain text with paragraph markers; or that an XML definition of
-non-standard astronomical coordinate systems could be seamlessly
-integrated.
-
-VOTable is derived from {\em Astrores}, which is specified not only as a way to
-write a data table, but also as a way to specify how to address a
-{\it request}  to data tables. We
-expect to sharpen and formalize this dichotomy with the benefit of
-experience, building into VOTable the ways of making
-sophisticated querying mechanisms and protocols.
-
-We expect to add features for efficiency in the future also: to
-specify that the data stream has a particular sort order, to specify
-that a column in one table is a key in to another table; to specify
-that one table is an index into another. The binary format will be 
-extended to facilitate large-scale streaming.
-\fi
 
 \subsection{XML Conventions}
 
@@ -466,7 +377,6 @@ a {\it start tag} (the part in angle brackets), the payload, and an
 contain other elements. Elements can also bear
 {\attr{attributes}}
 (keyword-value combinations).
-%, such as the {\elem{PARAM}} elements above. 
 
 
 The payload may be in two forms: parsed or unparsed character
@@ -617,8 +527,7 @@ and associated parameters (\elem{PARAM}).
 
 Each Cell is composed from Primitives, each of which is a datatype
 of fixed-length binary representation, as listed in 
-\Tref{primitives}{the accompanying table}. %(detailed in 
-%\Aref{sec:datatypes}{the section below}).
+\Tref{primitives}{the accompanying table}.
 \modified{1.2-090606}{
 Cells may consist of a single Primitive (this is
 the default), or of an {\em array} (which may be multidimensional)
@@ -631,9 +540,7 @@ Except for the Bit type, each primitive has the fixed length in
 bytes given in \Tref{primitives}{the table}. 
 Bit scalars and arrays are stored in
 the minimum number of bytes feasible (so that $b$ bits take the integer
-part of $(b+7)/8$ bytes). %It is this fixed size that allows efficiency
-%in storage, so that the memory used is minimized. 
-These primitives
+part of $(b+7)/8$ bytes).  These primitives
 are described in more detail in \Aref{sec:datatypes}{section 6}.
 
 VOTables support two kinds of characters: ASCII 1-byte characters
@@ -646,8 +553,6 @@ but also Unicode ({\attrval{datatype}{unicodeChar}}).
 
 Note that strings are not a primitive type: strings are 
 represented in VOTable as an array of characters. %in an characters are.
-%In VOTable, characters are Primitives, either one byte for an
-%ASCII character or two bytes for a Unicode character. 
 
 
 \modified{1.2-090606}{
@@ -655,11 +560,6 @@ represented in VOTable as an array of characters. %in an characters are.
 \subsection{Multidimensional Arrays}\label{array}}
 \label{sec:dim}
 
-\iffalse	% modified{1.2-090606}
-A table cell can contain an array of a given primitive type. The
-array is specified by a sequence of dimensions, with the first
-dimension changing fastest, and the last dimension that may be variable
-in length. \else
 A table cell can contain an {\em array} of a given primitive type,
 with a fixed or variable number of elements; the array may even
 be multidimensional. For instance, the position of a point in a
@@ -685,7 +585,6 @@ of a given primitive type. This is specified by a sequence of dimensions
 separated by the {\tt x} character, 
 with the first dimension changing fastest; as in the case
 of a simple array, the last dimension may be variable in length.
-\fi
 As an example, the following definition
 declares a table cell which may contain a set of up to 10 images,
 each of 64x64 bytes:
@@ -693,40 +592,12 @@ each of 64x64 bytes:
 \elemdef{FIELD}{ \attrval{ID}{thumbs} \attrval{datatype}{unsignedByte} 
   \attrval{arraysize}{64x64x10*}\slash}
 
-\iffalse        % modified{1.2-090606}
-The string in the \attr{arraysize} attribute expresses these
-dimensions, each integer except the last being followed by the 
-{\tt x} character.
-The last (slowest-varying) subscript of a
-multidimensional array may have variable length, meaning that the
-dimensionality of the final subscript may be different for different
-rows of the table. In this case, there may be just an asterisk, in
-which case the array may be arbitarily large 
-(in practice up to $\simeq 2\times10^9$ elements); or a number followed by
-an asterisk, meaning that this subscript is guaranteed not to exceed
-this value.
-\fi
-
-\iffalse
-Variable-length arrays are more efficient in storage and data
-transfer, but less efficient computationally, because extra pointer
-dereferencing is required to access the data. 
-%The reason that only
-%the slowest-varying subscript can be variable is effectively a demand
-%that the data provider pack the data into a small number of
-%fixed-size containers as much as is possible, rather than a large
-%number of small containers.
-\fi
-
 Strings, which are defined as a set of characters,
 can therefore be represented in VOTable as a fixed- or variable-length 
 array of characters:
 
 \elemdef{FIELD}{ \attrval{name}{unboundedString} \attrval{datatype}{char}
        \attrval{arraysize}{*}\slash}
-%\begin{verbatim}
-%<FIELD ID="unboundedString" datatype="char" arraysize="*"/>
-%\end{verbatim}
 
 A 1D array of strings can be represented as a 2D array of characters, but
 given the logic above, it is possible to define a variable-length array
@@ -754,17 +625,11 @@ that there is considerable overlap.
 
 For instance, the recommended formatting of the data for an
 edition of the data is expressed by the non-mandatory TDISP keyword:
-%FITS has semantics for how data is to be
-%represented when printed, expressed by the non-mandatory TDISP keyword: 
 for example F12.4 means 12 characters are to be used, and 4 decimal
 places. This has been converted in VOTable as the attributes {\attr{width}}
 and {\attr{precision}}
 which, connected with {\bf {\attr{datatype}}},
 are semantically identical to the TDISP keyword. 
-\iffalse
-Note that error estimation and the number
-of digits to print are rather different semantically.
-\fi
 
 \subsubsection*{What can FITS do but not VOTable?}
 
@@ -778,16 +643,6 @@ means of {\em data models}, and from its version 1.1,
 {\em VOTable} can refer to these data models by means
 of the \attr{utype} attribute described in
 \Aref{sec:utype}{section 4.6}.
-
-\iffalse
-(the ``Substring
-Array" convention) for structuring a single string as a
-collection of substrings, and VOTable 1.2 does not support this
-{\em(see however the \Aref{sec:arraystring}{appendix A3} which
-proposes  a compatible VOTable definition)}. 
-The current version of VOTable allows fixed- and variable-length strings, 
-as well as variable-length arrays of fixed-length strings.
-\fi
 
 \subsubsection*{What can VOTable do but not FITS?}
 
@@ -813,12 +668,7 @@ FITS table also without loss of information.
 However, it is
 possible to create new VOTables which cannot be converted to FITS
 tables without loss of information.
-\iffalse
-the conversion of a FITS file into VOTable does not lose any information, and a
-transformation back into FITS is possible. It will however not be
-possible to transform any VOTable into a FITS file without losing
-some information.
-\fi}
+}
 
 
 \section{The VOTable Document Structure}
@@ -826,34 +676,16 @@ some information.
 
 The overall VOTable document structure is described and controlled
 by its \A{http://www.ivoa.net/xml/VOTable/v1.2}{XML Schema}.
-%referenced at the top. 
-%The XML Schema corresponding to this version of VOTable 
-%is accessible from
-%http://vizier.u-strasbg.fr/cgi-bin/VizieR
-%however hardly human-readable, and is replaced in this document
-%by its equivalent
-\iffalse % Modified 2008-10-19
-This schema actually represents the VOTable definition, which means
-that documents claiming to represent VOTables should pass through
-W3C XML Schema validators without error.
-\else
 That means that documents claiming to represent VOTables must
 include the reference to the VOTable schema, and 
 pass through W3C XML Schema validators without error;
 notice that the validation is a necessary, {\em but not sufficient}, 
 condition for correctness.
-\fi
 The XML Schema of this version 1.2 is included in 
 \Arefx{XML-schema}{Appendix B},
 and is illustrated in \Arefs{dtd}{section 7}.
 
-\iffalse
-An example %(presented in \Aref{example1}{below}) 
-is used here to illustrate the components of a VOTable document
-described in the following sections.
-Basically, a
-\else 
-A \fi
+A
  VOTable document consists of a single all-containing element
 called {\elem{VOTABLE}},
 which contains descriptive elements and global definitions
@@ -980,19 +812,6 @@ referenced. %principle any element may have an {\attr{ID}} attribute.
 In VOTable1.2, it is further
 recommended to place the \attr{ID} attribute {\em prior to} referencing
 it whenever possible.
-\iffalse
-According to the XML standard, the contents of the {\attr{ID}} attribute 
-is a string beginning with a letter or underscore ({\tt{\_}}),
-followed by a sequence of letters, digits, or any of the
-punctuation characters {\tt.} (dot), {\tt-} (dash), {\tt\_} (underscore),
-or {\tt:} (colon).
-
-{\attr{ID}} and {\attr{name}} attributes have a different role in 
-VOTable: the ID is meant as a {\em unique identifier} of an element
-seen as a VOTable component, 
-while the name is meant for presentation purposes, and need
-not to be unique throughout the VOTable document.
-\else	% added{1.2-090606}
 
 While the {\attr{ID}} attribute has to be unique in a VOTable document,
 the {\attr{name}} attribute need not. It is however recommended,
@@ -1001,31 +820,6 @@ This recommendation means that,
 between a \elem{TABLE} and its corresponding closing \elem{\slash TABLE} tag,
 {\attr{name}} attributes of \elem{FIELD}, \elem{PARAM} and
 optional \elem{GROUP} elements should be all different.
-\fi
-%The value of each of \attr{ID} and \attr{name} attributes defaults
-%to the other value.
-
-\iffalse
-defaults to the same as the \elem{ID} value if not present.
-The ID's of the fields and parameters {\em must be unique throughout the
-document} -- this is part of the XML specification, and we intend that
-eventually ID's can be used to tie together data sources and
-applications that read and write them. The name of an object, when
-not present, defaults to the ID value, and when it is present is
-intended for presentation to humans.
-\fi
-
-\iffalse
-In summary, 
-the {\attr{ID}} is different from the {\attr{name}}
-attribute in that (a) the ID attribute is made from a restricted character
-set, and must be unique throughout a VOTable document 
-%(or else the document is considered invalid in the XML sense), 
-whereas names are standard XML attributes and need not be unique; 
-and (b) there should be support in the parsing
-software to look up references and extract the relevant element with
-matching ID. 
-\fi
 
 \subsection{\elem{VOTABLE} Element}
 \label{sec:definitions}
@@ -1033,33 +827,11 @@ matching ID.
 The \elem{VOTABLE} element may contain definitions consisting of
 a \elem{DESCRIPTION}, followed by any mixture of parameters and
 informative notes eventually structured in {\em groups}.
-%and celestial coordinate system definitions
-%described by the elements 
-%\elem{PARAM}, \elem{INFO} and \elem{COOSYS} respectively.
 These elements represent values which are meaningful over all tables
 included in a \elem{VOTABLE} document --- definitions specific to
 a \elem{RESOURCE} (\Aref{elem:RESOURCE}{section 3.4})
 or a \elem{TABLE} (\Aref{elem:TABLE}{section 3.6}) are better placed 
 within their most appropriate element.
-
-\iffalse        %%% Previous version
-a definition of a coordinate system,
-stored in a {\elem{COOSYS}}
-element. The \elem{COOSYS} element
-provides attributes for equinox and epoch, as well as a
-specification of  the celestial coordinate system. 
-The \elem{COOSYS} element being the only astronomy specific part 
-of VOTable, it may be deprecated in the  future,
-as it is expected that a more formal structuring of the coordinate system 
-will be designed, which would encompass conventions used in space science
-or solar physics. Its current definition is given below.
-
-The \elem{DEFINITIONS} element may also include one or more {\elem{PARAM}}
-elements (\Aref{sec:field}{section 4}) 
-that may contain user-specific data. Each of these may have
-an \attr{ID} attribute, that can be referenced with the \attr{ref} attribute 
-of other elements. 
-\fi
 
 Note that version 1.0 of VOTable required the usage of a \elem{DEFINITIONS}
 element holding the VOTable global definitions --- this
@@ -1075,28 +847,6 @@ which is deprecated in
 this version (1.2) in  favor of a more generic facility of {\em
 referring to external data models}.
 
-\iffalse
-This element defines a celestial coordinate system, to which the
-components of a position on the celestial sphere refer.
-It has an \attr{ID} attribute --- required if the
-\elem{COOSYS} element has to be referred to via the \attr{ref} attribute
-of the position components, which is generally the case ---
-a  \attr{system} attribute which specifies the coordinate system
-among \literalvalue{ICRS}, \literalvalue{eq\_FK5},  \literalvalue{eq\_FK4}, \literalvalue{ecl\_FK4},
-    \literalvalue{ecl\_FK5}, \literalvalue{galactic}, \literalvalue{supergalactic},
-    \literalvalue{barycentric}, \literalvalue{geo\_app} and a user-defined \literalvalue{xy}
-    value. \attr{equinox} is the parameter required to fix the 
-    equatorial or ecliptic systems (as e.g. \literalvalue{J2000} as
-    the default \literalvalue{eq\_FK5} or \literalvalue{B1950} as the default 
-    \literalvalue{eq\_FK4}), and \attr{epoch} specifies the epoch of the positions
-    if necessary.
-
-Note that %As mentioned above, 
-the \elem{COOSYS} may be deprecated in the  future
-in favor of a more generic way of describing the conventions used to define
-the positions of the objects studied in the enclosed tables.
-\fi
-
 The coordinates --- space and time, and eventually the spectral and
 redshift parameters --- are described in the {\em STC} model
 (A. Rots, see [9]), which specifies the various components
@@ -1106,9 +856,7 @@ space with a high accuracy.
 Starting with Version 1.2, {\em VOTable} makes use of the 
 \elem{GROUP} element (\Arefs{sec:group}{GROUP})  and the \attr{utype} attribute 
 (\Arefs{sec:utype}{utype}) to accurately describe 
-%with all the required accuracy
 the coordinate systems used in the data conveyed in a VOTable.
-%The example above 
 A dedicated note on {\em Referencing STC in VOTable} [8]
 describes in more detail how to express the coordinate components.
 
@@ -1139,21 +887,10 @@ attributes (see \Aref{sec:name}{section 3.2}); it may also be qualified by
 only, i.e. does not contain any actual data: no \elem{DATA} element
 should exist in any of its sub-elements. A \elem{RESOURCE} without
 this attribute {\em may} however have no \elem{DATA} sub-element.
-%Without this attribute
 
 Finally, the \elem{RESOURCE} element may have a \attr{utype} attribute
 to link the element to some external data model 
 (introduced in version 1.1, see \Aref{sec:utype}{section 4.6}).
-
-%\section{5 Parameters and Hierarchy}
-
-
-%The VOTable document is a hierarchy of {\elem{RESOURCE}}
-%elements, each of which can contain other {\elem{RESOURCE}}s.
-%The root of the tree is the single {\elem{VOTABLE}}
-%element that constitutes the entire XML document, and the leaves of
-%the tree are {\elem{TABLE}}s.
-%The resource elements may also contain parameters ({\elem{PARAM}}).
 
 \subsection{\elem{LINK} Element}
 \label{sec:link}
@@ -1169,20 +906,11 @@ for example \literalvalue{http://server/file} or \literalvalue{bizarre://server/
 VOTable parsers are not required to understand arbitrary protocols,
 but are required to understand the following three common protocols:
 \literalvalue{file:}, \literalvalue{http:} and \literalvalue{ftp:}.
-\iffalse        %%% OLD
-is meant to provide a URL that is at least valid syntactically, even
-though there need be no assurance that the link will actually connect
-and deliver data. It may be that a strange protocol is implied that
-the parser does not know about, for example {\literalvalue{httpg://server/file}}.
-However, parsers are expected to understand at least the {\literalvalue{file}},
-{\literalvalue{http}} and {\literalvalue{ftp}} protocols.
-\fi             %%% OLD
 
 A GLU reference [5] is an additional high-level protocol 
 introduced by a \literalvalue{glu:} value of the \attr{href} attribute:
 this way of referencing a  GLU is preferred %in this version of VOTable
 to the \attr{gref} attribute defined in the original version of VOTable.
-%of the previous version.
 The {\attr{gref}} attribute is deprecated since version 1.1.
 
 In the Astrores format, from which VOTable is derived, 
@@ -1222,7 +950,6 @@ by a mixed collection of \elem{PARAM}, \elem{FIELD} or \elem{GROUP} elements
 which describe a parameter (constant column), a field (column) or a group of
 columns respectively. \elem{PARAM} and \elem{FIELD} elements are detailed in 
 \Aref{sec:field}{the next section}, and the \elem{GROUP} element
-%introduced in Version 1.1
 is presented in \Aref{sec:group}{the following section}.
 
 Furthermore the \elem{TABLE} element may contain {\elem{LINK}} elements
@@ -1249,140 +976,6 @@ about the referencing.
 Finally, the \elem{TABLE} element may have a \attr{utype} and \attr{ucd}
 attribute to specify the table semantics, similarly to  the \elem{FIELD} and
 \elem{PARAM} elements (see \Aref{elem:FIELD}{section 4.1}).
-
-\iffalse
-\section{XML}
-
-VOTable is constructed with XML (extensible Markup Language), a
-powerful standard for structured data throughout the Internet
-industries. It derives %through simplification 
-from SGML, %which has been 
-a standard used in the publishing industry and for 
-technical documentation for many years. XML
-consists of {\it elements} and payload, where an element consists of
-a {\it start tag} (the part in angle brackets), the payload, and an
-{\it end tag} (with angle brackets and a slash). Elements can
-contain other elements. Elements can also bear
-{\attr{attributes}}
-(keyword-value combinations), such as the {\elem{PARAM}}
-elements above. 
-
-
-The payload may be in two forms: parsed or unparsed character
-data. Examples are:
-
-\begin{verbatim}
-<text>Fran&#231;ois</text>
-<text><![CDATA[ a <= (b & c) ]]></text>
-\end{verbatim}
-
-In the first example, the sequence {\tt \&\#231;} is interpreted as
-part of the Unicode code point, %ISO/IEC 10646 character set, 
-and translates to an
-accented character, so that the text is ``Fran\c{c}ois".
-The second example uses the special {\tt CDATA} sequence so that the
-characters {\tt <}, {\tt >}, and {\tt\&} can be used without interpretation;
-in this case, any ASCII characters are allowed except the terminating
-sequence {\tt]]>} For more information, see any book on
-XML.
-
-\subsection{Lists}
-
-Within a table cell, multiple Primitives can be formatted by
-separating them by whitespace, to express
-compound primitives (complex numbers) and multidimensional arrays.
-Text tokens are separated by contiguous whitespace (ASCII space {\tt{0x20}},
-tab {\tt{0x9}}, carriage-return {\tt{0xD}}, newline {\tt{0xA}},
-vertical tab {\tt{0xB}}).
-There are no null tokens, comments, quote characters, or separators.
-However, it is possible to include special characters through an
-escape mechanism as in HTML: for example the string {\tt New York}
-would be encoded as {\tt New\&\#x20;York}. 
-
-Thus a table cell that contains an array of three complex numbers
-could be represented as:
-
-\begin{verbatim}
-<TD>1.0 0.0   -0.5 0.866   -0.5 -0.866</TD>
-\end{verbatim}
-
-However, it should be noted that in a character array (a string) no
-space is needed to separate each element (a character).
-
-\subsection{Syntax Policy}
-
-Following the general XML rule, element and attribute names are
-case-sensitive and have to be used with the specified 
-capitalisation. For VOTable, we have adopted the convention that
-element names should be in uppercase
-and attribute names in lowercase (with an
-exception for the {\attr{ID}}
-attribute). Element and attribute names are further distinguished in
-this paper by being in {{\tt fixed-width}} font.
-
-\subsection{Xlink and STREAM}
-
-The \elem{STREAM} element is used to point to remote table data, and as
-such it closely follows the W3C specification called ``Xlink".
-The {\elem{STREAM}}
-implements the interface defined by Xlink; in particular it is an
-Xlink with {\attrval{type}{locator}}.
-However, {\elem{STREAM}}
-has more attributes than Xlink allows for: a {\attr{rights}}
-attribute for authentication information; and {\attr{expires}}
-attribute for when the link may cease to be valid; and an {\attr{encoding}}
-attribute if the data is filtered, (for example compression or
-binary-to-ascii filtering). Therefore we will wait until a future
-release to formalize the relationship between Xlink and {\elem{STREAM}}.
-
-
-\subsection{Location of the DTD}
-
-A VOTable document, like all XML documents, should be {\it well-formed}, meaning
-that it obeys the syntax rules of XML: for example, elements should start and
-end properly and be properly nested. The document may be further constrained to
-be {\it valid}, meaning that it follows the VOTable syntax rules, as defined in
-the DTD of \Aref{dtd}: for example the data type ``float" is valid, but not the
-datatype ``real". Access to the DTD is necessary to check validity. Valid XML
-documents may employ certain advanced features of XML, features that can
-significantly improve the usability of a document, including: linking
-mechanisms, entities and attributes. Valid XML documents offer much more to the
-document process than those that may be simply well-formed. Document authoring,
-processing, storage and display are made easier because documents exist in a
-structured environment. Authors create documents against a pre-defined structure
-and benefit from a clear document model.
-
-There are three ways to give the document access to its DTD structure: by
-embedding the DTD directly into the XML file, or by referencing a local file, or
-by referencing a remote file. We should point out that many parsers will simply
-stop if the DTD reference cannot be resolved, rather than falling back to a
-non-validated document. Any XML book will explain the syntax of these options.
-
-\begin {itemize}
-
-\item Embedding the DTD means that the document is longer, since it includes
-all the text of the DTD (\Aref{dtd}{below}). 
-It also means that the document is more
-portable, since it does not rely on external references that may not be
-available. However, the receiver of such a document does not know that it is a
-proper VOTable, since the DTD may be different from the official version. 
-
-\item If the DTD is a local file, it means that the document processing still
-works even when the machine is disconnected from the internet. However, when the
-XML file is moved to a new directory or sent by email, the DTD must move with
-it.
-
-\item Referencing a DTD at a standard place on the internet makes the XML
-document portable, and files can be moved at will. However, the document
-processing will fail when not connected to the internet. We expect the VOTable
-DTD to be mirrored at several sites, including:
-
-\begin{tabular}{l}
-{\bf\fg{DarkRed}\Plain{http://ivoa.net/xml/VOTable.dtd}}\\
-{\bf\fg{DarkRed}\Plain{http://cdsweb.u-strasbg.fr/xml/VOTable.dtd}}\\
-\end{tabular}
-\end{itemize}
-\fi
 
 \section{\elem{FIELD}s and \elem{PARAM}eters}
 \label{sec:field}
@@ -1484,14 +1077,6 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
         \Arefx{LINK}{Link substitution},
         \Arefx{query}{Query Extension} and 
         \Arefx{location}{fields as pointers}).
-%       In Astrores it was used to
-%       express some pecularities of the column in the table
-%       as \attrval{type}{hidden} (see \Arefx{query}{link substitutions})
-%       and \attrval{type}{no\_query} 
-%       (see \Arefx{query}{Query Extension});
-%       an additional \attrval{type}{location} value is proposed
-%       to express columns containing parts of URIs 
-%       (see \Arefx{location}{fields as pointers}).
 
 \end{itemize}
 
@@ -1528,14 +1113,6 @@ Two attributes were retained for this purpose:
         (e.g. \attrval{precision}{E5} indicates a relative precision
         of $10^{-5}$).
 \end{itemize}
-\iffalse
-But there is a semantic difference between a number written as
-\literalvalue{5.12} and one that is written \literalvalue{5.1200}, in that
-the former implies three significant digits of accuracy, and the
-latter five digits. Therefore the number of digits to show is not
-purely a presentation matter, but part of the metadata content of the
-number.
-\fi
 
 The existence and presentation of the special {\em null} value of 
 a field (when the actual value of the field is unknown) is
@@ -1627,13 +1204,6 @@ which is essentially restricted to the {\em Syst\`eme International}
 (SI) conventions, plus a few astronomical extensions concerning
 units used for time, angle, distance and energy measurements.
 
-%\begin{verbatim}
-%      units="cm-2.s-1.keV-1"
-%      units="erg.s-1"
-%\end{verbatim}
-%
-%The syntax of this string is defined in reference [3].
-
 \subsection{Unified Content Descriptors}
 \label{sec:ucd}
 
@@ -1667,11 +1237,6 @@ is currently evolving [4].}
 {\literalvalue{instr.det.qe}}             &  Detector's Quantum Efficiency \\
 \end{tabular}
 
-%\noindent but the contents of the
-%{\attr{ucd}} attribute will follow the evolution of the UCD
-%standard.
-%of the {\elem{FIELD}} element
-%is to hold this information.
 
 \subsection{The \attr{utype} Attribute}
 \label{sec:utype}
@@ -1680,12 +1245,6 @@ In many contexts, it is important to specify that \elem{FIELD}s or
 model}. For instance, it can be fundamental for an application to
 be aware that a given \elem{FIELD} expresses { the} surface brightness
 measured with a specific filter and within a 12x6arcsec elliptical aperture.
-%In some contexts, it can be important that \elem{FIELD}s or \elem{PARAM}eters
-%are explicitely designed as being {\em the} parameter performing some
-%well-defined role in some external data model.
-%For instance, it might be important for an application to know
-%that a given \elem{FIELD} expresses {\em the} surface brightness 
-%processed by an explicit method.
 None of the other \attr{name}, \attr{ID}
 or \attr{ucd} attributes can fill this role, and 
 the \attr{utype} (usage-specific or {\em unique} type) attribute was 
@@ -1706,7 +1265,6 @@ The {\tt utype} attribute is especially useful to  specify
 the {\em spatial and temporal coordinates} present  in the table
 when it contains astronomical events: these parameters 
 are  essential to most applications which process multi-wavelength data.
-%coming from different sources. 
 Within the IVOA, the spatial and temporal
 frames are described in the {\bf STC} data model (see Rots [9]),
 and it is expected that this {\em STC}-referencing replaces
@@ -1785,9 +1343,6 @@ instead.
 The representation of {\em null} values in the \elem{TABLEDATA} serialisation
 is indicated in \Arefs{sec:datatypes}{section 6} for each of the primitive
 data types.
-%\Arefs{sec:datatypes}{Section 6} indicates the default {\em null} values for 
-%each of the primitive data types when the \elem{TABLEDATA} data representation
-%is being used. 
 Some of the primitive data types have one or more representations of the
 {\em null} value %{\em null} values defined
 (for the \literalvalue{char}, \literalvalue{float} and \literalvalue{double}
@@ -1810,14 +1365,6 @@ the {\em NaN} (not-a-number)
 patterns are recommended to represent floating-point {\em null} values.
 Therefore, the {\em null} convention is only necessary for primitive types
 that do not have a natural {\em null} value: long, int, short, and byte datatypes.
-\fi
-
-\iffalse        %%% THIS IS WRONG -- does not match FITS rules
-For fields containing arrays or complex numbers, the values specified
-in the \attr{value} or \attr{null} attributes have to be compatible
-with their datatype, and contain as many numbers separated by white space
-as implied by the \attr{datatype} and \attr{arraysize} of the parent
-\elem{FIELD}.
 \fi
 
 Finally the \attr{ref} attribute of a \elem{VALUES} element
@@ -1862,48 +1409,15 @@ data processing system which generates the VOTable document.
 The \elem{GROUP} element was introduced in VOTable 1.1
 to group together a set of \elem{FIELD}s
 which are logically connected, like a value and its error. 
-\iftrue %%%% Introduced in V1.094
 However, in order to avoid any confusion with the first
 version of VOTable which did not include \elem{GROUP},
 all \elem{FIELD}s are always defined {\em outside} any group,
 and the \elem{GROUP} designates its member fields via  
 \elem{FIELDref} elements.
-%\else  %%%% --- Pre-V1.094
-%Each field
-%participating in a \elem{GROUP} can be defined either {\em physically} 
-%(via the \elem{FIELD} element), or
-%%(contains a \attr{datatype} field), or 
-%{\em logically}  %(via  a \elem{FIELDref} element)
-%by means of a \elem{FIELDref} element which references a field 
-%defined in the same parent \elem{TABLE}.
-%%(the \elem{FIELD} contains only a \attr{ref} attribute referencing
-%%a field defined in the same parent \elem{TABLE}).
-%A physical field (i.e. a single column of the table)
-%may therefore participate (logically) to several groups.
-\fi     %%%% (V1.094)
 
 A simple example of a group made of the velocity and its error, 
 based on the example of \Aref{example1}{section 3.1}, 
-%is obtained by replacing the definitions of columns 4 and 5 by 
 can be the following:
-
-\iffalse
-%\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
-%\else\begingroup\small\fi
-\begin{verbatim}
-    <GROUP name="Velocity" ucd="src.veloc.hc">
-      <DESCRIPTION>Velocity and its error</DESCRIPTION>
-      <FIELD name="RVel" ID="col4" ucd="src.veloc.hc" datatype="float" 
-             width="5" unit="km/s"/>
-      <FIELD name="e_RVel" ID="col5" ucd="stat.error;src.veloc.hc" 
-             datatype="float" width="3" unit="km/s"/>
-    </GROUP>
-\end{verbatim}
-%\ifhtx\End{tabular}\else\endgroup\fi
-
-\noindent A {\em logical} definition of this group could alternatively be
-achieved by inserting just before the \elem{DATA} element the following:
-\fi     %%%%%%%
 
 \ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
 \fi%\else\begingroup\fi
@@ -1993,13 +1507,6 @@ in a single {\elem{DATA}} element.
 The data is organized in ``reading" order, so that
 the content of each row appears in the same order as the order of the
 {\elem{FIELD}} definitions.
-%%%%%%%%%%%% Removed follwing Tony's comments
-%tags having a \attr{datatype} attribute, with each row 
-%having the same number of items as 
-%there are {\elem{FIELD}} tags having a \attr{datatype} attribute. 
-%Fields without a \attr{datatype} attribute have a \attr{ref}
-%attribute, and represent references to  ``true'' columns
-%(see \Aref{sec:field}{FIELD attributes}).
 
 \label{Image1}
 \ifhtx\tag{IMG SRC="serial.gif" NAME="Image1" ALIGN=BOTTOM BORDER=0}\br
@@ -2031,7 +1538,6 @@ VOTable.
 The serialization elements and their attributes are
 described in the next sections.
 
-%\subsection{Data Serialization}
 \subsection{\elem{TABLEDATA} Serialization}
 \label{sec:TABLEDATA}
 \label{elem:TD}
@@ -2040,8 +1546,6 @@ described in the next sections.
 The \elem{TABLEDATA} element is a way to build the table in pure XML,
 and has the advantage that XML tools can manipulate and present
 the table data directly.
-%and is the only serialization method that does not allow an 
-%encoding or a remote data stream. 
 The \elem{TABLEDATA} element  contains {\elem{TR}}
 elements, which in turn contain {\elem{TD}}
 elements --- i.e. the same conventions as in HTML.
@@ -2051,40 +1555,14 @@ An example is contained in \Aref{example1}{section 3.1},
 surrounded by the \elemdef{TABLEDATA}{} and \elemdef{\slash TABLEDATA}{}
 delimiters.
 
-%The number of {\elem{TD}} elements should be in number equal to the
-%number of {\elem{FIELD}} elements having \attr{datatype} attributes
-%declaring the table; when there are
-%less {\elem{TD}}'s than expected, the corresponding values are set
-%to \literalvalue{null}s; superfluous {\elem{TD}}'s are ignored.
-
-%While this serialization has a high overhead in the number of
-%bytes, it has the advantage that XML tools can manipulate and present
-%the table data directly.
-
 Each item in the {\elem{TD}} tag 
-%%%%%%%% Modified following Tony's comments
 contains a value which must be compatible with 
-%is passed to a reader that is implicitly defined by 
 the {\attr{datatype}} attribute of the corresponding {\elem{FIELD}} definition.
-%which attempts to read the object from it. If it reads a value that
 If the value is the same as the {\attr{null}} value for that field, 
 then the item is assumed to contain no data.
-%cell will contain that value, and is therefore assumed to contain no data.
 Valid representations of values in a cell, depending on their
 \attr{datatype}, are detailed in \Aref{sec:datatypes}{the complete
 description of datatypes}.
-
-\iffalse
-The reader may not succeed, for example if we try to parse the
-string \literalvalue{36.9H9}
-into a float, where the alphabetic character is obviously a problem. 
-In this case, the parser may choose to insert the {\attr{null}}
-value (no data available), or it may use a NaN (not a number), or it
-may throw an exception. It might however be
-useful if the data provider would warn that invalid data patterns
-could be used to designate non-existing data -- via an \attr{invalid}
-attribute.
-\fi
 
 If a cell contains an array of numbers or a complex number, 
 it should be encoded as multiple numbers separated by
@@ -2222,20 +1700,6 @@ The parser can then compute the number of bytes taken
 by the variable-length array by multiplying the size and number 
 of the primitives.
 
-%Binary format becomes more complex. Fixed-length cells are stored
-%stored as is, has first a part for
-%the fixed-length fields, (as well as four bytes for each of the
-%variable-length fields), followed by a section for the variable
-%length fields. The four bytes for the variable-length field is
-%interpreted as a four-byte integer with
-%the number of items in
-%the variable-length array, as shown in the figure. The parser can
-%then read the data by computing appropriate offsets. This is done by
-%multiplying the size and number of the primitives in each table cell
-%to get length in bytes, then
-%adding these lengths from previous
-%variable-length sections of the record.
-
 \label{Image2}
 \ifhtx\begin{tabular}{c}
 \tag{IMG SRC="binary.gif" NAME="Image2" ALIGN=LEFT BORDER=0}\end{tabular}
@@ -2346,10 +1810,6 @@ attribute expresses when a remote resource ceases to become valid,
 and is expressed in Universal Time in the same way as the FITS
 specification [2], itself conforming to the ISO 8601 standard.
 
-%\begin{verbatim}
-%<STREAM expires="2002-01-31T12:00:00">
-%\end{verbatim}
-
 The {\attr{rights}}
 attribute expresses authentication information that may be necessary
 to access the remote resource. If  the VOTable document is suitably
@@ -2375,8 +1835,6 @@ In the following, the term ``hexadigit'' designates the ASCII numbers
 \literalvalue{0} to \literalvalue{9}, or the ASCII lower- or upper-case letters
 \literalvalue{a} to \literalvalue{f} (i.e. a digit in a hexadecimal representation
 of a number).
-%; in this section we write the hexadecimal representation
-%as {\bf 0x} followed by hexadigits.
 
 \begin{itemize}
 \item {\bf Logical}\quad If the value of the {\attr{datatype}}
@@ -2409,9 +1867,6 @@ attribute specifies data type {\literalvalue{unsignedByte}},
 the field shall contain in the \elem{BINARY} serialization a byte 
 (8-bits) representing a number in the
 range 0 to 255. 
-%no default {\em null} value exists, if necessary one
-%has to be defined via the \attr{null} attribute of the \elem{VALUES} element
-%(\Aref{sec:values}{section 4.6}).
 In the case of an array of bytes (\attrval{arraysize}{*}),
 also known as a ``blob", the bytes are stored consecutively.
 The representation of a byte in the \elem{TABLEDATA} serialization
@@ -2420,8 +1875,6 @@ or its {\em hexadecimal} representation when starting with {\tt0x} and
 followed by one or two hexadigits,
 (e.g. {\tt0xff}), separated by at least one space from the next one
 in the case of an array of bytes.
-%the default representation of a {\em null} value is an empty cell
-%(see \Aref{sec:values}{VALUES definitions above})
 No default {\em null} value exists; if necessary, one
 has to be defined via the \attr{null} attribute of the \elem{VALUES} element
 (\Aref{sec:values}{section 4.7}).
@@ -2442,22 +1895,13 @@ and a string having the number of characters identical to
 the \attr{arraysize} value is not NULL terminated. 
 Characters should be represented in the \elem{TABLEDATA} serialization
 using the normal rules for encoding XML text: 
-%it is necessary to ensure 
-%that special characters are not interpreted by XML: 
 the ampersand (\&) can be written \verb+&amp;+ (symbolic representation)
 or \verb+&#38;+ (decimal representation) or 
 \verb+&#x26;+ (hexadecimal representation); the less-than ($<$) and greater-then ($>$) symbols should be coded \verb+&lt;+ and \verb+&gt;+ 
 or \verb+&#x3C;+ and \verb+&#x3E;+.
-\iffalse
-and a blank which would be interpreted
-by XML as whitespace (e.g. several consecutive blanks) 
-should be coded \verb+&#32;+ or \verb+&#x20;+.
-\else
-% =TODO=
 Also note also the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
 (\Arefs{elem:TD}{section 5.1})
-\fi
 
 \item {\bf Unicode Character}\quad If the value of the {\attr{datatype}}
 attribute specifies data type {\literalvalue{unicodeChar}},
@@ -2467,11 +1911,8 @@ indicates a string composed of Unicode text,
 which enables representation of text in many non-Latin alphabets.
 Each Unicode character is represented in the \elem{BINARY} serialization by 
 two bytes, using the big-endian UCS-2 encoding (ISO-10646-UCS-2).
-%; no byte order mark should appear. 
 The representation of a Unicode character in the  \elem{TABLEDATA} serialization
 follows the XML specifications, 
-%: special ASCII characters are escaped as in
-%the case of Character datatype, and 
 and e.g. the Cyrillic uppercase ``Ya'' can be written 
 \verb+&#x042F;+ in UTF-8.
 Also note the significance of the {\em white space} characters
@@ -2523,8 +1964,6 @@ The representation of a Long Integer in the \elem{TABLEDATA} serialization
 No default {\em null} value exists; if necessary, one
 has to be defined via the \attr{null} attribute of the \elem{VALUES} element
 (\Aref{sec:values}{section 4.7}).
-%the default representation of a {\em null} value is an empty cell
-%(see \Aref{sec:values}{VALUES definitions above})
 
 
 \item {\bf Single Precision Floating Point}\quad If
@@ -2604,14 +2043,9 @@ the default representation of a {\em null} value is an empty cell
 \clearpage
 \section{A Simplified View of the VOTable 1.2 Schema}
 \label{dtd}
-%\begin{quote}
 The XML Schema [7] defining a VOTable 1.2 document
 is available from \ifhtx\else\\ \fi
 \url{http://www.ivoa.net/xml/VOTable/v1.2}
-%\end{quote}
-%
-%\noindent The XML Schema represents the actual definition of
-%a VOTable document. 
 In this section we illustrate this XML Schema
 by a set of boxes describing the structure of a VOTable,
 and the list of attributes of each VOTable element.
@@ -2649,19 +2083,6 @@ it uses the following conventions:
 \end{quote}
 \fi
 
-
-\iffalse
-%\clearpage
-%\section{Schema Diagram for VOTable}
-%\ifhtx\tag{IMG SRC="diagram_v1.gif" NAME="VOTable Schema"
-%   ALIGN=BOTTOM BORDER=0}\else
-%%\begin{figure}[htbp]
-%%\hspace*{-1cm}
-%\includegraphics[width=\textwidth]{diagram_v1.jpg}
-%%height=0.75\textheight
-%%\caption{Schema Diagram for VOTable}
-%%\end{figure}
-\fi
 
 %\clearpage
 \subsection{Attribute Summary}
@@ -2707,8 +2128,6 @@ would preferably be associated with an XSL style sheet,
 for a presentation of well-formatted tables. It is expected
 that a few typical XSL style sheets will be accessible from
 the IVOA site.
-
-%quite generally presented in a structured interpreted in the browser, and a 
 
 %\clearpage
 \section{Differences Between Versions 1.1 and 1.2}
@@ -2762,9 +2181,6 @@ version 1.1 are:
         attributes in groups and tables; it is now included in VOTable1.2.
 	\Arefx{sec:addesc}{Appendix A7} now contains a new proposal 
 	(May/June 2009) for multiple descriptions and titles.
-%\item  a clarification of the {\em null} possibilities
-%       (see \Aref{sec:datatypes}{datatypes} section)
-%\item  the usage and scope of the \attr{null} attribute was clarified
 \end{itemize}
 \ifhtx\End{tabular}\fi
 
@@ -2801,9 +2217,6 @@ Strasbourg}
 \noindent [6] {\it ASU: Astronomical Server URL, CDS
 Strasbourg}
 \\ \hspace*{2em}{\url{http://cds.u-strasbg.fr/doc/asu.html}}
-
-%\noindent [7] {\it XDF: Extensible Data format, ADC}
-%\\ \hspace*{2em}{{http://xml.gsfc.nasa.gov/XDF/XDF\_home.html}}
 
 \noindent [7] {\it XML Schema: W3C Document}
 \\ \hspace*{2em}{\url{http://www.w3.org/XML/Schema}}
@@ -2924,11 +2337,6 @@ of a database and contains only some of the columns in that
 database, it might be necessary to include columns additional to
 those requested in order to ensure that the LINKS in the VOTable
 are operational.
-\iffalse
-This necessity may imply that a \elem{TABLE}
-contains columns which were not asked, but have been included to
-ensure that the quoted \elem{LINK}s are operational.
-\fi
 Such a \elem{FIELD} included ``by necessity'' is marked with 
 the attribute \attrval{type}{hidden}. The primary key of
 a relational table is a typical example of a \elem{FIELD} 
@@ -3211,15 +2619,6 @@ The \elem{BINARY} serialization of variable-length arrays
 items of the array. This convention imposes an absolute maximal
 number of $2^{31}-1$ elements. This limit could be releaved 
 with a new \attr{arrayprefix} attribute.
-
-\iffalse
-\subsection{Additional {\tt TABLE} Attributes}  % Suggested TomMcGlynn
-% Nov.2003, Mails 7978 + 8073
-The \elem{GROUP} introduced in version 1.1 can be qualified
-by \attr{ucd} and \attr{utype} attributes. These attributes 
-could similarly bring useful additional metadata to qualify the
-\elem{TABLE} structure.
-\fi
 
 \subsection{Additional Descriptions and Titles}
 \label{sec:addesc}
