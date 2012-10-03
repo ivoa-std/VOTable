@@ -38,8 +38,9 @@ XSD  = VOTable.xsd
 
 default: votable.pdf votable.html
 
-votable.pdf: votable.tex VOTable.attr.tex  VOTable.elem.tex
-	pdflatex votable
+votable.pdf: votable.tex VOTable.attr.tex  VOTable.elem.tex serial.png
+	pdflatex votable && \
+	pdflatex votable && \
 	pdflatex votable
 
 votable.html: votable.tex votable.htx $(CGIPRINT)
