@@ -33,7 +33,7 @@ COMPILE= $(CC) $(CFLAGS) -c
 CGIPRINT = cgiprint/bin/cgiprint
 
 # Files
-GIFs = circ2.gif leadsto2.gif oplus.gif serial.gif binary.gif
+IMGs = circ2.gif leadsto2.gif oplus.gif serial.png binary.gif
 XSD  = VOTable.xsd
 
 default: votable.pdf votable.html
@@ -45,13 +45,13 @@ votable.pdf: votable.tex VOTable.attr.tex  VOTable.elem.tex
 votable.html: votable.tex votable.htx $(CGIPRINT)
 	$(CGIPRINT) votable.htx > votable.html
 
-votable.tar: votable.html votable.htx votable.pdf $(GIFs) $(XSD)
+votable.tar: votable.html votable.htx votable.pdf $(IMGs) $(XSD)
 	$(MAKE) votable.html
 	$(MAKE) votable.pdf
 	mv votable.html votable.tmp; trim votable.tmp | gawk '\
 	 { if(x<1) { if ($$0 == "") next; x++; sub(/^ */, "") } print}' \
 	 > votable.html; rm votable.tmp
-	tar cvf $@ votable.html votable.pdf $(GIFs) $(XSD)
+	tar cvf $@ votable.html votable.pdf $(IMGs) $(XSD)
 	gzip -v9 $@ 
 
 cgiprint/bin/cgiprint:
