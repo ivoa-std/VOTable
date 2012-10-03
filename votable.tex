@@ -160,15 +160,15 @@
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
-%\ivoatype{IVOA WG Internal Draft}
+\ivoatype{IVOA Working Draft}
 %\ivoatype{IVOA Proposed Recommendation}
-\ivoatype{IVOA Recommendation}
+%\ivoatype{IVOA Recommendation}
 
-\version{1.2}
+\version{1.3}
 
 \editor{Fran\c cois {Ochsenbein}}
 \urlthisversion{%\par\noindent {\bf This version:}\\
-  \url{http://www.ivoa.net/Documents/VOTable-20091130/}} 
+  \url{??}} 
 \urllastversion{%\par\noindent {\bf Latest version:}\\
   %\hspace*{5em}
   \url{http://www.ivoa.net/Documents/latest/VOT.html}}
@@ -182,6 +182,9 @@
   %\url{http://www.ivoa.net/internal/IVOA/IvoaVOTable/votable1.2-2009-06-12.pdf}
   %\quad V1.2 Working Draft (2009-06-13)  \hfill\\
   %\hspace*{1.8em}
+  \url{http://www.ivoa.net/Documents/VOTable-20091130/}
+  \quad V1.2 (2009-11-30) \hfill\\
+  \hspace*{1.8em}
   \url{http://www.ivoa.net/Documents/cover/VOT-20040811.html}
   \quad V1.1 (2004-08-11) \hfill\\
   \hspace*{1.8em}
@@ -226,11 +229,8 @@
 \maketitle % print header in standard form
   
 \section*{Abstract}
-This document describes the structures making up the version 1.2 of 
-the VOTable standard,
-which supersedes the version 1.1 of 08 August 2004.
-The differences between versions 1.1 and 1.2 are summarized in 
-\Aref{diff}{the last section}.
+This document describes the structures making up
+the VOTable standard.
 
 \noindent The main part of this document describes the adopted part of the
 VOTable standard; it is followed by appendices presenting extensions
@@ -239,29 +239,16 @@ the standard.
 
 \section*{Status of This Document}
 
-It is an IVOA Recommendation. 
+This is an IVOA Working Draft for review by IVOA members
+and other interested parties.
+It is a draft document and may be updated, replaced,
+or obsoleted by other documents at any time.
+It is inappropriate to use IVOA Working Drafts as reference materials or to
+cite them as other than ``work in progress''.
 
-\begin{quote}\em
-This document has been produced by the 
-\A{http://www.ivoa.net/cgi-bin/twiki/bin/view/IVOA/IvoaVOTable}
-  {IVOA VOTable Working Group}.
-It has been reviewed by IVOA Members and other
-interested parties, and has been endorsed by the IVOA Executive Committee as an
-IVOA Recommendation. It is a stable document and may be used as reference
-material or cited as a normative reference from another document. IVOA's role in
-making the Recommendation is to draw attention to the specification and to
-promote its widespread deployment. This enhances the functionality and
-interoperability inside the Astronomical Community.
+This document has been produced by the IVOA Applications Working Group,
+building on the work of the now dormant IVOA VOTable Working Group.
 
-A list of current IVOA Recommendations and other technical documents 
-can be found at \ifhtx\else \\ \fi
-\A{http://www.ivoa.net/Documents/}{http://www.ivoa.net/Documents/}.
-
-\end{quote}
-
-\section*{Acknowledgments}
-This document is based on the W3C documentation standards as adapted for the 
-IVOA.
 
 
 \clearpage
@@ -675,13 +662,13 @@ tables without loss of information.
 \label{elem:VOTABLE}
 
 The overall VOTable document structure is described and controlled
-by its \A{http://www.ivoa.net/xml/VOTable/v1.2}{XML Schema}.
+by its \A{http://www.ivoa.net/xml/VOTable/v1.3}{XML Schema}.
 That means that documents claiming to represent VOTables must
 include the reference to the VOTable schema, and 
 pass through W3C XML Schema validators without error;
 notice that the validation is a necessary, {\em but not sufficient}, 
 condition for correctness.
-The XML Schema of this version 1.2 is included in 
+The XML Schema of this version 1.3 is included in 
 \Arefx{XML-schema}{Appendix B},
 and is illustrated in \Arefs{dtd}{section 7}.
 
@@ -717,8 +704,8 @@ prior to 1.2, which made use of a \elem{COOSYS} element for this specification.
 \fi
 \begin{verbatim}
 <?xml version="1.0"?>
-<VOTABLE version="1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xmlns="http://www.ivoa.net/xml/VOTable/v1.2" 
+<VOTABLE version="1.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns="http://www.ivoa.net/xml/VOTable/v1.3" 
  xmlns:stc="http://www.ivoa.net/xml/STC/v1.30" >
   <RESOURCE name="myFavouriteGalaxies">
     <TABLE name="results">
@@ -808,8 +795,8 @@ but \attrval{ID}{\_1} or \attrval{ID}{ref.1} are both valid.
 The {\attr{ID}} attribute %(as defined by Xpointer standard) 
 is therefore required in the elements which {\em have to be referenced},
 but the elements having an {\attr{ID}} attribute do not need to be
-referenced. %principle any element may have an {\attr{ID}} attribute.
-In VOTable1.2, it is further
+referenced.
+In VOTable 1.2, it is further
 recommended to place the \attr{ID} attribute {\em prior to} referencing
 it whenever possible.
 
@@ -844,7 +831,7 @@ An essential difference with the version 1.1 of VOTable concerns
 the way adopted in version 1.2 to describe the {\em coordinate system}:
 a dedicated \elem{COOSYS} element was defined in VOTable 1.0, 
 which is deprecated in
-this version (1.2) in  favor of a more generic facility of {\em
+versions 1.2 and later in  favor of a more generic facility of {\em
 referring to external data models}.
 
 The coordinates --- space and time, and eventually the spectral and
@@ -1042,7 +1029,7 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
         numerical accuracy associated with the data 
         (see \Aref{sec:form}{below}).
 
-\item	The \attr{xtype} attribute, added in VOTable1.2, specifies an
+\item	The \attr{xtype} attribute, added in VOTable 1.2, specifies an
 	{\em extended} (or {\em external}) datatype. It is meant
 	to give details about the column contents beyond the 
 	primitive \attr{datatype}\revision{2}{, like timestamps.}
@@ -1793,7 +1780,7 @@ decoded by the VOTable reader. We might also use the encoding facilities to
 convert a binary file to text (through base64 encoding), so that binary 
 data can be used in the XML document.
 
-In this version (1.2) of VOTable, it is not possible to encode
+In this version (1.3) of VOTable, it is not possible to encode
 individual columns of the table: the whole table must be encoded in
 the same way. However, the possibility of encoding selected table cells
 is  being examined for future versions of VOTable
@@ -2086,11 +2073,11 @@ whitespace, representing the real and imaginary part respectively.
 
 
 \clearpage
-\section{A Simplified View of the VOTable 1.2 Schema}
+\section{A Simplified View of the VOTable 1.3 Schema}
 \label{dtd}
-The XML Schema [7] defining a VOTable 1.2 document
+The XML Schema [7] defining a VOTable 1.3 document
 is available from \ifhtx\else\\ \fi
-\url{http://www.ivoa.net/xml/VOTable/v1.2}
+\url{http://www.ivoa.net/xml/VOTable/v1.3}
 In this section we illustrate this XML Schema
 by a set of boxes describing the structure of a VOTable,
 and the list of attributes of each VOTable element.
@@ -2098,7 +2085,7 @@ and the list of attributes of each VOTable element.
 %\clearpage
 \subsection{Element Hierarchy}
 
-The hierarchy of the elements existing in VOTable 1.2 is illustrated below;
+The hierarchy of the elements existing in VOTable 1.3 is illustrated below;
 it uses the following conventions:
 \begin{itemize}
 \item   {\em italicized} text represents {\em optional} elements;
@@ -2107,7 +2094,7 @@ it uses the following conventions:
         elements may occur in any order;
 \item   \choice{} marks a choice between alternatives. 
 \item   \deprecated{} marks a {\em deprecated} element (valid in Version 1.1,
-        discouraged in Version 1.2)
+        discouraged in Version 1.2 and later)
 \item   $\cdots$ (dots) indicate that an element
         may be repeated. 
 \item   \underline{underlined elements} may contain sub-elements,
@@ -2137,7 +2124,7 @@ with the following conventions:
 \item   Attributes written in bold are \requiredattr{required attributes}
 \item   Attributes written in a {fixed font} are \attr{optional}.
 \item   Attributes written in {\it italics}
-        are not part of VOTable 1.2, but are {\it reserved}
+        are not part of VOTable 1.3, but are {\it reserved}
         for possible extensions (mentioned in an Appendix).
 \item	Attributes added in VOTable 1.2 are \attr{\underline{underlined}}
 \end{itemize}
@@ -2226,7 +2213,7 @@ version 1.1 are:
 \item   Detailed and clarified the conventions and recommendations concerning
 	\attr{name}, \attr{ID} and \attr{ref} attributes
 \item	Appendix A7 was a proposition for additional \attr{utype} 
-        attributes in groups and tables; it is now included in VOTable1.2.
+        attributes in groups and tables; it is now included in VOTable 1.2.
 	\Arefx{sec:addesc}{Appendix A7} now contains a new proposal 
 	(May/June 2009) for multiple descriptions and titles.
 \end{itemize}
@@ -2777,10 +2764,9 @@ derived directly from the \attr{ID} attribute of the \elem{FIELD}
 element, their definition can be generated automatically from the set of
 \elem{FIELD} definitions.
 
-\section{The VOTable V1.2 XML Schema}
+\section{The VOTable V1.3 XML Schema}
 \label{XML-schema}
-The XML Schema of VOTable 1.2 is included here as a reference;
-the date of this schema is 2009-09-29.
+The XML Schema of VOTable 1.3 is included here as a reference.
 \revision{2}{
 This schema includes a couple of extra optional attributes which are not
 part of VOTable-1.2 ({\em ID} in TR and {\em encoding} in TD),
@@ -2788,13 +2774,12 @@ but proved to be useful to fix some problems encountered in the
 usage of some code generators.
 }{}
 \ifhtx
-\W{xsd}{http://www.ivoa.net/xml/VOTable/v1.2}
-   {http://www.ivoa.net/xml/VOTable/v1.2}.
+\W{xsd}{http://www.ivoa.net/xml/VOTable/v1.3}
+   {http://www.ivoa.net/xml/VOTable/v1.3}.
 \par
 \Beg{tabular}{\bg{LavenderBlush} CELLPADDING=10}{||l||}
 \else
 \bigskip
-%\inputverbatim{VOTable-1.2.xsd}
 %%%%%%%XML-Schema%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \small
 \fi
@@ -2817,14 +2802,15 @@ usage of some code generators.
 .Version 1.20a: FO: PR-20090710 Cosmetics.
 .Version 1.20b: FO: INFO does not accept sub-elements (2009-09-29)
 .Version 1.20c: FO: elementFormDefault="qualified" to stay compatible with 1.1
+.Version 1.3: MT: Add BINARY2 element
 -->
 <xs:schema 
    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-   xmlns="http://www.ivoa.net/xml/VOTable/v1.2"
-   targetNamespace="http://www.ivoa.net/xml/VOTable/v1.2" 
+   xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
+   targetNamespace="http://www.ivoa.net/xml/VOTable/v1.3" 
 >
 <xs:annotation><xs:documentation>
-    VOTable1.2 is meant to serialize tabular documents in the
+    VOTable1.3 is meant to serialize tabular documents in the
     context of Virtual Observatory applications. This schema
     corresponds to the VOTable document available from
     http://www.ivoa.net/Documents/latest/VOT.html
@@ -3361,7 +3347,7 @@ usage of some code generators.
   <xs:attribute name="version">
      <xs:simpleType>
        <xs:restriction base="xs:NMTOKEN">
-         <xs:enumeration value="1.2"/>
+         <xs:enumeration value="1.3"/>
        </xs:restriction>
      </xs:simpleType>
    </xs:attribute>
