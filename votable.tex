@@ -3164,6 +3164,7 @@ usage of some code generators.
     <xs:choice>
       <xs:element name="TABLEDATA" type="TableData"/>
       <xs:element name="BINARY" type="Binary"/>
+      <xs:element name="BINARY2" type="Binary2"/>
       <xs:element name="FITS" type="FITS"/>
     </xs:choice>
     <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/>
@@ -3215,6 +3216,13 @@ usage of some code generators.
 
 <!-- BINARY data format -->
 <xs:complexType name="Binary">
+  <xs:sequence>
+    <xs:element name="STREAM" type="Stream"/>
+  </xs:sequence>
+</xs:complexType>
+
+<!-- BINARY2 data format -->
+<xs:complexType name="Binary2">
   <xs:sequence>
     <xs:element name="STREAM" type="Stream"/>
   </xs:sequence>
