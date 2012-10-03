@@ -1337,9 +1337,7 @@ When this value is found in the corresponding data, it is assumed that no data
 exists for that table cell; the parser may also choose to use this
 when unparsable data is found, and the null value will be substituted
 instead.
-\iftrue % Added FO 2002-03-21
 
-\iftrue %% Suggested by Ray
 The representation of {\em null} values in the \elem{TABLEDATA} serialisation
 is indicated in \Arefs{sec:datatypes}{section 6} for each of the primitive
 data types.
@@ -1350,22 +1348,12 @@ types an empty cell may be used). Other types (\literalvalue{boolean},
 \literalvalue{unsignedByte}, \literalvalue{short}, and \literalvalue{int}) have no default
 {\em null} value defined, and thus, when they are needed, they must be defined 
 explicitly via the \elem{VALUES} element.
-\else
-In the \elem{TABLEDATA} data representation,
-the default representation of a {\em null} value is an empty column
-(i.e. \verb+<TD></TD>+);
-for fields containing arrays, individual {\em null} elements of the array
-can be specified either by the value specified in the \attr{null}
-attribute, or by the \literalvalue{NaN} or \literalvalue{nan} text in place of the expected
-numeric value.
-\fi
 
 For the \elem{FITS} and \elem{BINARY} data representations, 
 the {\em NaN} (not-a-number)
 patterns are recommended to represent floating-point {\em null} values.
 Therefore, the {\em null} convention is only necessary for primitive types
 that do not have a natural {\em null} value: long, int, short, and byte datatypes.
-\fi
 
 Finally the \attr{ref} attribute of a \elem{VALUES} element
 can be used to avoid a repetition of the domain definition,
