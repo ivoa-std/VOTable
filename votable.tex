@@ -335,16 +335,16 @@ attribute).
 
 \subsubsection*{Data Storage: Flexible and Efficient}
 
-The data part in a  VOTable may be represented using one of three 
-different formats: TABLEDATA, FITS and BINARY. TABLEDATA is a
+The data part in a  VOTable may be represented using one of four
+different formats: TABLEDATA, FITS, BINARY and BINARY2. TABLEDATA is a
 pure XML format so that small tables can be easily handled in their
 entirety by XML tools. The FITS binary table format is well-known to
 astronomers, and VOTable can be used either to encapsulate such a
 file, or to re-encode the metadata; unfortunately it is difficult to
 stream FITS, since the dataset size is required in the header 
 (NAXIS2 keyword), and FITS requires a specification up front of the maximum
-size of its variable-length arrays. The BINARY format
-is supported for efficiency and ease of programming: no FITS
+size of its variable-length arrays. The BINARY and BINARY2 formats
+are supported for efficiency and ease of programming: no FITS
 library is required, and the streaming paradigm is supported.
 
 VOTable can be used in different ways, as a data
@@ -707,8 +707,8 @@ position, velocity and error, and their estimated distance.
 It contains a reference to the {\em Space-Time Coordinate} data model
 ({\em STC}, A. Rots [9]) implicitly used to specify the system of coordinates
 used to locate the observed galaxies in the sky:
-this is an essential difference from the previous versions of {\em VOTable}
-which made use of a \elem{COOSYS} element for this specification.
+this is an essential difference from versions of {\em VOTable}
+prior to 1.2, which made use of a \elem{COOSYS} element for this specification.
 
 %<!-- (deprecated) COOSYS ID="J2000" equinox="J2000." system="eq_FK5"-->
 \label{example1}
@@ -1338,22 +1338,12 @@ exists for that table cell; the parser may also choose to use this
 when unparsable data is found, and the null value will be substituted
 instead.
 
-The representation of {\em null} values in the \elem{TABLEDATA} serialisation
-is indicated in \Arefs{sec:datatypes}{section 6} for each of the primitive
-data types.
-Some of the primitive data types have one or more representations of the
-{\em null} value %{\em null} values defined
-(for the \literalvalue{char}, \literalvalue{float} and \literalvalue{double}
-types an empty cell may be used). Other types (\literalvalue{boolean}, 
-\literalvalue{unsignedByte}, \literalvalue{short}, and \literalvalue{int}) have no default
-{\em null} value defined, and thus, when they are needed, they must be defined 
-explicitly via the \elem{VALUES} element.
-
-For the \elem{FITS} and \elem{BINARY} data representations, 
-the {\em NaN} (not-a-number)
-patterns are recommended to represent floating-point {\em null} values.
-Therefore, the {\em null} convention is only necessary for primitive types
-that do not have a natural {\em null} value: long, int, short, and byte datatypes.
+This mechanism for representing null values is required for integer
+columns in the \elem{BINARY} serialization.
+Since VOTable 1.3 however other mechanisms are available for representing
+null values in the \elem{TABLEDATA} and \elem{BINARY2} serializations.
+Representation of nulls using the \elem{VALUES} element and otherwise
+is discussed further in \Aref{sec:NULL}{section 5.5}.
 
 Finally the \attr{ref} attribute of a \elem{VALUES} element
 can be used to avoid a repetition of the domain definition,
@@ -1546,11 +1536,14 @@ delimiters.
 Each item in the {\elem{TD}} tag 
 contains a value which must be compatible with 
 the {\attr{datatype}} attribute of the corresponding {\elem{FIELD}} definition.
-If the value is the same as the {\attr{null}} value for that field, 
+If the value is the same as the {\attr{null}} value for that field
+(see \Aref{sec:values}{section 4.7})
 then the item is assumed to contain no data.
 Valid representations of values in a cell, depending on their
 \attr{datatype}, are detailed in \Aref{sec:datatypes}{the complete
 description of datatypes}.
+If the {\elem{TD}} element is empty ({\verb|<TD/>| or \verb|<TD></TD>|)
+the cell is considered to contain no data, i.e.\ to be null.
 
 If a cell contains an array of numbers or a complex number, 
 it should be encoded as multiple numbers separated by
@@ -1698,6 +1691,93 @@ of the primitives.
 \end{figure}\end{center}
 \fi
 
+\subsection{\elem{BINARY2} Serialization}
+\label{sec:BIN2}
+
+The BINARY2 format, introduced at VOTable 1.3, is the same as BINARY,
+but with null entries flagged explicitly rather than identified
+by their values.
+The byte stream contains one additional bit for each table cell
+indicating whether that cell's value is to be considered null or not.
+
+The byte content for each row consists of the bytes for the BINARY
+encoding as described in the previous subsection, followed by zero or
+more bytes containing a null-value flags for each cell in that row.
+These flags are stored as exactly one bit per table column, and the number
+of bytes is the smallest required for this purpose;
+an $N$-column table will therefore contain $(N+7)/8$ flag bytes per row.
+The most significant bit of the first flag byte corresponds to the
+first column,
+the second most significant bit of the first flag byte to the second column,
+the most significant bit of the second flag byte to the eighth column,
+and so on.  A set (1) bit indicates that the corresponding cell is null,
+and an unset (0) bit indicates that its value is not null.
+
+It is recommended, but not required, that unused flag bits are unset,
+and that cell values flagged as nulls are represented with zero-valued
+bytes.
+
+\subsection{Null values}
+\label{sec:NULL}
+
+VOTable provides two approaches to representing null values in data.
+
+The first approach makes use of the \elem{VALUES} element's \attr{null}
+attribute to indicate that whenever a particular ``magic'' value is
+encountered in a column's data, that entry should be considered as null.
+This magic value must be a legal value for the column's data type,
+for instance in the case of {\attrval{datatype}{unsignedByte}}
+it must be an integer in the range 0--255.
+This approach, inherited from FITS, works in the same way for all
+of the defined VOTable encodings.
+However it can present difficulties when generating VOTables,
+since the magic value must be distinct from all actual data values
+in the column, and must be chosen before the column data has
+been written, since the \elem{FIELD} element precedes the \elem{DATA}.
+
+The second approach, introduced at VOTable 1.3,
+is to mark null values using some mechanism external
+to the data itself, and it works differently for the different encodings.
+In the \elem{TABLEDATA} encoding
+an empty \elem{TD} element signals a null value, and
+in the \elem{BINARY2} encoding
+a separate null-ness flag is provided for each cell.
+The \elem{BINARY} and \elem{FITS} encodings do not support this approach
+at all.
+It should be noted that when using this approach, unlike with magic values,
+the different encodings do not have identical capabilities for
+representing data, so that lossless round-tripping between encodings
+is not always possible.
+
+Some other subtleties concerning null values should also be mentioned:
+\begin{itemize}
+\item Individual elements can be marked as null only
+      by use of the \elem{VALUES}/\attr{null} mechanism, which operates on a
+      per-element basis.  It is not possible to denote a null cell
+      of an array-valued column using the magic value approach.
+      % Alternatively:
+      % There is no way to mark individual elements in
+      % the cells of an array-valued column as null.
+\item In TABLEDATA array-valued columns, a null value and a zero-length
+      array are not distinguished.
+      Since strings are represented as arrays of characters, this also
+      means that empty and null strings are not distinguished.
+\item In either approach, floating point values not formally marked as nulls
+      may take the value NaN (not-a-number),
+      represented by the string ``NaN'' or by a suitable IEEE bit pattern
+      as appropriate.
+      This option is suitable for scalar, complex, and array-valued columns.
+      For many purposes, the distinction between NaN and null is not
+      important, and in such cases use of NaN can be more convenient
+      than formally marking cells as null.
+\item Combining the the two approaches is not encouraged, however
+      the \elem{VALUES} \attr{null} attribute must always be respected
+      where present.
+\item The {\em logical} datatype has its own arrangements for representing
+      null which do not require use of either of the special approaches above.
+\end{itemize}
+
+
 \subsection{Data Encoding}
 \label{elem:STREAM}
 
@@ -1816,18 +1896,20 @@ embedded image on an HTML page).
 
 This section describes the primitives summarized in 
 \Tref{primitives}{the table of primitives}
-and their representations in the \elem{BINARY}  
+and their representations in the \elem{BINARY}/\elem{BINARY2}  
 and \elem{TABLEDATA} serializations 
-(see \Aref{sec:TABLEDATA}{section 5}).
+(see \Aref{sec:data}{section 5}).
 In the following, the term ``hexadigit'' designates the ASCII numbers
 \literalvalue{0} to \literalvalue{9}, or the ASCII lower- or upper-case letters
 \literalvalue{a} to \literalvalue{f} (i.e. a digit in a hexadecimal representation
 of a number).
 
+The representation of null values is discussed in \Aref{sec:NULL}{section 5.5}.
+
 \begin{itemize}
 \item {\bf Logical}\quad If the value of the {\attr{datatype}}
 attribute specifies data type {\literalvalue{boolean}},
-the contents of the field{ }shall consist of the \elem{BINARY} serialization of
+the contents of the field{ }shall consist of the \elem{BINARY}/\elem{BINARY2} serialization of
 ASCII \literalvalue{T}, \literalvalue{t},  or \literalvalue{1} indicating true, and
 ASCII \literalvalue{F}, \literalvalue{f}, or \literalvalue{0} indicating false.
 The {\em null} value is indicated by an ascii NULL [0x00],
@@ -1835,13 +1917,11 @@ a space [0x20]
 or a question mark \literalvalue{?} [0x3f].
 The acceptable representations in the \elem{TABLEDATA} serialization
 also include any capitalisation variation of the 
-strings \literalvalue{true}  and \literalvalue{false} (e.g. \literalvalue{tRUe} or \literalvalue{FalsE});
-the default representation of a {\em null} value is an empty cell
-(see \Aref{sec:values}{VALUES definitions above})
+strings \literalvalue{true}  and \literalvalue{false} (e.g. \literalvalue{tRUe} or \literalvalue{FalsE}).
 
 \item {\bf Bit Array} \quad If the value of the {\attr{datatype}}
 attribute specifies data type {\literalvalue{bit}},
-the contents of the field{ }in the \elem{BINARY} serialization shall consist of
+the contents of the field{ }in the \elem{BINARY}/\elem{BINARY2} serialization shall consist of
 a sequence of bits starting with the most significant bit; the bits
 following shall be in order of decreasing significance, ending with
 the least significant bit. A bit field shall be composed of the
@@ -1852,7 +1932,7 @@ is made by a sequence of ASCII \literalvalue{0} and \literalvalue{1} characters.
 
 \item {\bf Byte}\quad If the value of the {\attr{datatype}}
 attribute specifies data type {\literalvalue{unsignedByte}},
-the field shall contain in the \elem{BINARY} serialization a byte 
+the field shall contain in the \elem{BINARY}/\elem{BINARY2} serialization a byte 
 (8-bits) representing a number in the
 range 0 to 255. 
 In the case of an array of bytes (\attrval{arraysize}{*}),
@@ -1863,17 +1943,14 @@ or its {\em hexadecimal} representation when starting with {\tt0x} and
 followed by one or two hexadigits,
 (e.g. {\tt0xff}), separated by at least one space from the next one
 in the case of an array of bytes.
-No default {\em null} value exists; if necessary, one
-has to be defined via the \attr{null} attribute of the \elem{VALUES} element
-(\Aref{sec:values}{section 4.7}).
 
 \item {\bf Character}\quad If the value of the {\attr{datatype}}
 attribute specifies data type {\literalvalue{char}},
-the field shall contain in the \elem{BINARY} serialization an ASCII 
+the field shall contain in the \elem{BINARY}/\elem{BINARY2} serialization an ASCII 
 (7-bit) character. 
 The \attr{arraysize} attribute
 indicates a character string composed of ASCII text. 
-The \elem{BINARY} serialization follows the 
+The \elem{BINARY}/\elem{BINARY2} serialization follows the 
 FITS rules for character strings,
 and a character string may therefore be terminated by an ASCII 
 NULL [0x00]
@@ -1897,7 +1974,7 @@ the field shall contain a Unicode character.
 The \attr{arraysize} attribute
 indicates a string composed of Unicode text,
 which enables representation of text in many non-Latin alphabets.
-Each Unicode character is represented in the \elem{BINARY} serialization by 
+Each Unicode character is represented in the \elem{BINARY}/\elem{BINARY2} serialization by 
 two bytes, using the big-endian UCS-2 encoding (ISO-10646-UCS-2).
 The representation of a Unicode character in the  \elem{TABLEDATA} serialization
 follows the XML specifications, 
@@ -1910,7 +1987,7 @@ in the \elem{TABLEDATA} serialization
 
 \item {\bf 16-Bit Integer}\quad If the value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{short}}, 
-the data in the \elem{BINARY} serialization shall consist of
+the data in the \elem{BINARY}/\elem{BINARY2} serialization shall consist of
 big-endian twos-complement signed 16-bit integers 
 (the most significant byte first). 
 The representation of a Short Integer in the \elem{TABLEDATA} serialization
@@ -1918,13 +1995,10 @@ is either its decimal representation between -32768 and 32767
    made of an optional {\tt-} or {\tt+} sign followed by digits,
    or its hexadecimal representation when starting with {\tt0x}
    and followed by 1 to 4 hexadigits.
-No default {\em null} value exists; if necessary, one
-has to be defined via the \attr{null} attribute of the \elem{VALUES} element
-(\Aref{sec:values}{section 4.7}).
 
 \item {\bf 32-Bit Integer }\quad If the value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{int}},
-the data in the \elem{BINARY} serialization shall consist of 
+the data in the \elem{BINARY}/\elem{BINARY2} serialization shall consist of 
 big-endian twos-complement signed 32-bit
 integer contained in four bytes, with the most significant first, 
 and subsequent bytes in order of decreasing significance. 
@@ -1933,13 +2007,10 @@ and subsequent bytes in order of decreasing significance.
   made of an optional {\tt-} or {\tt+} sign followed by digits,
   or its hexadecimal representation when starting with {\tt0x}
   and followed by 1 to 8 hexadigits;
-No default {\em null} value exists; if necessary, one
-has to be defined via the \attr{null} attribute of the \elem{VALUES} element
-(\Aref{sec:values}{section 4.7}).
 
 \item {\bf 64-Bit Integer}\quad If the value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{long}},
-the data in the \elem{BINARY} serialization shall consist of 
+the data in the \elem{BINARY}/\elem{BINARY2} serialization shall consist of 
 big-endian twos-complement signed 64-bit integers
 contained in eight bytes, with the most significant byte first,
 and subsequent bytes in order of decreasing significance. 
@@ -1949,17 +2020,13 @@ The representation of a Long Integer in the \elem{TABLEDATA} serialization
   made of an optional {\tt-} or {\tt+} sign followed by digits,
   or its hexadecimal representation when starting with {\tt0x}
   and followed by 1 to 16 hexadigits;
-No default {\em null} value exists; if necessary, one
-has to be defined via the \attr{null} attribute of the \elem{VALUES} element
-(\Aref{sec:values}{section 4.7}).
 
 
 \item {\bf Single Precision Floating Point}\quad If
 the value of the {\attr{datatype}} attribute specifies datatype {\literalvalue{float}},
-the data in the \elem{BINARY} serialization shall consist of 
+the data in the \elem{BINARY}/\elem{BINARY2} serialization shall consist of 
 ANSI/IEEE-754 32-bit floating point numbers in big-endian order. 
-All IEEE special values are recognized. The IEEE {NaN}
-pattern is used to represent {\em null} values.
+All IEEE special values including NaN are recognized.
 The representation of a Floating Point number in the 
 \elem{TABLEDATA} serialization is made of an optional {\tt-} or {\tt+},
 followed by the ASCII representation of a positive decimal number,
@@ -1967,19 +2034,17 @@ and followed eventually by the ASCII letter \literalvalue{E} or  \literalvalue{e
 introducing the base-10 exponent made of an optional {\tt-} or {\tt+}
 followed by 1 or 2 digits. The number must be within the limits of the
 IEEE floating-point definition (around $\pm3.4\cdot10^{38}$; numbers with
-absolute value less than about $1.4\cdot10^{-45}$ are equated to zero);
-the default representation of a {\em null} value is an empty cell
-(see \Aref{sec:values}{VALUES definitions above}), and the special
+absolute value less than about $1.4\cdot10^{-45}$ are equated to zero).
+The special
 values \literalvalue{+Inf}, \literalvalue{-Inf}, and \literalvalue{NaN} are accepted.
 
 
 \item {\bf Double Precision Floating Point}\quad If
 the value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{double}},
-the data in the \elem{BINARY} serialization shall consist of ANSI/IEEE-754
+the data in the \elem{BINARY}/\elem{BINARY2} serialization shall consist of ANSI/IEEE-754
 64-bit double precision floating point numbers in big-endian order. 
-All IEEE special values are recognized. The IEEE {NaN}
-pattern is used to represent {\em null} values.
+All IEEE special values including NaN are recognized.
 The representation of a Double number in the 
 \elem{TABLEDATA} serialization is made of an optional {\tt-} or {\tt+},
 followed by the ASCII representation of a positive decimal number,
@@ -1987,44 +2052,36 @@ and followed eventually by the ASCII letter \literalvalue{E} or  \literalvalue{e
 introducing the base-10 exponent made of an optional {\tt-} or {\tt+}
 followed by 1 to 3 digits. The number must be within the limits of the
 IEEE floating-point definition (around $\pm1.7\cdot10^{308}$; numbers with
-absolute value less than about $5\cdot10^{-324}$ are equated to zero);
-the default representation of a {\em null} value is an empty cell
-(see \Aref{sec:values}{VALUES definitions above}), and the special
+absolute value less than about $5\cdot10^{-324}$ are equated to zero).
+The special
 values \literalvalue{+Inf}, \literalvalue{-Inf}, and \literalvalue{NaN} are accepted.
 
 \item {\bf Single Precision Complex}\quad If the value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{floatComplex}},
-the data in the \elem{BINARY} serialization shall consist of a sequence of 
+the data in the \elem{BINARY}/\elem{BINARY2} serialization shall consist of a sequence of 
 pairs of 32-bit single precision floating point numbers in big-endian order. 
 The first member of each
 pair shall represent the real part of a complex number and the
 second member shall represent the imaginary part of that complex
-number. If either member contains a \literalvalue{NaN},
-the entire complex value is {\em null}.
+number.
 The representation of a Floating Complex number in the 
 \elem{TABLEDATA} serialization is made of two representations
 of a {\em  Single Precision Floating Point} numbers separated by 
-whitespace, representing the real and imaginary part respectively;
-the default representation of a {\em null} value is an empty cell
-(see \Aref{sec:values}{VALUES definitions above}).
+whitespace, representing the real and imaginary part respectively.
 
 \item {\bf Double Precision Complex}\quad If the
 value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{doubleComplex}},
-the data in the \elem{BINARY} serialization  shall consist of a
+the data in the \elem{BINARY}/elem{BINARY2} serialization  shall consist of a
 sequence of pairs of 64-bit double precision floating point numbers
 in big-endian order.
 The first member of each pair shall represent the real part of a
 complex number and the second member of the pair shall represent the
-imaginary part of that complex number. If either member contains a
-\literalvalue{NaN}, the entire complex
-value is {\em null}.
+imaginary part of that complex number.
 The representation of a Double Complex number in the 
 \elem{TABLEDATA} serialization is made of two representations
 of a {\em  Double Precision Floating Point} numbers separated by 
-whitespace, representing the real and imaginary part respectively;
-the default representation of a {\em null} value is an empty cell
-(see \Aref{sec:values}{VALUES definitions above}).
+whitespace, representing the real and imaginary part respectively.
 \end{itemize}
 
 
@@ -2118,8 +2175,11 @@ that a few typical XSL style sheets will be accessible from
 the IVOA site.
 
 %\clearpage
-\section{Differences Between Versions 1.1 and 1.2}
+\section{Version History}
 \label{diff}
+
+\subsection{Differences Between Versions 1.1 and 1.2}
+\label{diff1.1-1.2}
 The differences between version 1.2 of VOTable and the preceding
 version 1.1 are:
 
@@ -2169,6 +2229,26 @@ version 1.1 are:
         attributes in groups and tables; it is now included in VOTable1.2.
 	\Arefx{sec:addesc}{Appendix A7} now contains a new proposal 
 	(May/June 2009) for multiple descriptions and titles.
+\end{itemize}
+\ifhtx\End{tabular}\fi
+
+\subsection{Differences Between Versions 1.2 and 1.3}
+\label{diff1.2-1.3}
+The differences between version 1.3 of VOTable and the preceding
+version 1.2 are:
+
+\ifhtx\Beg{tabular}{\bg{LavenderBlush} CELLPADDING=4}{||p||}
+\fi
+\begin{itemize}
+\item The \elem{BINARY2} serialization has been introduced.
+\item The usage and semantics of an empty \elem{TD} element in the
+      \elem{TABLEDATA} serialization have changed.
+      In VOTable 1.3, an empty \elem{TD} element is legal for any datatype
+      (previously it was illegal for integer types)
+      and it always denotes a null value
+      (previously it indicated NaN for floating point types).
+      This change means that the different serializations no longer have
+      exactly the same capabilities for data representation.
 \end{itemize}
 \ifhtx\End{tabular}\fi
 
@@ -2602,8 +2682,8 @@ implicitly defined by the length of the encoded text.
 
 \subsection{Very Large Arrays}
 % Feb. 2004, Mails 1054, 1123
-The \elem{BINARY} serialization of variable-length arrays 
-(\Aref{sec:BIN}{section 5.3}) uses a 4-byte prefix containg the number of
+The \elem{BINARY} and \elem{BINARY2} serializations of variable-length arrays 
+(\Aref{sec:BIN}{section 5.3}, \Aref{sec:BIN2}{5.4}) uses a 4-byte prefix containg the number of
 items of the array. This convention imposes an absolute maximal
 number of $2^{31}-1$ elements. This limit could be releaved 
 with a new \attr{arrayprefix} attribute.
