@@ -34,12 +34,11 @@ CGIPRINT = cgiprint/bin/cgiprint
 
 # Files
 GIFs = circ2.gif leadsto2.gif oplus.gif serial.gif binary.gif
-XSD  = VOTable-1.1.xsd
+XSD  = VOTable.xsd
 
 default: votable.pdf votable.html
 
-votable.pdf: votable.tex VOTable-1.2.attr.tex  VOTable-1.2.elem.tex \
-	VOTable-1.2.xsd
+votable.pdf: votable.tex VOTable.attr.tex  VOTable.elem.tex
 	pdflatex votable
 	pdflatex votable
 
