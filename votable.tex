@@ -156,7 +156,7 @@
 % Provide a title for your document
 \title{VOTable Format Definition}
 % Give date and version number
-\date{2009-11-30}%\date{2009-10-24}%\date{2009-09-29}%\date{2008-10-30}
+\date{2012-??-??}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
@@ -380,7 +380,7 @@ accented character, so that the text is ``Fran\c{c}ois".
 The second example uses the special {\tt CDATA} sequence so that the
 characters {\tt <}, {\tt >}, and {\tt\&} can be used without interpretation;
 in this case, any ASCII characters are allowed except the terminating
-sequence {\tt]]>} For more information, see any book on
+sequence {\tt]]>}. For more information, see any book on
 XML.
 
 
@@ -452,6 +452,10 @@ is a restricted form of the {\elem{PARAM}} ---  it is always understood
 as a {\em string} (i.e. \attrval{datatype}{char}
 and \attrval{arraysize}{*} are {\em implied}).
 
+% No idea why, this seems to be required to prevent blue text
+% at the top of a page in PDF output.
+\mbox{}{\color{black}}%
+%
 The ordered list of Fields at the top of the table thus provides a
 template for a Row object (also called a {\it record}). The
 template allows interpretation of the data in the Row. 
@@ -911,9 +915,9 @@ In addition to the referencing \attr{href} %and \attr{gref} attributes
 attribute and to the naming \attr{name} and \attr{ID} attributes 
 (see \Aref{sec:name}{name and ID}), the \elem{LINK} element
 may announce the mime type of the data it references 
-with a \attr{content-type}  attribute (e.g. \attrval{content-type}{image/fits}),
+with a \attr{content-type}  attribute (e.g.\ \attrval{content-type}{image/fits}),
 and specify the role of the link by a \attr{content-role} attribute
-(e.g. \\ \attrval{content-role}{doc} for access to documentation).
+(e.g.\ \attrval{content-role}{doc} for access to documentation).
 
 \subsection{\elem{TABLE} Element}
 \label{elem:TABLE}
@@ -1301,7 +1305,7 @@ and it may contain {\elem{OPTION}} elements;
 the latter may itself contain more {\elem{OPTION}}
 elements, so that a hierarchy of keyword-values pairs can be
 associated with each field. 
-Note that oinly a single pair \elem{MIN} / \elem{MAX} is possible, 
+Note that only a single pair \elem{MIN} / \elem{MAX} is possible, 
 whereas many \elem{OPTION} elements may be used to qualify the domain
 described by the \elem{VALUES} element. 
 The domain may therefore be defined as a single interval, or as a set
@@ -1545,17 +1549,13 @@ that  has arrays in the table cells:
 \label{example2}
 \begin{verbatim}
 <TABLE>
-  <FIELD ID="aString" datatype="char" arraysize="10"/>
-  <FIELD ID="Floats" datatype="float" arraysize="3"/>
-  <FIELD ID="varComplex" datatype="floatComplex" arraysize="*"/>
+  <FIELD name="aString" datatype="char" arraysize="10"/>
+  <FIELD name="aShort"  datatype="short"/>
+  <FIELD name="varInts" datatype="int"  arraysize="*"/>
+  <FIELD name="Floats"  datatype="float"arraysize="3"/>
   <DATA><TABLEDATA>
-  <TR>
-   <TD>Apple</TD><TD>1.62 4.56 3.44</TD>
-   <TD>67 1.57  4 3.14  77 -1.57</TD>
-  </TR><TR>
-   <TD>Orange</TD><TD>2.33 4.66 9.53</TD>
-   <TD>39 0  46 3.14</TD>
-  </TR>
+    <TR> <TD>Apple</TD>  <TD/>       <TD>1 2 4 8 16</TD> <TD>1.62 4.56 3.44</TD> </TR>
+    <TR> <TD>Orange</TD> <TD>15</TD> <TD>23 -11 9</TD>   <TD>2.33 4.66 9.53</TD> </TR>
   </TABLEDATA></DATA>
 </TABLE>
 \end{verbatim}
@@ -1563,11 +1563,10 @@ that  has arrays in the table cells:
 
 The first entry is a fixed-length array of 10 characters; since
 the value being presented ({\tt Apple}) has 5 characters, this
-is padded with trailing blanks. The second cell is an
-array of three floats.
-The last cell contains a variable array of complex numbers, each complex
-number being represented by its real part followed by at least a blank
-and its imaginary part -- hence 6 numbers for 3 complex numbers.
+is padded with trailing blanks. The second cell is a short integer
+but has a null value, as indicated by the empty \elem{TD} element.
+The third cell contains a variable-length array of integers.
+The last cell contains a fixed-length array of three floats.
 
 A special notice should be mentioned about the significance of 
 {\em white space} in a table cell (the term {\em white space} 
@@ -1658,22 +1657,31 @@ then each record of the binary format has the same length
 (the sum of {\attr{arraysize}}
 times the length in bytes of the corresponding {\attr{datatype}}).
 
-
 Variable-length arrays of primitives are preceded by a 4-byte integer
 containing the number of items of the array.
-The way the stream of bytes is arranged for the data of the 
-example in \Aref{example2}{section 5} is illustrated in 
-\Fref{fig:bin}{Figure 2}.
 The parser can then compute the number of bytes taken
 by the variable-length array by multiplying the size and number 
 of the primitives.
 
+The way the stream of bytes is arranged for the data of the 
+example in \Aref{example2}{section 5.1} is illustrated in 
+\Fref{fig:bin}{Figure 2}.
+In this case the second column must be declared like this:
+\begin{verbatim}
+  <FIELD name="aShort" datatype="short">
+    <VALUES null="-99"/>
+  </FIELD>
+\end{verbatim}
+to indicate a magic value representing nulls, since no equivalent of the
+empty \elem{TD} element is available for the BINARY serialization
+(see \Aref{sec:NULL}{section 5.5}).
+
 \label{Image2}
 \ifhtx\begin{tabular}{c}
-\tag{IMG SRC="binary.gif" NAME="Image2" ALIGN=LEFT BORDER=0}\end{tabular}
+\tag{IMG SRC="binary.png" NAME="Image2" ALIGN=LEFT BORDER=0}\end{tabular}
 \else\begin{center}
 \begin{figure}[htb]
-\includegraphics[width=0.8\textwidth]{binary.eps}
+\includegraphics[width=\textwidth]{binary.pdf}
 \caption{\label{fig:bin}Data Storage in BINARY mode}
 \end{figure}\end{center}
 \fi
@@ -1703,6 +1711,20 @@ and an unset (0) bit indicates that its value is not null.
 It is recommended, but not required, that unused flag bits are unset,
 and that cell values flagged as nulls are represented with zero-valued
 bytes.
+
+The way the stream of bytes is arranged for the data of the
+example in \Aref{example2}{section 5.1} is illustrated in
+\Fref{fig:bin2}{Figure 3}.
+
+\label{Image3}
+\ifhtx\begin{tabular}{c}
+\tag{IMG SRC="binary2.png" NAME="Image3" ALIGN=LEFT BORDER=0}\end{tabular}
+\else\begin{center}
+\begin{figure}[htb]
+\includegraphics[width=\textwidth]{binary2.pdf}
+\caption{\label{fig:bin}Data Storage in BINARY mode}
+\end{figure}\end{center}
+\fi
 
 \subsection{Null values}
 \label{sec:NULL}

@@ -31,19 +31,22 @@ SYS =
 CFLAGS = $(C_OPT) $(DEBUG) $(SYS) -I. -I$(INCDIR)
 COMPILE= $(CC) $(CFLAGS) -c
 CGIPRINT = cgiprint/bin/cgiprint
+XDOC_CLASSPATH = figicon/xdoc.jar:figicon/epsgraphics.jar:figicon/Text_shrunk.jar
+BINFIGURE = java -classpath $(XDOC_CLASSPATH):. BinFigure
 
 # Files
-IMGs = circ2.gif leadsto2.gif oplus.gif serial.png binary.gif
+IMGs = circ2.gif leadsto2.gif oplus.gif serial.png binary.png binary2.png
 XSD  = VOTable.xsd
 
 default: votable.pdf votable.html
 
-votable.pdf: votable.tex VOTable.attr.tex  VOTable.elem.tex serial.png
+votable.pdf: votable.tex VOTable.attr.tex  VOTable.elem.tex \
+             serial.png binary.pdf binary2.pdf
 	pdflatex votable && \
 	pdflatex votable && \
 	pdflatex votable
 
-votable.html: votable.tex votable.htx $(CGIPRINT)
+votable.html: votable.tex votable.htx $(CGIPRINT) binary.png binary2.png
 	$(CGIPRINT) votable.htx > votable.html
 
 votable.tar: votable.html votable.htx votable.pdf $(IMGs) $(XSD)
@@ -61,6 +64,21 @@ cgiprint/bin/cgiprint:
         make && \
         make install
 
+BinFigure.class: BinFigure.java
+	javac -classpath $(XDOC_CLASSPATH) BinFigure.java
+
+binary.png: BinFigure.class
+	$(BINFIGURE) -png BINARY >$@
+
+binary.pdf: BinFigure.class
+	$(BINFIGURE) -pdf BINARY >$@
+
+binary2.png: BinFigure.class
+	$(BINFIGURE) -png BINARY2 >$@
+
+binary2.pdf: BinFigure.class
+	$(BINFIGURE) -pdf BINARY2 >$@
+
 # Make export tar
 export:	CLEAN
 	h=`pwd`;d=`basename $$h`; tar cvf /tmp/$$d.tar -C .. $$d; \
@@ -68,12 +86,14 @@ export:	CLEAN
 
 # Remove useless files:
 clean: 
-	rm -f *.log *.aux *.out
+	rm -f votable.log votable.aux votable.out votable.toc
+	rm -f BinFigure.class binary.pdf binary2.pdf
 	cd cgiprint && rm -f cgiprint cgigraph cgiparm
-
-# Remove depedent files:
-CLEAN: clean
-	rm -f votable.toc votable.pdf votable.html
 	cd cgiprint && rm -rf include lib bin
 	cd cgiprint && rm -f config.log config.status Makefile
 	cd cgiprint && rm -f cgiprint.lis versions
+
+# Remove depedent files:
+CLEAN: clean
+	rm -f votable.pdf votable.html
+	rm -f binary.png binary2.png
