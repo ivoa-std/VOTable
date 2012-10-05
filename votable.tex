@@ -2183,7 +2183,8 @@ indicates that the type describes a specialization of XML.
 This type may be accompanied by an optional parameter
 {\literalvalue{\sf encoding}}
 with a value specifying the serialization type used for table data within the
-document, one of TABLEDATA, FITS, BINARY or BINARY2.
+document, one of TABLEDATA, FITS, BINARY or BINARY2,
+interpreted case-insensitively.
 In the absence of this parameter, any of the serializations may be
 encountered.  If multiple different serializations are used in the same
 document, this parameter must not be used.
@@ -2209,7 +2210,7 @@ by a service producing VOTables with the TABLEDATA serialization:
   \item {\sf text/xml}
   \item {\sf text/xml; charset="iso-8859-1"}
   \item {\sf application/x-votable+xml}
-  \item {\sf application/x-votable+xml; encoding=TABLEDATA}
+  \item {\sf application/x-votable+xml; encoding=tabledata}
   \item {\sf application/x-votable+xml; encoding=TABLEDATA; charset=iso-8859-1}
 \end{itemize}
 
