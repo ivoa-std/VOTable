@@ -8,16 +8,26 @@
 .Version 1.1 :  10-Jun-2004 remove the complexContent
 .Version 1.11: GL: 23-May-2006 remove most root elements, use name= type= iso ref= structure
 .Version 1.11: GL: 29-Aug-2006 review and added comments (prefixed by GL) 
-	      before sending to Francois Ochsenbein
+              before sending to Francois Ochsenbein
 .Version 1.12: FO: Preliminary Version 1.2
 .Version 1.18: FO: Tested (jax) version 1.2
 .Version 1.19: FO: Completed INFO attributes
+.Version 1.20: FO: Added xtype; content-role is less restrictive (May2009)
+.Version 1.20a: FO: PR-20090710 Cosmetics.
+.Version 1.20b: FO: INFO does not accept sub-elements (2009-09-29)
+.Version 1.20c: FO: elementFormDefault="qualified" to stay compatible with 1.1
 -->
 <xs:schema 
    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-   targetNamespace="http://www.ivoa.net/xml/VOTable/v1.3"
-   xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
+   xmlns="http://www.ivoa.net/xml/VOTable/v1.2"
+   targetNamespace="http://www.ivoa.net/xml/VOTable/v1.2" 
 >
+<xs:annotation><xs:documentation>
+    VOTable1.2 is meant to serialize tabular documents in the
+    context of Virtual Observatory applications. This schema
+    corresponds to the VOTable document available from
+    http://www.ivoa.net/Documents/latest/VOT.html
+</xs:documentation></xs:annotation>
 
 <!-- Here we define some interesting new datatypes:
      - anyTEXT   may have embedded XHTML (conforming HTML)
@@ -136,8 +146,9 @@
   </xs:complexType>
   
   <!-- The LINK is a URL (href) or some other kind of reference (gref) -->
-  <xs:complexType name="Link" mixed="true"><!--  GL why mixed is true ? no elements defined anyway -->
-    <xs:attribute name="ID" type="xs:ID"/>
+  <xs:complexType name="Link">
+    <xs:annotation><xs:documentation> 
+    content-role was previsouly restricted as: <![CDATA[
     <xs:attribute name="content-role">
       <xs:simpleType>
         <xs:restriction base="xs:NMTOKEN">
@@ -147,8 +158,11 @@
           <xs:enumeration value="location"/>
         </xs:restriction>
       </xs:simpleType>
-    </xs:attribute>
-    <xs:attribute name="content-type" type="xs:token"/>
+    </xs:attribute>]]>; is now a name token.
+    </xs:documentation></xs:annotation>
+    <xs:attribute name="ID" type="xs:ID"/>
+    <xs:attribute name="content-role" type="xs:NMTOKEN"/>
+    <xs:attribute name="content-type" type="xs:NMTOKEN"/>
     <xs:attribute name="title" type="xs:string"/>
     <xs:attribute name="value" type="xs:string"/>
     <xs:attribute name="href" type="xs:anyURI"/>
@@ -166,8 +180,7 @@
     </xs:restriction>
   </xs:complexContent>
 </xs:complexType>
--->
-<!-- Rather than a restriction, full definition -->
+ -or- as a full definition:
 <xs:complexType name="Info">
   <xs:sequence> 
   <xs:element name="DESCRIPTION" type="anyTEXT" minOccurs="0"/>
@@ -178,22 +191,27 @@
   <xs:attribute name="value" type="xs:string" use="required"/>
   <xs:attribute name="ID" type="xs:ID"/>
   <xs:attribute name="unit" type="xs:token"/>
+  <xs:attribute name="xtype" type="xs:token"/>
   <xs:attribute name="ref" type="xs:IDREF"/>
   <xs:attribute name="ucd" type="ucdType"/>
   <xs:attribute name="utype" type="xs:string"/>
 </xs:complexType>
-
-<!-- OLD INFO definition:
+-->
+<!-- No sub-element is accepted in INFO for backward compatibility -->
 <xs:complexType name="Info">
   <xs:simpleContent>
     <xs:extension base="xs:string">
       <xs:attribute name="ID" type="xs:ID"/>
-      <xs:attribute name="name" type="xs:token" use="required"/>
+      <xs:attribute name="name"  type="xs:token" use="required"/>
       <xs:attribute name="value" type="xs:string" use="required"/>
+      <xs:attribute name="unit"  type="xs:token"/>
+      <xs:attribute name="xtype" type="xs:token"/>
+      <xs:attribute name="ref"   type="xs:IDREF"/>
+      <xs:attribute name="ucd"   type="ucdType"/>
+      <xs:attribute name="utype" type="xs:string"/>
     </xs:extension>
   </xs:simpleContent>
 </xs:complexType>
--->
 
 <!-- Expresses the coordinate system we are using --><!-- Deprecated V1.2 -->
 <xs:complexType name="CoordinateSystem">
@@ -247,6 +265,7 @@
   <xs:attribute name="datatype" type="dataType" use="required"/>
   <xs:attribute name="precision" type="precType"/>
   <xs:attribute name="width" type="xs:positiveInteger"/>
+  <xs:attribute name="xtype" type="xs:token"/>
   <xs:attribute name="ref" type="xs:IDREF"/>
   <xs:attribute name="name" type="xs:token" use="required"/>
   <xs:attribute name="ucd" type="ucdType"/>
@@ -293,7 +312,8 @@
       <xs:element name="FIELDref" type="FieldRef"/> 
       <xs:element name="PARAMref" type="ParamRef"/> 
       <xs:element name="PARAM" type="Param"/> 
-      <xs:element name="GROUP" type="Group"/> <!-- GL a GroupRef could remove recursion -->
+      <xs:element name="GROUP" type="Group"/> 
+      <!-- GL a GroupRef could remove recursion -->
     </xs:choice>
   </xs:sequence>
   <xs:attribute name="ID"   type="xs:ID"/>
@@ -309,20 +329,20 @@
      In particular if the UCD and utype attributes will NOT be added -->
 <xs:complexType name="FieldRef">
   <xs:attribute name="ref" type="xs:IDREF" use="required"/>
-  <!-- utype and maybe ucd could well be added there, will be if necessary -->
-  <!-- GL fould not the utype and ucd have to be the same as those of the referenced Field ? -->
+  <xs:attribute name="ucd"  type="ucdType"/>
+  <xs:attribute name="utype" type="xs:string"/>
 </xs:complexType>
 
 <xs:complexType name="ParamRef">
   <xs:attribute name="ref" type="xs:IDREF" use="required"/>
-  <!-- utype and maybe ucd could well be added there, will be if necessary -->
-  <!-- GL fould not the utype and ucd have to be the same as those of the referenced Field ? -->
+  <xs:attribute name="ucd"  type="ucdType"/>
+  <xs:attribute name="utype" type="xs:string"/>
 </xs:complexType>
-    
 
 <!-- DATA is the actual table data, in one of three formats -->
 <!-- 
-  GL in Kyoto we discussed the option of having the specific Data items be subtypes of Data:
+  GL in Kyoto we discussed the option of having the specific Data items 
+  be subtypes of Data:
 -->
 <!-- 
 <xs:complexType name="Data" abstract="true"/>
@@ -335,7 +355,6 @@
   </xs:complexContent>
 </xs:complexType>
  -->
-<!-- I have not done that here as it will require special solutions for solving backwards compatibility issues -->
 <xs:complexType name="Data">
   <xs:annotation><xs:documentation>
     Added in Version 1.2: INFO for diagnostics
@@ -344,7 +363,6 @@
     <xs:choice>
       <xs:element name="TABLEDATA" type="TableData"/>
       <xs:element name="BINARY" type="Binary"/>
-      <xs:element name="BINARY2" type="Binary2"/>
       <xs:element name="FITS" type="FITS"/>
     </xs:choice>
     <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/>
@@ -362,6 +380,13 @@
   <xs:simpleContent>
     <xs:extension base="xs:string">
       <!-- xs:attribute name="ref" type="xs:IDREF"/ -->
+      <xs:annotation><xs:documentation>
+          The 'encoding' attribute is added here to avoid
+          problems of code generators which do not properly
+          interpret the TR/TD structures.
+          'encoding' was chosen because it appears in
+          appendix A.5
+      </xs:documentation></xs:annotation>
       <xs:attribute name="encoding" type="encodingType"/>
     </xs:extension>
   </xs:simpleContent>
@@ -389,13 +414,6 @@
 
 <!-- BINARY data format -->
 <xs:complexType name="Binary">
-  <xs:sequence>
-    <xs:element name="STREAM" type="Stream"/>
-  </xs:sequence>
-</xs:complexType>
-
-<!-- BINARY2 data format -->
-<xs:complexType name="Binary2">
   <xs:sequence>
     <xs:element name="STREAM" type="Stream"/>
   </xs:sequence>
@@ -447,20 +465,26 @@
       <xs:element name="GROUP" type="Group" minOccurs="0" maxOccurs="unbounded"/>
 -->
 <!-- 
-  This could also enforce groups to be defined after the fields and params to which they must
-  have a reference, which is somewhat more logical
+  This could also enforce groups to be defined after the fields and params 
+  to which they must have a reference, which is somewhat more logical
 -->
-    <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/> <!-- Added Version 1.2 -->
-    <xs:choice minOccurs="0" maxOccurs="unbounded"> 
+    <!-- Added Version 1.2: -->
+    <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/> 
+    <!-- An empty table without any FIELD/PARAM should not be acceptable -->
+    <xs:choice minOccurs="1" maxOccurs="unbounded"> 
       <xs:element name="FIELD" type="Field"/>
       <xs:element name="PARAM" type="Param"/>
       <xs:element name="GROUP" type="Group"/>
     </xs:choice>
     <xs:element name="LINK" type="Link" minOccurs="0" maxOccurs="unbounded"/>
+    <!-- This would allow several DATA parts in a table (future extension?)
     <xs:sequence minOccurs="0" maxOccurs="unbounded">  
       <xs:element name="DATA" type="Data"/>
       <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
+    -->
+    <xs:element name="DATA" type="Data" minOccurs="0"/>
+    <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/>
   </xs:sequence>
   <xs:attribute name="ID"   type="xs:ID"/>
   <xs:attribute name="name" type="xs:token"/>
@@ -528,7 +552,7 @@
   <xs:attribute name="version">
      <xs:simpleType>
        <xs:restriction base="xs:NMTOKEN">
-         <xs:enumeration value="1.3"/>
+         <xs:enumeration value="1.2"/>
        </xs:restriction>
      </xs:simpleType>
    </xs:attribute>
