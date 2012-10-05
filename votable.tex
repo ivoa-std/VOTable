@@ -915,7 +915,7 @@ a possible extension of VOTable.
 In addition to the referencing \attr{href} %and \attr{gref} attributes
 attribute and to the naming \attr{name} and \attr{ID} attributes 
 (see \Aref{sec:name}{name and ID}), the \elem{LINK} element
-may announce the mime type of the data it references 
+may announce the MIME type of the data it references 
 with a \attr{content-type}  attribute (e.g.\ \attrval{content-type}{image/fits}),
 and specify the role of the link by a \attr{content-role} attribute
 (e.g.\ \attrval{content-role}{doc} for access to documentation).
@@ -2163,29 +2163,56 @@ with the following conventions:
 \ifhtx\End{tabular}\end{center}\else\end{quote}
 \fi
 
-\subsection{Mime Type}
+\section{MIME Type}
 \label{sec:mime}
-A VOTable document should be introduced by a {\em mime type}
-(Multipurpose Internet Mail Extensions, defined in the RFC 2046);
-associating a mime type to a document enables the {\em data consumer}
+A VOTable document should be introduced by a 
+Multipurpose Internet Mail Extensions media type, or MIME type.
+MIME type syntax is described in RFC 2045 section 5.1, and
+its semantics in RFC 2046.
+Associating a MIME type to a document enables the {\em data consumer}
 (an application or a web browser) to launch the desired application
 ({\em e.g.} a visualisation tool).
 
-In the HTTP protocol, the mime type is the value specified by the
-{\sf Content-Type:} line. The recommended mime-type describing
-a VOTable document is {\fbox{{\sf application/x-votable+xml}}}:
+In the HTTP protocol (RFC 2616), the MIME type is the value specified by the
+{\sf Content-Type:} header. The recommended MIME type describing
+a VOTable document is {\literalvalue{\sf application/x-votable+xml}}:
 the {\bf x-} prefix indicates an experimental type, and
 is required for non-registered media types; and the 
 {\bf+xml} suffix (defined by RFC 3023 section 7)
 indicates that the type describes a specialization of XML.
+This type may be accompanied by an optional parameter
+{\literalvalue{\sf encoding}}
+with a value specifying the serialization type used for table data within the
+document, one of TABLEDATA, FITS, BINARY or BINARY2.
+In the absence of this parameter, any of the serializations may be
+encountered.  If multiple different serializations are used in the same
+document, this parameter must not be used.
 
-However the {\fbox{{\sf text/xml}}} mime type is acceptable
+Alternatively the {\literalvalue{\sf text/xml}} MIME type is acceptable
 for services delivering data which are expected to be
-visualized by humans in a browser; this mime type 
+visualized by humans in a browser; this MIME type 
 would preferably be associated with an XSL style sheet,
 for a presentation of well-formatted tables. It is expected
 that a few typical XSL style sheets will be accessible from
 the IVOA site.
+Note that use of the {\em text} top-level media type means that
+line breaks must be represented as a CRLF sequence
+(RFC 2046, section 4.1.1).
+
+For both of these MIME types, RFC 3023 also defines the optional
+parameter {\literalvalue{\sf charset}}.
+If this parameter is not supplied, US-ASCII is assumed.
+
+Any of the following Content-Type header values may therefore be used
+by a service producing VOTables with the TABLEDATA serialization:
+\begin{itemize}
+  \item {\sf text/xml}
+  \item {\sf text/xml; charset="iso-8859-1"}
+  \item {\sf application/x-votable+xml}
+  \item {\sf application/x-votable+xml; encoding=TABLEDATA}
+  \item {\sf application/x-votable+xml; encoding=TABLEDATA; charset=iso-8859-1}
+\end{itemize}
+
 
 %\clearpage
 \section{Version History}
@@ -2262,6 +2289,9 @@ version 1.2 are:
       (previously it indicated NaN for floating point types).
       This change means that the different serializations no longer have
       exactly the same capabilities for data representation.
+\item The MIME type section (now \Aref{sec:mime}{section 8}) now describes
+      the new {\tt encoding} parameter that can be used to specify
+      serialization.
 \end{itemize}
 \ifhtx\End{tabular}\fi
 
