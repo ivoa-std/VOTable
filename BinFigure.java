@@ -19,20 +19,22 @@ import uk.ac.starlink.xdoc.fig.StringDrawer;
 public class BinFigure extends FigureIcon {
 
     private static final int nd2 = 3;
-    private static final int xCell = 16;
+    private static final int xCell = 14;
     private static final int yCell = 24;
+    private static final int box = 18;
     private static final int fontSize = 16;
     private static final Color fixColor = Color.WHITE;
+    private static final Color lenColor = new Color( 0xfdf44b );
     private static final Color varColor = new Color( 0xbfffff );
-    private static final Color lenColor = new Color( 0xf0f080 );
-    private static final Color flagColor = new Color( 0xfff0c0 );
+    private static final Color flagColor = new Color( 0xffb6fe );
 
     private final boolean isBinary2;
     private int xmax;
     private int ymax;
 
     public BinFigure( boolean isBinary2 ) {
-        super( new Rectangle( 0, 0, xCell * 64, 170 + ( isBinary2 ? 30 : 0) ) );
+        super( new Rectangle( 0, 0, 908,
+                              160 + ( isBinary2 ? ( box + box / 2 ) : 0 ) ) );
         this.isBinary2 = isBinary2;
     }
 
@@ -42,7 +44,7 @@ public class BinFigure extends FigureIcon {
         int gy = yCell / 4;
         gy += drawRow( g2, gx, gy,
                        "Apple    ",
-                       isBinary2 ? (short) 0 : (short) -99,
+                       isBinary2 ? (short) 0 : (short) 99,
                        new int[] { 1, 2, 4, 8, 16 },
                        new float[] { 1.62f, 4.56f, 3.44f },
                        (byte) Integer.parseInt( "01000000", 2 ) );
@@ -59,6 +61,13 @@ public class BinFigure extends FigureIcon {
     private int drawRow( Graphics g, int gx, int gy,
                          String strVal, short shortVal,
                          int[] intsVal, float[] floatsVal, byte flags ) { 
+        int ncol = 4;
+        if ( isBinary2 ) {
+            g.setFont( new Font( "Dialog", Font.PLAIN, fontSize ) );
+            gx += drawCellFlags( g, gx, gy, flagColor, flags, ncol );
+            gx += xCell;
+        }
+        xmax = Math.max( xmax, gx );
 
         g.setFont( new Font( "Monospaced", Font.BOLD, fontSize ) );
         for ( int i = 0; i < strVal.length(); i++ ) {
@@ -86,14 +95,6 @@ public class BinFigure extends FigureIcon {
                                  Float.toString( floatsVal[ i ] ), 4 );
         }
 
-        if ( isBinary2 ) {
-            g.setFont( new Font( "Dialog", Font.PLAIN, fontSize ) );
-            gx += xCell;
-            gx += drawCellFlags( g, gx, gy, flagColor,
-                                 flags );
-        }
-        xmax = Math.max( xmax, gx );
-
         return yCell + yCell / 2;
     }
 
@@ -117,12 +118,26 @@ public class BinFigure extends FigureIcon {
     }
 
     private int drawCellFlags( Graphics g, int gx, int gy, Color bg,
-                               byte flags ) {
-        paintRect( g, gx, gy, xCell, yCell, bg );
-        new StringDrawer( Anchor.SOUTH_WEST, false, 1 )
-           .drawString( g, toBinaryString( flags ),
-                        gx + 2, gy + yCell - 2 );
-        return xCell;
+                               byte flags, int nSigFlags ) {
+        String str = toBinaryString( flags );
+        String str1 = str.substring( 0, nSigFlags );
+        String str2 = str.substring( nSigFlags );
+        int str1Width = getStringWidth( str1, g );
+        int str2Width = getStringWidth( str2, g );
+        int boxOff = str1Width + str2Width - xCell + 2;
+        paintRect( g, gx + boxOff, gy, xCell, yCell, bg );
+        StringDrawer stringer = new StringDrawer( Anchor.SOUTH_WEST, false, 1 );
+        stringer.drawString( g, str1, gx, gy + yCell - 2 );
+        Color color0 = g.getColor();
+        g.setColor( Color.GRAY );
+        stringer.drawString( g, str2, gx + str1Width, gy + yCell - 2 );
+        g.setColor( color0 );
+        return boxOff + xCell;
+    }
+
+    private static int getStringWidth( String str, Graphics g ) {
+        return (int) Math.ceil( g.getFontMetrics().getStringBounds( str, g )
+                                                  .getWidth() );
     }
 
     private String toBinaryString( byte flags ) {
@@ -135,7 +150,7 @@ public class BinFigure extends FigureIcon {
     }
 
     private int drawKey( Graphics g, int gx, int gy ) {
-        g.setFont( new Font( "Serif", Font.PLAIN, 20 ) );
+        g.setFont( new Font( "SansSerif", Font.PLAIN, 18 ) );
         gx += 128;
         gy += drawKeyLine( g, gx, gy, fixColor, "Fixed length" );
         gy += drawKeyLine( g, gx, gy, lenColor,
@@ -149,8 +164,8 @@ public class BinFigure extends FigureIcon {
 
     private int drawKeyLine( Graphics g, int gx, int gy, Color bg,
                              String txt ) {
-        int bw = (int) ( xCell * 1.3 );
-        int bh = bw;
+        int bw = box;
+        int bh = box;
         paintRect( g, gx, gy, bw, bh, bg );
         new StringDrawer( Anchor.WEST, false, 1 )
            .drawString( g, txt, gx + bw + bw / 2, gy + bh / 2 );

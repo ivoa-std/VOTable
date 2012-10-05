@@ -1328,6 +1328,10 @@ When this value is found in the corresponding data, it is assumed that no data
 exists for that table cell; the parser may also choose to use this
 when unparsable data is found, and the null value will be substituted
 instead.
+The value of the \attr{null} attribute must follow the same rules
+as the TABLEDATA serialization for the appropriate datatype
+described in \Aref{sec:datatypes}{section 6}, and may never
+contain an array value.
 
 This mechanism for representing null values is required for integer
 columns in the \elem{BINARY} serialization.
@@ -1669,7 +1673,7 @@ example in \Aref{example2}{section 5.1} is illustrated in
 In this case the second column must be declared like this:
 \begin{verbatim}
   <FIELD name="aShort" datatype="short">
-    <VALUES null="-99"/>
+    <VALUES null="99"/>
   </FIELD>
 \end{verbatim}
 to indicate a magic value representing nulls, since no equivalent of the
@@ -1695,11 +1699,12 @@ by their values.
 The byte stream contains one additional bit for each table cell
 indicating whether that cell's value is to be considered null or not.
 
-The byte content for each row consists of the bytes for the BINARY
-serialization as described in the previous subsection, followed by zero or
-more bytes containing a null-value flag for each cell in that row.
-These flags are stored as exactly one bit per table column, and the number
-of bytes is the smallest required for this purpose;
+The byte content for each row consists of
+zero or more bytes containing a null value flag for each cell in the row,
+followed by the bytes for the BINARY serialization as described in the
+previous subsection.
+The null flags are stored as exactly one bit per table column, and the number
+of flag bytes is the smallest required for this purpose;
 an $N$-column table will therefore contain $(N+7)/8$ flag bytes per row.
 The most significant bit of the first flag byte corresponds to the
 first column,
@@ -1707,7 +1712,7 @@ the second most significant bit of the first flag byte to the second column,
 the most significant bit of the second flag byte to the eighth column,
 and so on.  A set (1) bit indicates that the corresponding cell is null,
 and an unset (0) bit indicates that its value is not null.
-Unused bits will be at the less-significant bits of the final flag byte,
+Unused bits will be at the less-significant end of the final flag byte,
 and shall be unset (0).
 
 It is recommended, but not required, that cell values flagged as nulls
@@ -1723,7 +1728,7 @@ example in \Aref{example2}{section 5.1} is illustrated in
 \else\begin{center}
 \begin{figure}[htb]
 \includegraphics[width=\textwidth]{binary2.pdf}
-\caption{\label{fig:bin}Data Storage in BINARY2 mode}
+\caption{\label{fig:bin2}Data Storage in BINARY2 mode}
 \end{figure}\end{center}
 \fi
 
@@ -1735,8 +1740,8 @@ VOTable provides two approaches to representing null values in data.
 The first approach makes use of the \elem{VALUES} element's \attr{null}
 attribute to indicate that whenever a particular ``magic'' value is
 encountered in a column's data, that entry should be considered as null.
-This magic value must be a legal value for the column's data type,
-for instance in the case of {\attrval{datatype}{unsignedByte}}
+This magic value must represent a legal scalar value for the column's
+datatype, for instance in the case of {\attrval{datatype}{unsignedByte}}
 it must be an integer in the range 0--255.
 This approach, inherited from FITS, works in the same way for all
 of the defined VOTable serializations.
@@ -1761,13 +1766,10 @@ is not always possible.
 
 Some other subtleties concerning null values should also be mentioned:
 \begin{itemize}
-\item Individual elements can be marked as null only
+\item Individual elements of an array-valued cell can be marked as null only
       by use of the \elem{VALUES}/\attr{null} mechanism, which operates on a
       per-element basis.  It is not possible to denote a null cell
       of an array-valued column using the magic value approach.
-      % Alternatively:
-      % There is no way to mark individual elements in
-      % the cells of an array-valued column as null.
 \item In TABLEDATA array-valued columns, a null value and a zero-length
       array are not distinguished.
       Since strings are represented as arrays of characters, this also
