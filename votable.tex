@@ -696,11 +696,6 @@ followed by the data values
 
 This simple example of a VOTable document lists 3 galaxies with their
 position, velocity and error, and their estimated distance.
-It contains a reference to the {\em Space-Time Coordinate} data model
-({\em STC}, A. Rots [9]) implicitly used to specify the system of coordinates
-used to locate the observed galaxies in the sky:
-this is an essential difference from versions of {\em VOTable}
-prior to 1.2, which made use of a \elem{COOSYS} element for this specification.
 
 %<!-- (deprecated) COOSYS ID="J2000" equinox="J2000." system="eq_FK5"-->
 \label{example1}
@@ -721,6 +716,16 @@ listed in the \elem{DATA} part of the table, here in  XML format
 (introduced by \elem{TABLEDATA}); each cell is marked by the \elem{TD} element, 
 and follow the same order as their \elem{FIELD} description:
 {\sl RA, Dec, Name, RVel, e\_RVel, R}.
+
+This example also contains a reference to the {\em Space-Time Coordinate} data model
+({\em STC}, A. Rots [9]) implicitly used to specify the system of coordinates
+used to locate the observed galaxies in the sky:
+this is an essential difference from versions of {\em VOTable}
+prior to 1.2, which made use of a \elem{COOSYS} element for this specification.
+A prescription for relating VOTable metadata to the STC data model is
+given in [8].
+VOTables which contain appropriate fields are encouraged to declare
+their STC metadata in this way if possible.
 
 \subsection{\attr{name}, \attr{ID} and \attr{ref} attributes}
 \label{sec:name}
@@ -2245,6 +2250,14 @@ version 1.2 are:
 \item The MIME type section (now \Aref{sec:mime}{section 8}) now describes
       the new {\tt encoding} parameter that can be used to specify
       serialization.
+\item The representation of STC information in \Aref{example1}{section 3.1}
+      and \Aref{query}{appendix A.2}
+      has been modified to reflect the recommended usage from the
+      {\em STC in VOTable} Note [8].  This usage is recommended even for
+      VOTable 1.2, so this change to the VOTable document represents
+      an update of advice rather than a change to the normative part
+      of the VOTable standard.  Additionally, text has been added
+      encouraging declaration of the STC metadata where possible.
 \end{itemize}
 \ifhtx\End{tabular}\fi
 
