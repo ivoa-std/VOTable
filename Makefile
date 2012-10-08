@@ -41,12 +41,14 @@ XSD  = VOTable.xsd
 default: votable.pdf votable.html
 
 votable.pdf: votable.tex VOTable.attr.tex  VOTable.elem.tex \
-             serial.png binary.pdf binary2.pdf
+             serial.png binary.pdf binary2.pdf \
+             VOTable.xsd stc_example1.vot stc_example2.vot
 	pdflatex votable && \
 	pdflatex votable && \
 	pdflatex votable
 
-votable.html: votable.tex votable.htx $(CGIPRINT) binary.png binary2.png
+votable.html: votable.tex votable.htx $(CGIPRINT) binary.png binary2.png \
+              VOTable.xsd stc_example1.vot stc_example2.vot
 	$(CGIPRINT) votable.htx > votable.html
 
 votable.tar: votable.html votable.htx votable.pdf $(IMGs) $(XSD)
