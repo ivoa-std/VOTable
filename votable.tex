@@ -1697,10 +1697,13 @@ Some other subtleties concerning null values should also be mentioned:
       For many purposes, the distinction between NaN and null is not
       important, and in such cases use of NaN can be more convenient
       than formally marking cells as null.
-\item Combining the the two approaches is not encouraged, however
-      the \elem{VALUES} \attr{null} attribute must always be respected
-      where present.
-\item The {\em logical} datatype has its own arrangements for representing
+\item Combining the two approaches is not encouraged,
+      and use of the \elem{VALUES} \attr{null} attribute is deprecated
+      where it can be avoided (marking null cells in TABLEDATA and BINARY2
+      serializations in VOTable 1.3).
+      However, if it is present, the \elem{VALUES} \attr{null} attribute
+      must always be respected.
+\item The {\em boolean} datatype has its own arrangements for representing
       null which do not require use of either of the special approaches above.
 \end{itemize}
 
@@ -2187,7 +2190,8 @@ version 1.2 are:
 \ifhtx\Beg{tabular}{\bg{LavenderBlush} CELLPADDING=4}{||p||}
 \fi
 \begin{itemize}
-\item The \elem{BINARY2} serialization has been introduced.
+\item The \elem{BINARY2} serialization has been introduced
+      (\Aref{sec:BIN2}{section 5.4}).
       \elem{BINARY} is mildly deprecated.
 \item The usage and semantics of an empty \elem{TD} element in the
       \elem{TABLEDATA} serialization have changed.
@@ -2197,6 +2201,9 @@ version 1.2 are:
       (previously it indicated NaN for floating point types).
       This change means that the different serializations no longer have
       exactly the same capabilities for data representation.
+\item In view of the new options for flagging null values introduced by the
+      BINARY2 and TABLEDATA changes above, use of the
+      \elem{VALUES} \attr{null} attribute is now deprecated in most cases.
 \item The MIME type section (now \Aref{sec:mime}{section 8}) now describes
       the new {\tt serialization} parameter that can be used to specify
       serialization type.
