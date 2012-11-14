@@ -847,37 +847,43 @@ to link the element to some external data model
 \label{sec:link}
 \label{elem:LINK}
 
-The role of the {\elem{LINK}} element is to provide pointers to other documents 
-or data servers on the Internet through a URI. In VOTable, the {\elem{LINK}}
+The role of the {\elem{LINK}} element is to provide pointers
+to external resources
+through a URI. In VOTable, the {\elem{LINK}}
 element may be part of a {\elem{RESOURCE}},
-{\elem{TABLE}}, \elem{GROUP}, {\elem{FIELD}} or \elem{PARAM} elements. 
-The {\attr{href}}
-attribute of the {\elem{LINK}} element can utilize any arbitrary protocol,
-for example \literalvalue{http://server/file} or \literalvalue{bizarre://server/file}.
-VOTable parsers are not required to understand arbitrary protocols,
-but are required to understand the following three common protocols:
-\literalvalue{file:}, \literalvalue{http:} and \literalvalue{ftp:}.
+{\elem{TABLE}}, \elem{GROUP}, {\elem{FIELD}} or \elem{PARAM} element. 
 
-A GLU reference [5] is an additional high-level protocol 
-introduced by a \literalvalue{glu:} value of the \attr{href} attribute:
-this way of referencing a  GLU is preferred %in this version of VOTable
-to the \attr{gref} attribute defined in the original version of VOTable.
-The {\attr{gref}} attribute is deprecated since version 1.1.
+The linked URI is given by the \attr{href} attribute,
+and the nature of the link is indicated by the \attr{content-role} attribute.
+The URI should ideally be dereferenceable,
+but this is not an absolute requirement,
+and appropriate use of the URI depends on the content-role.
+For example, \attrval{content-role}{doc} indicates documentation,
+and in this case dereferencing the URI should yield a document,
+suitable for presentation to the user, describing the LINK's parent element.
+On the other hand \attrval{content-role}{type} indicates a type-like
+relationship between the URI and the LINK's parent,
+and in this case the type is named by the URI string itself,
+while the content retrieved by dereferencing it, if any, is secondary.
+Beyond these two examples, the values and semantics of
+the \attr{content-role} attribute are to be defined outside of this
+VOTable specification.
+A \attr{content-role} should be provided for all \elem{LINK} elements,
+but if it is absent, a doc-like role may be assumed.
+
+In addition the the \elem{LINK} element
+may announce the MIME type of the data it references 
+with a \attr{content-type} attribute (e.g.\ \attrval{content-type}{image/fits}).
+Note however that this may be overridden
+by metadata received during the retrieval operation
+(e.g.\ the HTTP Content-Type header).
 
 In the Astrores format, from which VOTable is derived, 
 there are additional semantics for the {\elem{LINK}}
 element; the \elem{href} attribute is used as a template for creating
-URL's. This behavior is explained in \Arefx{LINK}{Appendix A.1}, 
-and it represents %a further proposal, 
+URLs. This behavior is explained in \Arefx{LINK}{Appendix A.1}, 
+and it represents
 a possible extension of VOTable.
-
-In addition to the referencing \attr{href} %and \attr{gref} attributes
-attribute and to the naming \attr{name} and \attr{ID} attributes 
-(see \Aref{sec:name}{name and ID}), the \elem{LINK} element
-may announce the MIME type of the data it references 
-with a \attr{content-type}  attribute (e.g.\ \attrval{content-type}{image/fits}),
-and specify the role of the link by a \attr{content-role} attribute
-(e.g.\ \attrval{content-role}{doc} for access to documentation).
 
 \subsection{\elem{TABLE} Element}
 \label{elem:TABLE}
@@ -2204,6 +2210,9 @@ version 1.2 are:
 \item In view of the new options for flagging null values introduced by the
       BINARY2 and TABLEDATA changes above, use of the
       \elem{VALUES} \attr{null} attribute is now deprecated in most cases.
+\item The description of the \elem{LINK} element (\Aref{sec:link}{section 3.5})
+      has been clarified, and a new \attrval{content-role}{type}
+      example added.
 \item The MIME type section (now \Aref{sec:mime}{section 8}) now describes
       the new {\tt serialization} parameter that can be used to specify
       serialization type.
