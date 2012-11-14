@@ -2140,7 +2140,7 @@ is required for non-registered media types; and the
 {\bf+xml} suffix (defined by RFC 3023 section 7)
 indicates that the type describes a specialization of XML.
 This type may be accompanied by an optional parameter
-{\literalvalue{\sf encoding}}
+{\literalvalue{\sf serialization}}
 with a value specifying the serialization type used for table data within the
 document, one of TABLEDATA, FITS, BINARY or BINARY2,
 interpreted case-insensitively.
@@ -2169,8 +2169,8 @@ by a service producing VOTables with the TABLEDATA serialization:
   \item {\sf text/xml}
   \item {\sf text/xml; charset="iso-8859-1"}
   \item {\sf application/x-votable+xml}
-  \item {\sf application/x-votable+xml; encoding=tabledata}
-  \item {\sf application/x-votable+xml; encoding=TABLEDATA; charset=iso-8859-1}
+  \item {\sf application/x-votable+xml; serialization=tabledata}
+  \item {\sf application/x-votable+xml; serialization=TABLEDATA; charset=iso-8859-1}
 \end{itemize}
 
 
@@ -2250,8 +2250,8 @@ version 1.2 are:
       This change means that the different serializations no longer have
       exactly the same capabilities for data representation.
 \item The MIME type section (now \Aref{sec:mime}{section 8}) now describes
-      the new {\tt encoding} parameter that can be used to specify
-      serialization.
+      the new {\tt serialization} parameter that can be used to specify
+      serialization type.
 \item The representation of STC information in \Aref{example1}{section 3.1}
       and \Aref{query}{appendix A.2}
       has been modified to reflect the recommended usage from the
