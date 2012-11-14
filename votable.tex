@@ -760,7 +760,7 @@ The {\attr{ID}} attribute %(as defined by Xpointer standard)
 is therefore required in the elements which {\em have to be referenced},
 but the elements having an {\attr{ID}} attribute do not need to be
 referenced.
-In VOTable 1.2, it is further
+From VOTable 1.2, it is further
 recommended to place the \attr{ID} attribute {\em prior to} referencing
 it whenever possible.
 
@@ -1070,7 +1070,6 @@ a field (when the actual value of the field is unknown) is
 another aspect of the numerical accuracy, which is part of the
 \elem{VALUES} sub-element (see \Aref{sec:values}{below}).
 
-\iftrue 	% modified{1.2-090606}
 \subsection{Extended Datatype  \attr{xtype}} \label{sec:xtype}
 
 The \attr{xtype} attribute expands the basic
@@ -1078,7 +1077,6 @@ datatype primitives (in \Tref{primitives}{table of primitives})
 representing the storage units which are valid in any of the 
 VOTable serializations,
 and corresponds therefore exactly to the {\em FITS} definitions.
-\revision{2}{
 It fills the gap between the datatypes
 known by FITS and those required to express queries 
 (Astronomical Data Query Language or ADQL, see [13])
@@ -1099,41 +1097,6 @@ in this VOTable specification; it is expected however that
 common conventions will be adopted by the various components
 of the Virtual Observatory, in a way similar to the adoption of the
 Unified Content Descriptor (\Arefs{example1}{section 4.5})
-
-}{
-\par
-In order to avoid possible name collisions in the 
-contents of the \attr{xtype} attribute, it is recommended to
-use a {\em namespace prefix}: an example could be
-\attrval{xtype}{obj:position} where {\tt obj} represents
-the namespace (which should be specified by an {\tt xmlns} definition)
-and {\tt position} a name specific to the {\tt obj} context.
-
-There are however 2 values of  \attr{xtype} which have a particular 
-importance in the context of the IVOA:
-\begin{itemize}
-\item	\attrval{xtype}{iso8601} indicates a {\em  timestamp}
-	and follows the ISO-8601 standard to express a date/time
-	{\em restricted to UTC}, i.e. without any time
-	zone or daylight saving option. According to this
-	standard, a UTC date is written {\tt YYYY-MM-DDThh:mm:ss}
-	eventually followed by a decimal point and fractions of seconds.
-	In a VOTable, the \attrval{xtype}{iso8601} attribute requires 
-	the attribute
-	\attrval{datatype}{char}, and an arraysize which is at least 10
-	when a date is specified (no time); a timestamp accurate to
-	1s requires \attrval{arraysize}{19}.
-\item   \attrval{xtype}{STC-S} indicates a text representing a 
-	{\em space-time position} following the STC-S convention
-	(see Rots [10]). Since this convention expresses a spatial
-	or temporal coordinate or region
-	in the form of an ascii string, this attribute also requires 
-	\attrval{datatype}{char} and an appropriate \attr{arraysize} attribute.
-\end{itemize}
-}
-
-
-\fi
 
 \subsection{Units}
 \label{sec:unit}
@@ -1161,7 +1124,7 @@ units used for time, angle, distance and energy measurements.
 The Unified Content Descriptors (UCD) can be viewed as a 
 hierarchical glossary of the scientific meanings of the data 
 contained in the astronomical tables.
-\revision{2}{Two versions of UCDs have been developed:
+Two versions of UCDs have been developed:
 the initial version (UCD1) created at CDS, which uses
 atomic words separated by underscores (e.g. {\tt POS\_EQ\_RA\_MAIN});
 and a more flexible one, UCD1+ [4],
@@ -1170,16 +1133,9 @@ a reduced vocabulary of dot-separated atoms which can be
 combined with semi-colons (e.g. {\tt pos.eq.ra;meta.main}).
 UCD1+ usage is recommended, but applications using the older
 vocabulary are still acceptable in this version of VOTable.
-}{The initial version was created at CDS, but the UCD definition
-is currently evolving [4].}
 
-%The CDS in Strasbourg has used the metadata from thousands of
-%astronomical tables to make a hierarchical glossary of the scientific
-%meanings of the data in those tables [4]. Of 1600 entries in the
-%glossary, here are a few typical examples.
-
-\noindent A few typical examples \revision{2}{of UCD1+ definitions
- are}{taken from the original UCD design}:
+\noindent A few typical examples of UCD1+ definitions
+ are:
 
 \begin{tabular}{ll}
 {\literalvalue{phot.mag;em.opt.B}}        &  Blue magnitude \\
@@ -1316,14 +1272,9 @@ to be of type {\em string}
 It {\em must} also have a \attr{name} attribute,
 and {\em may} have the other attributes allowed in a \elem{PARAM}:
 \attr{ID}, \attr{ref}, \attr{unit}, \attr{ucd} and \attr{utype}.
-\revision{2}{ % 28-Sep-2009: Refused at RFC
 But unlike \elem{PARAM}, \elem{INFO} does not accept sub-elements:
 only text is acceptable in \elem{INFO}'s body. This limitation ensures full 
 compatibility with the previous versions of VOTable.
-}{
-And like the \elem{PARAM} element, \elem{INFO} may include the
-sub-elements \elem{DESCRIPTION}, \elem{VALUES} and \elem{LINK}.
-}
 
 \elem{INFO} is meant to convey informative details about the
 generation of the {VOTABLE} document.
@@ -1578,9 +1529,7 @@ FTP site:
    \attrval{arraysize}{*} \attrval{value}{VTel} \slash}\\
 \hspace*{0.5em}\elemdef{INFO}{ \attrval{name}{HISTORY}}\\
   \hspace*{1em}
-  \revision{2}{The very first Virtual Telescope observation made in 2002}{
-               \elemdef{DESCRIPTION}{}The very first Virtual Telescope 
-      observation made in 2002\elemdef{\slash DESCRIPTION}{}}\\
+  The very first Virtual Telescope observation made in 2002\\
 \hspace*{0.5em}\elemdef{\slash INFO}{} \\
 \hspace*{0.5em}\elemdef{TABLE}{} \\
 \hspace*{1.0em}\elemdef{FIELD}{{\rm\em\quad(insert field metadata here)} \slash}\\
@@ -2190,28 +2139,20 @@ version 1.1 are:
         to the {\em Space-Time Coordinate} (STC) data model
         (see \Arefs{sec:utype}{utype} and the IVOA note
         {\it Referencing STC in VOTable}[8])
-\revision{2}{
 \item  \elem{GROUP} may appear as a direct child of
 	\elem{VOTABLE} and \elem{RESOURCE} (where {\em COOSYS} was 
 	acceptable)
 \item  The usage of UCD1+ is recommended (\Arefs{sec:ucd}{section 4.5})
-}{}
 \item  The \attr{xtype} attribute was added 
 	(see  \Arefs{sec:xtype}{section 4.3})
 \item  The {\elem{INFO}} element (\Arefs{elem:INFO}{INFO}) is made 
-	\revision{2}{more similar}{similar}
+	more similar
         to the \elem{PARAM} element, but with \attrval{datatype}{char}
         and \attrval{arraysize}{*} (i.e. is a {\em String});
-	\revision{2}{ it may have attributes \attr{utype},  \attr{ucd},
-		\attr{ref}, \attr{unit}}{
-        \begin{itemize}
-        \item   may have attributes \attr{utype},  \attr{ucd}, 
-                 \attr{ref},  \attr{unit} 
-        \item   accept sub-elements \elem{DESCRIPTION}, 
-                \elem{VALUES} and \elem{LINK}
-        \end{itemize}}
+	it may have attributes \attr{utype},  \attr{ucd},
+		\attr{ref}, \attr{unit}
 \item  The {\elem{INFO}} element may occur before the closing
-        tags \revision{2}{}{\elem{/DATA},} \elem{/TABLE} and \elem{/RESOURCE} 
+        tags \elem{/TABLE} and \elem{/RESOURCE} 
         and \elem{/VOTABLE}
         (enables {\em post-operational diagnostics})
 \item  The {\elem{FIELDref}} and {\elem{PARAMref}} elements may have
@@ -2314,13 +2255,11 @@ Strasbourg}
 \noindent [11] {\it Registry of FITS conventions}
 \\ \hspace*{2em}{\url{http://fits.gsfc.nasa.gov/fits\_registry.html}}
 
-\revision{2}{\par
 \noindent [12] {\it Table Access Protocol}
 \\ \hspace*{2em}{\url{http://ivoa.net/Documents/latest/TAP.html}}
 \par
 \noindent [13] {\it IVOA Astronomical Data Query Language}
 \\ \hspace*{2em}{\url{http://ivoa.net/Documents/latest/ADQL.html}}
-}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%     A P P E N D I C E S
