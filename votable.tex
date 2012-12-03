@@ -858,10 +858,13 @@ and the nature of the link is indicated by the \attr{content-role} attribute.
 The URI should ideally be dereferenceable,
 but this is not an absolute requirement,
 and appropriate use of the URI depends on the content-role.
-For example, \attrval{content-role}{doc} indicates documentation,
-and in this case dereferencing the URI should yield a document,
-suitable for presentation to the user, describing the LINK's parent element.
-On the other hand \attrval{content-role}{type} indicates a type-like
+This document defines two values for the \attr{content-role} attribute.
+\attrval{content-role}{doc} indicates documentation,
+and in this case dereferencing the URI should yield a document
+suitable for presentation to the user which describes the LINK's parent element;
+appropriate behaviour for a client might be to pass the link to a browser
+for presentation.
+\attrval{content-role}{type} indicates a type-like
 relationship between the URI and the LINK's parent,
 and in this case the type is named by the URI string itself,
 while the content retrieved by dereferencing it, if any, is secondary.
@@ -874,9 +877,9 @@ but if it is absent, a doc-like role may be assumed.
 In addition the \elem{LINK} element
 may announce the MIME type of the data it references 
 with a \attr{content-type} attribute (e.g.\ \attrval{content-type}{image/fits}).
-Note however that this may be overridden
-by metadata received during the retrieval operation
-(e.g.\ the HTTP Content-Type header).
+Although this might be overridden by metadata received during the
+retrieval operation (e.g.\ the HTTP Content-Type header)
+it can serve as a hint to the application about what to expect.
 
 In the Astrores format, from which VOTable is derived, 
 there are additional semantics for the {\elem{LINK}}
