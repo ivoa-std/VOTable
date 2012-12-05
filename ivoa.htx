@@ -35,7 +35,7 @@
   \tag{link href="http://www.ivoa.net/misc/ivoa_rec.css" rel="stylesheet" 
        type="text/css"}
   \else
-  \tag{link href="http://www.ivoa.net/misc/ivoa_wg.css" rel="stylesheet" 
+  \tag{link href="http://www.ivoa.net/misc/ivoa_wd.css" rel="stylesheet" 
        type="text/css"}
   \fi
  \end{HEAD}
