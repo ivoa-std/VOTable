@@ -52,13 +52,7 @@ votable.html: votable.tex votable.htx $(CGIPRINT) binary.png binary2.png \
 	$(CGIPRINT) votable.htx > votable.html
 
 votable.tar: votable.html votable.htx votable.pdf $(IMGs) $(XSD)
-	$(MAKE) votable.html
-	$(MAKE) votable.pdf
-	mv votable.html votable.tmp; trim votable.tmp | gawk '\
-	 { if(x<1) { if ($$0 == "") next; x++; sub(/^ */, "") } print}' \
-	 > votable.html; rm votable.tmp
 	tar cvf $@ votable.html votable.pdf $(IMGs) $(XSD)
-	gzip -v9 $@ 
 
 cgiprint/bin/cgiprint:
 	cd cgiprint && \
@@ -90,6 +84,7 @@ export:	CLEAN
 clean: 
 	rm -f votable.log votable.aux votable.out votable.toc
 	rm -f BinFigure.class binary.pdf binary2.pdf
+	rm -f votable.tar
 	cd cgiprint && rm -f cgiprint cgigraph cgiparm
 	cd cgiprint && rm -rf include lib bin
 	cd cgiprint && rm -f config.log config.status Makefile
