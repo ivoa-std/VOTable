@@ -37,6 +37,7 @@ BINFIGURE = java -classpath $(XDOC_CLASSPATH):. BinFigure
 # Files
 IMGs = circ2.gif leadsto2.gif oplus.gif serial.png binary.png binary2.png
 XSD  = VOTable.xsd
+UPLOAD_NAME = WD-VOTable-1.3-20121205
 
 default: votable.pdf votable.html
 
@@ -51,8 +52,16 @@ votable.html: votable.tex votable.htx $(CGIPRINT) binary.png binary2.png \
               VOTable.xsd stc_example1.vot stc_example2.vot
 	$(CGIPRINT) votable.htx > votable.html
 
-votable.tar: votable.html votable.htx votable.pdf $(IMGs) $(XSD)
-	tar cvf $@ votable.html votable.pdf $(IMGs) $(XSD)
+upload: $(UPLOAD_NAME).tar
+
+$(UPLOAD_NAME).tar: votable.html votable.pdf $(IMGs)
+	rm -rf tmp/
+	mkdir tmp
+	cp votable.html tmp/$(UPLOAD_NAME).html
+	cp votable.pdf tmp/$(UPLOAD_NAME).pdf
+	cp $(IMGs) tmp/
+	cd tmp; tar cvf ../$@ $(UPLOAD_NAME).html $(UPLOAD_NAME).pdf $(IMGs)
+	rm -rf tmp/
 
 cgiprint/bin/cgiprint:
 	cd cgiprint && \
@@ -92,5 +101,5 @@ clean:
 
 # Remove depedent files:
 CLEAN: clean
-	rm -f votable.pdf votable.html
+	rm -f votable.pdf votable.html $(UPLOAD_NAME).tar
 	rm -f binary.png binary2.png
