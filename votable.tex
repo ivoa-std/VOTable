@@ -1648,7 +1648,8 @@ Unused bits will be at the less-significant end of the final flag byte,
 and shall be unset (0).
 
 It is recommended, but not required, that cell values flagged as nulls
-are filled with with zero-valued bytes.
+are filled with with NaN values for floating point or complex datatypes,
+and zero-valued bytes for other datatypes.
 
 The way the stream of bytes is arranged for the data of the
 example in \Aref{example2}{section 5.1} is illustrated in
