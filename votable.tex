@@ -1636,7 +1636,8 @@ followed by the bytes for the BINARY serialization as described in the
 previous subsection.
 The null flags are stored as exactly one bit per table column, and the number
 of flag bytes is the smallest required for this purpose;
-an $N$-column table will therefore contain $(N+7)/8$ flag bytes per row.
+the number of flag bytes per row for an $N$-column table will therefore
+be the integer part of  $(N+7)/8$.
 The most significant bit of the first flag byte corresponds to the
 first column,
 the second most significant bit of the first flag byte to the second column,
