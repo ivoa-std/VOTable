@@ -1773,6 +1773,12 @@ applied. In future releases, we might allow more complex strings in
 the encoding attribute, allowing combinations of encoding filters and
 a way for the parser to find the software needed for the decoding.
 
+Note that for inline streamed data
+(a \elem{STREAM} with no \attr{href} attribute)
+it is effectively required to use \attrval{encoding}{base64},
+since of the available options only base64 will ensure that
+binary data is encoded as legal XML content.
+
 \subsection{Remote Data}
 
 If the encoding of the data produces text, or if the serialization
