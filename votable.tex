@@ -858,16 +858,23 @@ and the nature of the link is indicated by the \attr{content-role} attribute.
 The URI should ideally be dereferenceable,
 but this is not an absolute requirement,
 and appropriate use of the URI depends on the content-role.
-This document defines two values for the \attr{content-role} attribute.
-\attrval{content-role}{doc} indicates documentation,
-and in this case dereferencing the URI should yield a document
-suitable for presentation to the user which describes the LINK's parent element;
-appropriate behaviour for a client might be to pass the link to a browser
-for presentation.
-\attrval{content-role}{type} indicates a type-like
-relationship between the URI and the LINK's parent,
-and in this case the type is named by the URI string itself,
-while the content retrieved by dereferencing it, if any, is secondary.
+This document defines two values for the \attr{content-role} attribute:
+
+\begin{itemize}
+\item \attrval{content-role}{doc} indicates documentation.
+      Dereferencing the URI should yield a document suitable for
+      presentation to the user which describes the LINK's parent element.
+      If the URI can produce more than one type, a human-readable response
+      must be the default.
+      Appropriate behaviour for a client might be to pass the link to a browser
+      for presentation.
+
+\item \attrval{content-role}{type} indicates a type-like relationship
+      between the URI and the LINK's parent.
+      The type is named by the URI string itself,
+      while the content retrieved by dereferencing it, if any, is secondary.
+\end{itemize}
+
 Beyond these two examples, the values and semantics of
 the \attr{content-role} attribute are to be defined outside of this
 VOTable specification.
