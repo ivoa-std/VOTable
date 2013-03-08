@@ -1262,8 +1262,10 @@ when unparsable data is found, and the null value will be substituted
 instead.
 The value of the \attr{null} attribute must follow the same rules
 as the TABLEDATA serialization for the appropriate datatype
-described in \Aref{sec:datatypes}{section 6}, and may never
-contain an array value.
+described in \Aref{sec:datatypes}{section 6},
+and may never contain an array value.
+This mechanism is only intended for use with integer types;
+it should not be used for floating point types, which can use NaN instead.
 
 This mechanism for representing null values is required for integer
 columns in the \elem{BINARY} serialization.
@@ -1702,8 +1704,8 @@ is not always possible.
 
 Some other subtleties concerning null values should also be mentioned:
 \begin{itemize}
-\item Individual elements of an array-valued cell can be marked as null only
-      by use of the \elem{VALUES}/\attr{null} mechanism, which operates on a
+\item The only way to mark as null individual elements of an array-valued cell
+      is by use of the magic value mechanism, which operates on a
       per-element basis.  It is not possible to denote a null cell
       of an array-valued column using the magic value approach.
 \item In TABLEDATA array-valued columns, a null value and a zero-length
@@ -1718,6 +1720,10 @@ Some other subtleties concerning null values should also be mentioned:
       For many purposes, the distinction between NaN and null is not
       important, and in such cases use of NaN can be more convenient
       than formally marking cells as null.
+\item The magic value mechanism, as in FITS, is only intended for integer
+      values.  Historically it has not been explicitly forbidden for
+      floating point values, but such use is strongly deprecated in favour
+      of the use of NaN.
 \item Combining the two approaches is not encouraged,
       and use of the \elem{VALUES} \attr{null} attribute is deprecated
       where it can be avoided (marking null cells in TABLEDATA and BINARY2
@@ -2231,6 +2237,7 @@ version 1.2 are:
 \item In view of the new options for flagging null values introduced by the
       BINARY2 and TABLEDATA changes above, use of the
       \elem{VALUES} \attr{null} attribute is now deprecated in most cases.
+      It is in any case explicitly deprecated for non-integer values.
 \item The description of the \elem{LINK} element (\Aref{sec:link}{section 3.5})
       has been clarified, and a new \attrval{content-role}{type}
       example added.
