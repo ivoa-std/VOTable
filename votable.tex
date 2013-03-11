@@ -1717,9 +1717,11 @@ Some other subtleties concerning null values should also be mentioned:
       represented by the string ``NaN'' or by a suitable IEEE bit pattern
       as appropriate.
       This option is suitable for scalar, complex, and array-valued columns.
-      For many purposes, the distinction between NaN and null is not
-      important, and in such cases use of NaN can be more convenient
-      than formally marking cells as null.
+      For most purposes, the distinction between NaN and null is not
+      significant, and VOTable implementations are not required to distinguish
+      these cases.  However, the BINARY2 encoding does provide the option
+      to represent them differently for specialised applications where
+      that is desirable.
 \item The magic value mechanism, as in FITS, is only intended for integer
       values.  Historically it has not been explicitly forbidden for
       floating point values, but such use is strongly deprecated in favour
@@ -2237,7 +2239,8 @@ version 1.2 are:
 \item In view of the new options for flagging null values introduced by the
       BINARY2 and TABLEDATA changes above, use of the
       \elem{VALUES} \attr{null} attribute is now deprecated in most cases.
-      It is in any case explicitly deprecated for non-integer values.
+      It is in any case explicitly deprecated for floating point values,
+      in favour of NaN.
 \item The description of the \elem{LINK} element (\Aref{sec:link}{section 3.5})
       has been clarified, and a new \attrval{content-role}{type}
       example added.
