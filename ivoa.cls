@@ -323,7 +323,7 @@
     \ifx\@editor\@undefined
     \else
     \item{}
-    {\large\sffamily\bfseries Editor(s):\par\indent}%
+    {\large\sffamily\bfseries Editors:\par\indent}%
     {\@editor}%
     \vskip 1.0em%
     \fi

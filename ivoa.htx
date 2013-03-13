@@ -72,8 +72,8 @@
  \par\term{{\bf This version}:} \Vurlthisversion
  \par\term{{\bf Latest version}:} \Vurllastversion
  \par\term{{\bf Previous version(s)}:} \Vpreviousversion
- \par\term{{\bf Editor(s)}:} \Veditor
- \par\term{{\bf Author(s)}:} 
+ \par\term{{\bf Editors}:} \Veditor
+ \par\term{{\bf Authors}:} 
  \begin{tabular}{ll}
  \Vauthor
  \end{tabular}
