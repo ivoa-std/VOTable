@@ -157,7 +157,7 @@
 % Provide a title for your document
 \title{VOTable Format Definition}
 % Give date and version number
-\date{2013-03-13 (Volute $\mbox{}$Revision$\mbox{}$)}
+\date{2013-03-15 (Volute $\mbox{}$Revision$\mbox{}$)}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
@@ -171,7 +171,7 @@
         \hspace*{1.7em}
         Mark Taylor}
 \urlthisversion{%\par\noindent {\bf This version:}\\
-  \url{http://www.ivoa.net/Documents/VOTable/20130313/}} 
+  \url{http://www.ivoa.net/Documents/VOTable/20130315/}} 
 \urllastversion{%\par\noindent {\bf Latest version:}\\
   %\hspace*{5em}
   \url{http://www.ivoa.net/Documents/latest/VOT.html}}
@@ -2249,6 +2249,10 @@ version 1.2 are:
 \item The description of the \elem{LINK} element (\Aref{sec:link}{section 3.5})
       has been clarified, and a new \attrval{content-role}{type}
       example added.
+\item The schema datatype declaration of the \elem{LINK} \attr{content-type}
+      attribute has been changed from {\tt NMTOKEN} to {\tt token}.
+      The {\tt NMTOKEN} datatype in VOTable 1.2 was a mistake, since it
+      would not have permitted the MIME type example in the text.
 \item The MIME type section (now \Aref{sec:mime}{section 8}) now describes
       the new {\tt serialization} parameter that can be used to specify
       serialization type.
