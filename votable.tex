@@ -25,6 +25,7 @@
 \def\Fref#1#2{\Aref{#1}{#2}}
 \def\twikiname#1#2{\makebox[10em][l]{\qquad\A{http://www.ivoa.net/twiki/bin/view/IVOA/#1}{#2}}}
 \def\verbatiminput#1{\inputverbatim{#1}}
+\def\texorpdfstring#1#2{#1}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \cgidef{ -tex
 \filex  html
@@ -732,7 +733,8 @@ given in [7].
 VOTables which contain appropriate fields are encouraged to declare
 their STC metadata in this way if possible.
 
-\subsection{\attr{name}, \attr{ID} and \attr{ref} attributes}
+\subsection{\texorpdfstring{\attr{name}, \attr{ID} and \attr{ref} attributes}
+                           {name, ID and ref attributes}}
 \label{sec:name}
 
 Most of the elements defined by VOTable may have or have to have {\em names},
@@ -775,7 +777,8 @@ between a \elem{TABLE} and its corresponding closing \elem{\slash TABLE} tag,
 {\attr{name}} attributes of \elem{FIELD}, \elem{PARAM} and
 optional \elem{GROUP} elements should be all different.
 
-\subsection{\elem{VOTABLE} Element}
+\subsection{\texorpdfstring{\elem{VOTABLE} Element}
+                           {VOTABLE Element}}
 \label{sec:definitions}
 
 The \elem{VOTABLE} element may contain definitions consisting of
@@ -814,7 +817,8 @@ the coordinate systems used in the data conveyed in a VOTable.
 A dedicated note on {\em Referencing STC in VOTable} [7]
 describes in more detail how to express the coordinate components.
 
-\subsection{\elem{RESOURCE} Element}
+\subsection{\texorpdfstring{\elem{RESOURCE} Element}
+                           {RESOURCE Element}}
 \label{sec:resource}
 \label{elem:RESOURCE}
 
@@ -846,7 +850,8 @@ Finally, the \elem{RESOURCE} element may have a \attr{utype} attribute
 to link the element to some external data model 
 (introduced in version 1.1, see \Aref{sec:utype}{section 4.6}).
 
-\subsection{\elem{LINK} Element}
+\subsection{\texorpdfstring{\elem{LINK} Element}
+                           {LINK Element}}
 \label{sec:link}
 \label{elem:LINK}
 
@@ -898,7 +903,8 @@ URLs. This behavior is explained in \Arefx{LINK}{Appendix A.1},
 and it represents
 a possible extension of VOTable.
 
-\subsection{\elem{TABLE} Element}
+\subsection{\texorpdfstring{\elem{TABLE} Element}
+                           {TABLE Element}}
 \label{elem:TABLE}
 
 The \elem{TABLE} element represents the basic data structure in VOTable;
@@ -947,7 +953,8 @@ Finally, the \elem{TABLE} element may have a \attr{utype} and \attr{ucd}
 attribute to specify the table semantics, similarly to  the \elem{FIELD} and
 \elem{PARAM} elements (see \Aref{elem:FIELD}{section 4.1}).
 
-\section{\elem{FIELD}s and \elem{PARAM}eters}
+\section{\texorpdfstring{\elem{FIELD}s and \elem{PARAM}eters}
+                        {FIELDs and PARAMeters}}
 \label{sec:field}
 
 The atoms of the table structure are represented by \elem{FIELD} and
@@ -1089,7 +1096,8 @@ a field (when the actual value of the field is unknown) is
 another aspect of the numerical accuracy, which is part of the
 \elem{VALUES} sub-element (see \Aref{sec:values}{below}).
 
-\subsection{Extended Datatype  \attr{xtype}} \label{sec:xtype}
+\subsection{\texorpdfstring{Extended Datatype \attr{xtype}}
+                           {Extended Datatype xtype}} \label{sec:xtype}
 
 The \attr{xtype} attribute expands the basic
 datatype primitives (in \Tref{primitives}{table of primitives})
@@ -1164,7 +1172,8 @@ vocabulary are still acceptable in this version of VOTable.
 \end{tabular}
 
 
-\subsection{The \attr{utype} Attribute}
+\subsection{\texorpdfstring{The \attr{utype} Attribute}
+                           {The utype Attribute}}
 \label{sec:utype}
 In many contexts, it is important to specify that \elem{FIELD}s or 
 \elem{PARAM}eters convey the values defined in an external {\em data
@@ -1202,7 +1211,8 @@ a VOTable document to the STC model. Other examples and
 details are presented in the dedicated note
 {\em``Referencing STC in VOTable''} [7].
 
-\subsection{\elem{VALUES} Element}
+\subsection{\texorpdfstring{\elem{VALUES} Element}
+                           {VALUES Element}}
 \label{sec:values}
 
 The {\elem{VALUES}} element of the {\elem{FIELD}}
@@ -1285,7 +1295,8 @@ When specified, the  \attr{ref} attribute completely defines
 the domain without any other element or attribute, e.g.
 \elemdef{VALUES}{ \attrval{ref}{RAdomain}\slash}.
 
-\subsection{\elem{INFO} Element}
+\subsection{\texorpdfstring{\elem{INFO} Element}
+                           {INFO Element}}
 \label{elem:INFO}
 The \elem{INFO} element is a {\elem{PARAM}} element restricted 
 to be of type {\em string}
@@ -1305,7 +1316,8 @@ or at the end of a \elem{TABLE}. Typical uses of \elem{INFO}
 include error reports, or explanations about choices made by the
 data processing system which generates the VOTable document.
 
-\subsection{GROUPing \elem{FIELD}s and \elem{PARAM}eters}
+\subsection{\texorpdfstring{GROUPing \elem{FIELD}s and \elem{PARAM}eters}
+                           {GROUPing FIELDs and PARAMeters}}
 \label{sec:group}
 \label{elem:GROUP}
 \label{elem:FIELDref}
@@ -1443,7 +1455,8 @@ VOTable.
 The serialization elements and their attributes are
 described in the next sections.
 
-\subsection{\elem{TABLEDATA} Serialization}
+\subsection{\texorpdfstring{\elem{TABLEDATA} Serialization}
+                           {TABLEDATA Serialization}}
 \label{sec:TABLEDATA}
 \label{elem:TD}
 \label{elem:TR}
@@ -1517,7 +1530,8 @@ the white space is significant for \literalvalue{char} or
 {\fg{DarkPurple}\verb+<TD> Apple</TD>+} are {\em not} identical.
 
 
-\subsection{\elem{FITS} Serialization}
+\subsection{\texorpdfstring{\elem{FITS} Serialization}
+                           {FITS Serialization}}
 \label{sec:FITS}
 \label{elem:FITS}
 
@@ -1568,7 +1582,8 @@ numbered from 1 up, the main header being numbered 0), and the
 these.
 
 
-\subsection{\elem{BINARY} Serialization}
+\subsection{\texorpdfstring{\elem{BINARY} Serialization}
+                           {BINARY Serialization}}
 \label{sec:BIN}
 
 The binary format is intended to be easy to read by parsers, so
@@ -1626,7 +1641,8 @@ an alternative, providing more straightforward null-flagging capabilities.
 In VOTable 1.3 BINARY remains a legal serialization, but for most
 purposes VOTable producers are advised to use BINARY2 instead.
 
-\subsection{\elem{BINARY2} Serialization}
+\subsection{\texorpdfstring{\elem{BINARY2} Serialization}
+                           {BINARY2 Serialization}}
 \label{sec:BIN2}
 
 The BINARY2 format, introduced at VOTable 1.3, is the same as BINARY,
@@ -2696,7 +2712,8 @@ a set of tables (resource) in addition to its description.
 Providing descriptions in several languages would be another
 obvious advantage of this extension.
 
-\subsection{A New {\tt XMLDATA} Serialization}
+\subsection{\texorpdfstring{A New {\tt XMLDATA} Serialization}
+                           {A New XMLDATA Serialization}}
 % Following discussions Tony Linde / Roy Williams
 % in January 2004 on the VOTable group
 In order to facilitate the  use of standard XML query tools 
