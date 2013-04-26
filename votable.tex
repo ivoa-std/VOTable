@@ -881,6 +881,12 @@ This document defines two values for the \attr{content-role} attribute:
       between the URI and the LINK's parent.
       The type is named by the URI string itself,
       while the content retrieved by dereferencing it, if any, is secondary.
+      This content-role value would for instance be appropriate
+      to mark the LINK's href value as a SKOS concept, e.g.:
+      \begin{verbatim}
+   <LINK content-role="type"
+         href="http://purl.org/astronomy/vocab/PhysicalQuantities/Distance"/>
+      \end{verbatim}
 \end{itemize}
 
 Beyond these two examples, the values and semantics of
@@ -2263,7 +2269,7 @@ version 1.2 are:
       usage and encoding for null values.
 \item The description of the \elem{LINK} element (\Aref{sec:link}{section 3.5})
       has been clarified, and a new \attrval{content-role}{type}
-      example added.
+      example added, with discussion of its application to SKOS concepts.
 \item The schema datatype declaration of the \elem{LINK} \attr{content-type}
       attribute has been changed from {\tt NMTOKEN} to {\tt token}.
       The {\tt NMTOKEN} datatype in VOTable 1.2 was a mistake, since it
