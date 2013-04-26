@@ -1223,8 +1223,7 @@ we could rewrite the RA field definition as:
 \ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
 \else\begingroup\small\fi
 \begin{verbatim}
-      <FIELD name="RA" ID="col1" ucd="pos.eq.ra;meta.main" ref="J2000" 
-             utype="stc:AstroCoords.Position2D.Value2.C1"
+      <FIELD name="RA" ID="col1" ucd="pos.eq.ra;meta.main"
              datatype="float" width="6" precision="2" unit="deg">
         <VALUES ID="RAdomain">
           <MIN value="0"/>
@@ -2728,9 +2727,9 @@ the following:
   <FIELD name="Number" ID="M" ucd="meta.record" datatype="int" >
     <DESCRIPTION>Messier Number</DESCRIPTION>
   </FIELD>
-  <FIELD name="R.A.2000" ID="RA" ucd="pos.eq.ra;meta.main" ref="J2000" 
+  <FIELD name="R.A.2000" ID="RA" ucd="pos.eq.ra;meta.main"
          unit="deg" datatype="float" width="5" precision="1" />
-  <FIELD name="Dec.2000" ID="DE" ucd="pos.eq.dec;meta.main" ref="J2000" 
+  <FIELD name="Dec.2000" ID="DE" ucd="pos.eq.dec;meta.main"
          unit="deg" datatype="float" width="5" precision="1" />
   <FIELD name="Name" ID="N" ucd="meta.id" datatype="char" arraysize="*">
     <DESCRIPTION>Common name used to designate the Messier object</DESCRIPTION>
