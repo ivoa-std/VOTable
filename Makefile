@@ -35,20 +35,22 @@ XDOC_CLASSPATH = figicon/xdoc.jar:figicon/epsgraphics.jar:figicon/Text_shrunk.ja
 BINFIGURE = java -classpath $(XDOC_CLASSPATH):. BinFigure
 
 # Files
-IMGs = circ2.gif leadsto2.gif oplus.gif serial.png binary.png binary2.png
+IMGs = circ2.gif leadsto2.gif oplus.gif serial.png binary.png binary2.png \
+       ivoa-archi.png
 XSD  = VOTable.xsd
 UPLOAD_NAME = PR-VOTable-1.3-20130315
 
 default: votable.pdf votable.html
 
 votable.pdf: votable.tex VOTable.attr.tex  VOTable.elem.tex \
-             serial.png binary.pdf binary2.pdf \
+             serial.png binary.pdf binary2.pdf ivoa-archi.pdf \
              VOTable.xsd stc_example1.vot stc_example2.vot
 	pdflatex votable && \
 	pdflatex votable && \
 	pdflatex votable
 
-votable.html: votable.tex votable.htx $(CGIPRINT) binary.png binary2.png \
+votable.html: votable.tex votable.htx $(CGIPRINT) \
+              binary.png binary2.png ivoa-archi.png \
               VOTable.xsd stc_example1.vot stc_example2.vot
 	$(CGIPRINT) votable.htx > votable.html
 
@@ -84,6 +86,9 @@ binary2.png: BinFigure.class
 binary2.pdf: BinFigure.class
 	$(BINFIGURE) -pdf BINARY2 >$@
 
+ivoa-archi.png: ivoa-archi.pdf
+	convert -antialias -resize 800 $< $@
+
 # Make export tar
 export:	CLEAN
 	h=`pwd`;d=`basename $$h`; tar cvf /tmp/$$d.tar -C .. $$d; \
@@ -102,4 +107,4 @@ clean:
 # Remove depedent files:
 CLEAN: clean
 	rm -f votable.pdf votable.html $(UPLOAD_NAME).tar
-	rm -f binary.png binary2.png
+	rm -f binary.png binary2.png ivoa-archi.png

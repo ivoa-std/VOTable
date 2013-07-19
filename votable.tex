@@ -404,6 +404,39 @@ Element and attribute names are further distinguished in
 this paper by being typed with a {\attr{red fixed-width}} font,
 and the values of the attributes typed in \literalvalue{magenta}.
 
+\subsection{VOTable in the VO Architecture}
+\label{sec:voarch}
+
+\ifhtx\begin{tabular}{c}
+\tag{IMG SRC="ivoa-archi.png" ALT="VOTable in IVOA Architecture"
+     ALIGN="LEFT" BORDER="0"}
+\end{tabular}
+\else
+\begin{figure}[h]
+\includegraphics[width=\textwidth]{ivoa-archi.pdf}
+\caption{\label{fig:vo-arch}VOTable in the IVOA Architecture}
+\end{figure}
+\fi
+
+VOTable is a core IVOA standard like ADQL, UCD, STC etc.
+
+Wherever tabular data is transferred between Virtual Observatory components,
+VOTable provides the preferred serialization format.
+Since tables are used to list available resources as well as to
+represent science data which is itself tabular,
+this means that VOTable is used pervasively in the definitions
+of the Data Access protocols (SCS, SIA, SSA, TAP),
+and hence for exchange of data and metadata
+between user layer applications and data-providing services.
+VOTable is also used as a serialization format for
+some of the IVOA Data Models.
+
+In order to represent semantically rich metadata, VOTable relies on
+the other IVOA standards UCD, Utype, Units and STC.
+This document explains how information structured according to those
+standards are managed within the VOTable framework.
+
+
 \section{Data Model}
 
 In this section we define the data model of a VOTable, and in the
@@ -2285,6 +2318,8 @@ version 1.2 are:
       an update of advice rather than a change to the normative part
       of the VOTable standard.  Additionally, text has been added
       encouraging declaration of the STC metadata where possible.
+\item A new \Aref{sec:voarch}{section 1.4} has been added explaining
+      the place of VOTable in the IVOA Architecture.
 \end{itemize}
 \ifhtx\End{tabular}\fi
 
