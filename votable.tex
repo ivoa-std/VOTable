@@ -1361,12 +1361,10 @@ data processing system which generates the VOTable document.
 \label{elem:FIELDref}
 \label{elem:PARAMref}
 
-The \elem{GROUP} element was introduced in VOTable 1.1
-to group together a set of \elem{FIELD}s
+The \elem{GROUP} element is used 
+to group together a set of \elem{FIELD}s and \elem{PARAM}s
 which are logically connected, like a value and its error. 
-However, in order to avoid any confusion with the first
-version of VOTable which did not include \elem{GROUP},
-all \elem{FIELD}s are always defined {\em outside} any group,
+The \elem{FIELD}s are always defined {\em outside} any group,
 and the \elem{GROUP} designates its member fields via  
 \elem{FIELDref} elements.
 
