@@ -789,9 +789,10 @@ there must exist an element in the same document with the
 \attrval{ID}{myStar} attribute. The XML standard moreover specifies
 that an {\em ID} type is a string beginning with a letter or 
 underscore ({\tt{\_}}),
-followed by a sequence of letters, digits, or any of the
-punctuation characters {\tt.} (dot), {\tt-} (dash) or {\tt\_} (underscore),
-but not the {\tt:} (colon). Therefore \attrval{ID}{1} is {\em not} valid,
+followed by a sequence of Unicode letters, digits, or any of the
+punctuation characters {\tt.} (dot), {\tt-} (dash) or {\tt\_} (underscore).
+The {\tt:} (colon) is reserved for namespace use and should be avoided.
+Therefore \attrval{ID}{1} is {\em not} valid,
 but \attrval{ID}{\_1} or \attrval{ID}{ref.1} are both valid.
 
 The {\attr{ID}} attribute %(as defined by Xpointer standard) 
