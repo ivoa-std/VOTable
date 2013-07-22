@@ -2291,13 +2291,13 @@ version 1.2 are:
       (previously it indicated NaN for floating point types).
       This change means that the different serializations no longer have
       exactly the same capabilities for data representation.
+\item A new \Aref{sec:NULL}{section 5.5} has been added to clarify
+      usage and encoding for null values.
 \item In view of the new options for flagging null values introduced by the
       BINARY2 and TABLEDATA changes above, use of the
       \elem{VALUES} \attr{null} attribute is now deprecated in most cases.
       It is in any case explicitly deprecated for floating point values,
       in favour of NaN.
-\item A new \Aref{sec:NULL}{section 5.5} has been added to clarify
-      usage and encoding for null values.
 \item The description of the \elem{LINK} element (\Aref{sec:link}{section 3.5})
       has been clarified, and a new \attrval{content-role}{type}
       example added, with discussion of its application to SKOS concepts.
