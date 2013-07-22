@@ -1763,8 +1763,9 @@ Some other subtleties concerning null values should also be mentioned:
 \begin{itemize}
 \item The only way to mark as null individual elements of an array-valued cell
       is by use of the magic value mechanism, which operates on a
-      per-element basis.  It is not possible to denote a null cell
-      of an array-valued column using the magic value approach.
+      per-element basis.
+      Although the magic value approach can mark individual elements
+      of an array as null, it cannot mark a whole multi-element array as null.
 \item In TABLEDATA array-valued columns, a null value and a zero-length
       array are not distinguished.
       Since strings are represented as arrays of characters, this also
