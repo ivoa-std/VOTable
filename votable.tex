@@ -641,6 +641,13 @@ A convention to express an array of variable-length strings
 exists (see \Aref{sec:arraystring}{in the appendix}) but is not
 part of this standard.
 
+\textbf{Note:} \attr{arraysize} should be present if, and only if, each table
+cell for the \elem{FIELD} is intended to be treated as an array. 
+\attrval{arraysize}{1}
+should not be used, as it is interpreted differently by different
+clients at this point. If a future VOTable specification re-encourages
+its use, \attrval{arraysize}{1} will mean ``array of length 1''.
+
 \subsection{Compatibility with FITS Binary Tables}
 
 VOTable is closely compatible with the FITS Binary Table format.
@@ -1057,7 +1064,10 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
         the corresponding table cell contains more than one of the specified
         datatype, as explained in \Aref{sec:dim}{section 2.2}.
         Note that strings are not a primitive type,
-        and have to be described as an array of characters.
+        and have to be described as an array of characters.  The
+        arraysize attribute should be omitted unless the corresponding
+        table cell contents is intended to be understood as an array
+        (see also \Aref{sec:dim}{section 2.2}).
 
 \item   {\fg{black}}The \attr{width} and \attr{precision} attributes define the 
         numerical accuracy associated with the data 
