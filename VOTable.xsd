@@ -251,7 +251,7 @@
     Deprecated in Version 1.1
   </xs:documentation></xs:annotation>
   <xs:choice minOccurs="0" maxOccurs="unbounded">
-    <xs:element name="COOSYS" type="CoordinateSystem"/><!-- Deprecated in V1.2 -->
+    <xs:element name="COOSYS" type="CoordinateSystem"/>
     <xs:element name="PARAM" type="Param"/>
   </xs:choice>
 </xs:complexType>
@@ -514,7 +514,7 @@
     <xs:element name="DESCRIPTION" type="anyTEXT" minOccurs="0"/>
     <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/>
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="COOSYS" type="CoordinateSystem"/><!-- Deprecated in V1.2 -->
+      <xs:element name="COOSYS" type="CoordinateSystem"/>
       <xs:element name="GROUP" type="Group" />
       <xs:element name="PARAM" type="Param" />
     </xs:choice>
@@ -551,7 +551,7 @@
     <xs:element name="DESCRIPTION" type="anyTEXT" minOccurs="0"/>
     <xs:element name="DEFINITIONS" type="Definitions" minOccurs="0"/><!-- Deprecated -->
     <xs:choice minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="COOSYS" type="CoordinateSystem"/><!-- Deprecated in V1.2 -->
+      <xs:element name="COOSYS" type="CoordinateSystem"/>
       <xs:element name="GROUP" type="Group" />
       <xs:element name="PARAM" type="Param" />
       <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/>

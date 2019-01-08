@@ -746,7 +746,6 @@ followed by the data values
 This simple example of a VOTable document lists 3 galaxies with their
 position, velocity and error, and their estimated distance.
 
-%<!-- (deprecated) COOSYS ID="J2000" equinox="J2000." system="eq_FK5"-->
 \label{example1}
 \ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
 \else\begingroup\small
@@ -766,15 +765,6 @@ listed in the \elem{DATA} part of the table, here in  XML format
 and follow the same order as their \elem{FIELD} description:
 {\sl RA, Dec, Name, RVel, e\_RVel, R}.
 
-This example also contains a reference to the {\em Space-Time Coordinate} data model
-({\em STC}, A. Rots [8]) implicitly used to specify the system of coordinates
-used to locate the observed galaxies in the sky:
-this is an essential difference from versions of {\em VOTable}
-prior to 1.2, which made use of a \elem{COOSYS} element for this specification.
-A prescription for relating VOTable metadata to the STC data model is
-given in [7].
-VOTables which contain appropriate fields are encouraged to declare
-their STC metadata in this way if possible.
 
 \subsection{\texorpdfstring{\attr{name}, \attr{ID} and \attr{ref} attributes}
                            {name, ID and ref attributes}}
@@ -841,25 +831,20 @@ usage is deprecated since version 1.1.
 \subsubsection*{Space and Time coordinates}
 \label{elem:COOSYS}
 
-An essential difference with the version 1.1 of VOTable concerns 
-the way adopted in version 1.2 to describe the {\em coordinate system}:
-a dedicated \elem{COOSYS} element was defined in VOTable 1.0, 
-which is deprecated in
-versions 1.2 and later in  favor of a more generic facility of {\em
-referring to external data models}.
-
-The coordinates --- space and time, and eventually the spectral and
-redshift parameters --- are described in the {\em STC} model
-(A. Rots, see [8]), which specifies the various components
-and systems used in Astronomy to locate the events in time and
-space with a high accuracy.
-
-Starting with Version 1.2, {\em VOTable} makes use of the 
-\elem{GROUP} element (\Arefs{sec:group}{GROUP})  and the \attr{utype} attribute 
-(\Arefs{sec:utype}{utype}) to accurately describe 
-the coordinate systems used in the data conveyed in a VOTable.
-A dedicated note on {\em Referencing STC in VOTable} [7]
-describes in more detail how to express the coordinate components.
+This \elem{COOSYS} element defines a celestial coordinate system, to
+which the components of a position on the celestial sphere refer. It has
+an \attr{ID} attribute -- required if the \elem{COOSYS} element has to
+be referred to via the \attr{ref} attribute of the position components,
+which is generally the case --, a \attr{system} attribute which
+specifies the coordinate system among \verb|"ICRS"|, \verb|"eq_FK5"|,
+\verb|"eq_FK4"|, \verb|"ecl_FK4"|, \verb|"ecl_FK5"|, \verb|"galactic"|,
+\verb|"supergalactic"|. The \attr{equinox} attribute fixes the
+equatorial or ecliptic systems (as e.g., \verb|"J2000"| as the default
+for \verb|"eq_FK5"| or \verb|"B1950"| as the default for
+\verb|"eq_FK4"|), and \attr{epoch} specifies the epoch of the positions
+if necessary.  Note that the \elem{COOSYS} may be deprecated in the
+future in favor of a more generic way of describing the conventions used
+to define the positions of the objects studied in the enclosed tables.
 
 \subsection{\texorpdfstring{\elem{RESOURCE} Element}
                            {RESOURCE Element}}
@@ -1249,21 +1234,6 @@ The mapping of \literalvalue{datamodel\_identifier} to an xml-type attribute
 is recommended, by means of the {\tt xmlns} convention
 which specifies the URI of the data model cited, as done
 in the example of \Arefs{example1}{section 3.1}.
-
-The {\tt utype} attribute is especially useful to  specify
-the {\em spatial and temporal coordinates} present  in the table
-when it contains astronomical events: these parameters 
-are  essential to most applications which process multi-wavelength data.
-Within the IVOA, the spatial and temporal
-frames are described in the {\bf STC} data model (see Rots [8]),
-and it is expected that this {\em STC}-referencing replaces
-the usage of the \elem{COOSYS} defined in the version 1.0 of VOTable.
-
-The example given above (see \Arefs{example1}{section 3.1})
-gives an illustration of the recommended way of linking
-a VOTable document to the STC model. Other examples and
-details are presented in the dedicated note
-{\em``Referencing STC in VOTable''} [7].
 
 \subsection{\texorpdfstring{\elem{VALUES} Element}
                            {VALUES Element}}
@@ -2142,8 +2112,7 @@ it uses the following conventions:
 \item   \unorder{} {\em(open bullet)} indicates that the corresponding
         elements may occur in any order;
 \item   \choice{} marks a choice between alternatives. 
-\item   \deprecated{} marks a {\em deprecated} element (valid in Version 1.1,
-        discouraged in Version 1.2 and later)
+\item   \deprecated{} marks a {\em deprecated} element.
 \item   $\cdots$ (dots) indicate that an element
         may be repeated. 
 \item   \underline{underlined elements} may contain sub-elements,
@@ -2336,6 +2305,22 @@ version 1.2 are:
 \end{itemize}
 \ifhtx\End{tabular}\fi
 
+\subsection{Differences Between Versions 1.3 and 1.4}
+\label{diff1.3-1.4}
+The differences between version 1.4 of VOTable and the preceding
+version 1.3 are:
+
+\ifhtx\Beg{tabular}{\bg{LavenderBlush} CELLPADDING=4}{||p||}
+\fi
+\begin{itemize}
+\item Applying erratum VOTable 1.3-1, un-deprecating COOSYS.
+\item Applying erratum VOTable 1.3-2, permitting \verb|F0| in
+\attr{precision}.
+\item Applying erratum VOTable 1.3-3, carifying the meaning of
+\attrval{arraysize}{1}.
+\end{itemize}
+\ifhtx\End{tabular}\fi
+
 \section{References}
 \noindent [1] Accomazzi {\it  et. al, Describing Astronomical Catalogues and
 Query Results with XML
@@ -2368,9 +2353,6 @@ Strasbourg}
 
 \noindent [6] {\it XML Schema: W3C Document}
 \\ \hspace*{2em}{\url{http://www.w3.org/XML/Schema}}
-
-\noindent [7] {\it Referencing STC in VOTable}
-\\ \hspace*{2em}{\url{http://ivoa.net/Documents/latest/VOTableSTC.html}}
 
 \noindent [8] Arnold Rots
         {\it Space-Time Coordinate Metadata for the Virtual Observatory (v1.30)}
