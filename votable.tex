@@ -831,7 +831,7 @@ usage is deprecated since version 1.1.
 \subsubsection*{Space and Time coordinates}
 \label{elem:COOSYS}
 
-This \elem{COOSYS} element defines a celestial coordinate system, to
+The \elem{COOSYS} element defines a celestial coordinate system, to
 which the components of a position on the celestial sphere refer. It has
 an \attr{ID} attribute -- required if the \elem{COOSYS} element has to
 be referred to via the \attr{ref} attribute of the position components,
@@ -845,6 +845,44 @@ for \verb|"eq_FK5"| or \verb|"B1950"| as the default for
 if necessary.  Note that the \elem{COOSYS} may be deprecated in the
 future in favor of a more generic way of describing the conventions used
 to define the positions of the objects studied in the enclosed tables.
+
+The \elem{TIMESYS} element (introduced in VOTable 1.4) defines metadata
+for temporal coordinates.  As with \elem{COOSYS}, \elem{FIELD}s (and
+possibly \elem{PARAM}s) SHOULD reference the \elem{TIMESYS} giving their
+frame using the VOTable \attr{ref} attribute; absent such a \attr{ref},
+readers SHOULD assume the lexically first \elem{TIMESYS} element in the
+VOTable to be pertinent for time-like quantities.
+
+\elem{TIMESYS} has the following attributes:
+
+\begin{description}
+\item[\attr{ID}] This attribute is used to reference \elem{TIMESYS}
+elements from the elements using the time system.
+\item[\attr{timeorigin}] This is the time origin of the time coordinate,
+given as a Julian Date for the the time scale and reference point
+defined.  It is usually given as a floating point
+literal; for convenience, the magic strings \verb|MJD-origin| (standing
+for 2400000.5) and \verb|JD-origin| (standing for 0) are also allowed.
+The timeorigin attribute MUST be given unless the time's representation
+contains a year of a calendar era, in which case it MUST NOT be present.  
+In VOTables, these
+representations currently are Gregorian calendar years with
+\attrval{xtype}{timestamp}, or years in the Julian or Besselian calendar when a column
+has \verb|yr|, \verb|a| or \verb|Ba| as its unit and no time origin is 
+given. 
+\item[\attr{timescale}]  This is the time scale used.  Values SHOULD be
+taken from the IVOA \emph{timescale}
+vocabulary\footnote{\url{http://ivoa.net/rdf/timescale}}.  This
+attribute is mandatory.
+\item[\attr{refposition}] The reference position again is a simple string,
+the values of which SHOULD be taken from the IVOA \emph{refposition}
+vocabulary\footnote{\url{http://ivoa.net/rdf/refposition}}.  This
+attribute is mandatory.
+\end{description}
+
+Further (non-normative) information on best practices and usage patterns
+for \elem{TIMESYS} can be found in [13].
+
 
 \subsection{\texorpdfstring{\elem{RESOURCE} Element}
                            {RESOURCE Element}}
@@ -2370,6 +2408,10 @@ Strasbourg}
 \par
 \noindent [12] {\it IVOA Astronomical Data Query Language}
 \\ \hspace*{2em}{\url{http://ivoa.net/Documents/latest/ADQL.html}}
+\par
+\noindent [13] {\it A Proposal for a TIMESYS Element in VOTable}
+\\ \hspace*{2em}{\url{http://ivoa.net/documents/Notes/TimeSys/}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%     A P P E N D I C E S
