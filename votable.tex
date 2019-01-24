@@ -159,21 +159,24 @@
 \title{VOTable Format Definition}
 % Give date and version number
 % \date{2013-08-06 (Volute $\mbox{}$Revision$\mbox{}$)}
-\date{2013-09-20}
+\date{2019-01-24}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
 %\ivoatype{IVOA Working Draft}
 %\ivoatype{IVOA Proposed Recommendation}
-\ivoatype{IVOA Recommendation}
+\ivoatype{IVOA Working Draft}
 
-\version{1.3}
+\version{1.4}
 
 \editor{Fran\c cois {Ochsenbein}\\
         \hspace*{1.7em}
-        Mark Taylor}
+        Mark Taylor\\
+        \hspace*{1.7em}
+        Tom Donaldson}
 \urlthisversion{%\par\noindent {\bf This version:}\\
-  \url{http://www.ivoa.net/Documents/VOTable/20130920/}} 
+  %WD-VOTable-1.4-20190124
+  \url{http://www.ivoa.net/Documents/VOTable/20190124/}} 
 \urllastversion{%\par\noindent {\bf Latest version:}\\
   %\hspace*{5em}
   \url{http://www.ivoa.net/Documents/latest/VOT.html}}
@@ -187,6 +190,9 @@
   %\url{http://www.ivoa.net/internal/IVOA/IvoaVOTable/votable1.2-2009-06-12.pdf}
   %\quad V1.2 Working Draft (2009-06-13)  \hfill\\
   %\hspace*{1.8em}
+  \url{http://www.ivoa.net/documents/VOTable/20130920/}
+  \quad V1.3 (2013-09-20) \hfill\\
+  \hspace*{1.8em}
   \url{http://www.ivoa.net/Documents/VOTable/20091130/}
   \quad V1.2 (2009-11-30) \hfill\\
   \hspace*{1.8em}
@@ -716,13 +722,13 @@ tables without loss of information.
 \label{elem:VOTABLE}
 
 The overall VOTable document structure is described and controlled
-by its \A{http://www.ivoa.net/xml/VOTable/v1.3}{XML Schema}.
+by its \A{http://www.ivoa.net/xml/VOTable/v1.4}{XML Schema}.
 That means that documents claiming to represent VOTables must
 include the reference to the VOTable schema, and 
 pass through W3C XML Schema validators without error;
 notice that the validation is a necessary, {\em but not sufficient}, 
 condition for correctness.
-The XML Schema of this version 1.3 is included in 
+The XML Schema of this version 1.4 is included in 
 \Arefx{XML-schema}{Appendix B},
 and is illustrated in \Arefs{dtd}{section 7}.
 
@@ -830,6 +836,7 @@ usage is deprecated since version 1.1.
 
 \subsubsection*{Space and Time coordinates}
 \label{elem:COOSYS}
+\label{elem:TIMESYS}
 
 The \elem{COOSYS} element defines a celestial coordinate system, to
 which the components of a position on the celestial sphere refer. It has
@@ -1697,7 +1704,7 @@ empty \elem{TD} element is available for the BINARY serialization
 The BINARY serialization has been available in all versions of VOTable.
 From VOTable 1.3 however, the alternative BINARY2 serialization is
 an alternative, providing more straightforward null-flagging capabilities.
-In VOTable 1.3 BINARY remains a legal serialization, but for most
+In VOTable 1.3 and above BINARY remains a legal serialization, but for most
 purposes VOTable producers are advised to use BINARY2 instead.
 
 \subsection{\texorpdfstring{\elem{BINARY2} Serialization}
@@ -1808,7 +1815,7 @@ Some other subtleties concerning null values should also be mentioned:
 \item Combining the two approaches is not encouraged,
       and use of the \elem{VALUES} \attr{null} attribute is deprecated
       where it can be avoided (marking null cells in TABLEDATA and BINARY2
-      serializations in VOTable 1.3).
+      serializations in VOTable 1.3 and above).
       However, if it is present, the \elem{VALUES} \attr{null} attribute
       must always be respected.
 \item The {\em boolean} datatype has its own arrangements for representing
@@ -1831,7 +1838,7 @@ decoded by the VOTable reader. We might also use the encoding facilities to
 convert a binary file to text (through base64 encoding), so that binary 
 data can be used in the XML document.
 
-In this version (1.3) of VOTable, it is not possible to encode
+In this version (1.4) of VOTable, it is not possible to encode
 individual columns of the table: the whole table must be encoded in
 the same way. However, the possibility of encoding selected table cells
 is  being examined for future versions of VOTable
@@ -2130,11 +2137,11 @@ whitespace, representing the real and imaginary part respectively.
 
 
 \clearpage
-\section{A Simplified View of the VOTable 1.3 Schema}
+\section{A Simplified View of the VOTable 1.4 Schema}
 \label{dtd}
-The XML Schema [6] defining a VOTable 1.3 document
+The XML Schema [6] defining a VOTable 1.4 document
 is available from \ifhtx\else\\ \fi
-\url{http://www.ivoa.net/xml/VOTable/v1.3}
+\url{http://www.ivoa.net/xml/VOTable/v1.4}
 In this section we illustrate this XML Schema
 by a set of boxes describing the structure of a VOTable,
 and the list of attributes of each VOTable element.
@@ -2142,7 +2149,7 @@ and the list of attributes of each VOTable element.
 %\clearpage
 \subsection{Element Hierarchy}
 
-The hierarchy of the elements existing in VOTable 1.3 is illustrated below;
+The hierarchy of the elements existing in VOTable 1.4 is illustrated below;
 it uses the following conventions:
 \begin{itemize}
 \item   {\em italicized} text represents {\em optional} elements;
@@ -2180,7 +2187,7 @@ with the following conventions:
 \item   Attributes written in bold are \requiredattr{required attributes}
 \item   Attributes written in a {fixed font} are \attr{optional}.
 \item   Attributes written in {\it italics}
-        are not part of VOTable 1.3, but are {\it reserved}
+        are not part of VOTable 1.4, but are {\it reserved}
         for possible extensions (mentioned in an Appendix).
 \end{itemize}
 
@@ -2354,8 +2361,10 @@ version 1.3 are:
 \item Applying erratum VOTable 1.3-1, un-deprecating COOSYS.
 \item Applying erratum VOTable 1.3-2, permitting \verb|F0| in
 \attr{precision}.
-\item Applying erratum VOTable 1.3-3, carifying the meaning of
+\item Applying erratum VOTable 1.3-3, clarifying the meaning of
 \attrval{arraysize}{1}.
+\item Add a new TIMESYS element as a simple means for 
+     supplying metadata for time values in the VOTable.
 \end{itemize}
 \ifhtx\End{tabular}\fi
 
@@ -2843,9 +2852,9 @@ derived directly from the \attr{ID} attribute of the \elem{FIELD}
 element, their definition can be generated automatically from the set of
 \elem{FIELD} definitions.
 
-\section{The VOTable V1.3 XML Schema}
+\section{The VOTable V1.4 XML Schema}
 \label{XML-schema}
-The XML Schema of VOTable 1.3 is included here as a reference.
+The XML Schema of VOTable 1.4 is included here as a reference.
 \revision{2}{
 This schema includes a couple of extra optional attributes which are not
 part of VOTable-1.2 ({\em ID} in TR and {\em encoding} in TD),
@@ -2853,8 +2862,8 @@ but proved to be useful to fix some problems encountered in the
 usage of some code generators.
 }{}
 \ifhtx
-\W{xsd}{http://www.ivoa.net/xml/VOTable/v1.3}
-   {http://www.ivoa.net/xml/VOTable/v1.3}.
+\W{xsd}{http://www.ivoa.net/xml/VOTable/v1.4}
+   {http://www.ivoa.net/xml/VOTable/v1.4}.
 \par
 \Beg{tabular}{\bg{LavenderBlush} CELLPADDING=10}{||l||}
 \else
