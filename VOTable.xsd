@@ -252,11 +252,12 @@
 <xs:simpleType name="Timeorigin">
   <xs:annotation>
     <xs:documentation>
-      A time origin.  This is usually a floating point literal giving
-      a Julian date (for timescale and refposition of the embedding
-      timesys element).  For convenience, the magic strings "MJD-origin" 
-      (standing for 2400000.5) and "JD-origin" (standing for 0) are also 
-      allowed.
+        This is the time origin of the time coordinate, given as a 
+        Julian Date for the the time scale and reference point
+        defined.  It is usually given as a floating point
+        literal; for convenience, the magic strings “MJD-origin” 
+        (standing for 2400000.5) and “JD-origin” (standing for 0) 
+        are also allowed.    
     </xs:documentation>
   </xs:annotation>
   <xs:restriction base="xs:token">
@@ -272,14 +273,10 @@
       <xs:attribute name="timeorigin" type="Timeorigin">
         <xs:annotation>
           <xs:documentation>
-            This is the time origin of the time coordinate, given as a 
-            Julian Date for the the time scale and reference point
-            defined.  It is usually given as a floating point
-            literal; for convenience, the magic strings ”MJD-origin” 
-            (standing for 2400000.5) and “JD-origin” (standing for 0) 
-            are also allowed.  The timeorigin attribute MUST be given 
-            unless the time's representation contains a year of a calendar 
-            era, in which case it MUST NOT be present.
+          	The time origin is the offset or the time coordinate to Julian
+          	Date.  The timeorigin attribute MUST be given unless the time's
+          	representation contains a year of a calendar era, in which case it
+          	MUST NOT be present.
           </xs:documentation>
         </xs:annotation>
       </xs:attribute>
