@@ -159,7 +159,7 @@
 \title{VOTable Format Definition}
 % Give date and version number
 % \date{2013-08-06 (Volute $\mbox{}$Revision$\mbox{}$)}
-\date{2019-01-24}
+\date{2019-01-31}
 
 % Choose one document type from below
 %\ivoatype{IVOA Note}
@@ -175,8 +175,8 @@
         \hspace*{1.7em}
         Tom Donaldson}
 \urlthisversion{%\par\noindent {\bf This version:}\\
-  %WD-VOTable-1.4-20190124
-  \url{http://www.ivoa.net/Documents/VOTable/20190124/}} 
+  %WD-VOTable-1.4-20190131
+  \url{http://www.ivoa.net/Documents/VOTable/20190131/}} 
 \urllastversion{%\par\noindent {\bf Latest version:}\\
   %\hspace*{5em}
   \url{http://www.ivoa.net/Documents/latest/VOT.html}}
@@ -722,20 +722,12 @@ tables without loss of information.
 \label{elem:VOTABLE}
 
 The overall VOTable document structure is described and controlled
-by its \A{http://www.ivoa.net/xml/VOTable/v1.4}{XML Schema}.
-That means that documents claiming to represent VOTables must
-include the reference to the VOTable schema, and 
-pass through W3C XML Schema validators without error;
-notice that the validation is a necessary, {\em but not sufficient}, 
-condition for correctness.
-The XML Schema of this version 1.4 is included in 
-\Arefx{XML-schema}{Appendix B},
-and is illustrated in \Arefs{dtd}{section 7}.
+by its XML Schema [6].  For VOTable version 1.4, the schema is available 
+from \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}
+as well as in \Arefx{XML-schema}{Appendix B} of this document.
 
-A
- VOTable document consists of a single all-containing element
-called {\elem{VOTABLE}},
-which contains descriptive elements and global definitions
+A VOTable document consists of a single all-containing element
+called {\elem{VOTABLE}}, which contains descriptive elements and global definitions
 ({\elem{DESCRIPTION}}, \elem{GROUP}, \elem{PARAM}, \elem{INFO}),
 followed by one or more {\elem{RESOURCE}} elements.
 Each Resource element contains zero or more \elem{TABLE} elements,
@@ -747,9 +739,42 @@ a description of the columns and parameters
 followed by the data values 
 (described in \Aref{sec:data}{the following section}).
 
+As the root element, \elem{VOTABLE} has attributes which specify the VOTable version 
+number and XML namespaces used in the document. For VOTable 1.4, the \elem{VOTABLE}
+element MUST have at least these attributes:\newline
+\attrval{version}{1.4}\newline
+\attrval{xmlns:xsi}{http://www.w3.org/2001/XMLSchema-instance}\newline
+\attrval{xmlns}{http://www.ivoa.net/xml/VOTable/v1.3}\newline
+
+Note that starting with VOTable 1.3, the namespace URI value will remain fixed at \url{http://www.ivoa.net/xml/VOTable/v1.3}
+until the next major version (2.0).  For convenience, that namespace URI 
+will resolve as a URL to the latest recommended schema for VOTable version 1.x.  So when 1.4 becomes 
+the latest recommended VOTable version, \url{http://www.ivoa.net/xml/VOTable/v1.3}
+will return the same schema as \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd} until a version 1.5 
+becomes recommended.
+
+Documents claiming to represent VOTables must
+include the reference to the VOTable schema, and 
+pass through W3C XML Schema validators without error;
+notice that the validation is a necessary, {\em but not sufficient}, 
+condition for correctness.
+
+Before VOTable 1.4 becomes recommended, this \elem{VOTABLE} attribute will reference
+the version 1.4 schema:
+\begin{verbatim}
+	   xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 
+	   http://www.ivoa.net/xml/VOTable/votable-1.4.xsd"
+\end{verbatim}
+Once VOTable version 1.4 becomes recommended, the following schema reference will 
+be upward compatible until the next major version (2.0): 
+\begin{verbatim}
+	   xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 
+	   http://www.ivoa.net/xml/VOTable/v1.3"
+\end{verbatim}
+
 \subsection{Example}
 
-This simple example of a VOTable document lists 3 galaxies with their
+This simple example of a VOTable document lists 3 galaxies with their 
 position, velocity and error, and their estimated distance.
 
 \label{example1}
@@ -759,7 +784,6 @@ position, velocity and error, and their estimated distance.
 \verbatiminput{stc_example1.vot}
 \ifhtx\End{tabular}
 \else
-%\caption{\label{example1}A simple VOTable example}
 \endgroup
 \fi
 
@@ -769,7 +793,7 @@ one additional \elem{PARAM} parameter (the Telescope). The actual rows are
 listed in the \elem{DATA} part of the table, here in  XML format 
 (introduced by \elem{TABLEDATA}); each cell is marked by the \elem{TD} element, 
 and follow the same order as their \elem{FIELD} description:
-{\sl RA, Dec, Name, RVel, e\_RVel, R}.
+{\sl RA, Dec, Name, RVel, e\_RVel, R}.  
 
 
 \subsection{\texorpdfstring{\attr{name}, \attr{ID} and \attr{ref} attributes}
@@ -826,17 +850,17 @@ a \elem{DESCRIPTION}, followed by any mixture of parameters and
 informative notes eventually structured in {\em groups}.
 These elements represent values which are meaningful over all tables
 included in a \elem{VOTABLE} document --- definitions specific to
-a \elem{RESOURCE} (\Aref{elem:RESOURCE}{section 3.4})
-or a \elem{TABLE} (\Aref{elem:TABLE}{section 3.6}) are better placed 
+a \elem{RESOURCE} (\Aref{elem:RESOURCE}{section 3.6})
+or a \elem{TABLE} (\Aref{elem:TABLE}{section 3.8}) are better placed 
 within their most appropriate element.
 
 Note that version 1.0 of VOTable required the usage of a \elem{DEFINITIONS}
 element holding the VOTable global definitions --- this
 usage is deprecated since version 1.1.
 
-\subsubsection*{Space and Time coordinates}
+\subsection{\texorpdfstring{\elem{COOSYS} Element}
+	{COOSYS Element}}
 \label{elem:COOSYS}
-\label{elem:TIMESYS}
 
 The \elem{COOSYS} element defines a celestial coordinate system, to
 which the components of a position on the celestial sphere refer. It has
@@ -853,12 +877,20 @@ if necessary.  Note that the \elem{COOSYS} may be deprecated in the
 future in favor of a more generic way of describing the conventions used
 to define the positions of the objects studied in the enclosed tables.
 
+A \elem{COOSYS} element referenced via a \attr{ref} attribute
+SHOULD appear before the element that references it.
+
+\subsection{\texorpdfstring{\elem{TIMESYS} Element}
+	{TIMESYS Element}}
+\label{elem:TIMESYS}
+
 The \elem{TIMESYS} element (introduced in VOTable 1.4) defines metadata
 for temporal coordinates.  As with \elem{COOSYS}, \elem{FIELD}s (and
 possibly \elem{PARAM}s) SHOULD reference the \elem{TIMESYS} giving their
 frame using the VOTable \attr{ref} attribute; absent such a \attr{ref},
 readers SHOULD assume the lexically first \elem{TIMESYS} element in the
-VOTable to be pertinent for time-like quantities.
+VOTable to be pertinent for time-like quantities. A \elem{TIMESYS} element referenced via a \attr{ref} attribute
+MUST appear before the element that references it.
 
 \elem{TIMESYS} has the following attributes:
 
@@ -887,8 +919,32 @@ vocabulary\footnote{\url{http://ivoa.net/rdf/refposition}}.  This
 attribute is mandatory.
 \end{description}
 
+The example below shows a VOTable in which each row would have an observation time, 
+a flux, and a magnitude.  The observation time values are given in days since 
+Julian Date 2455197.5 (the time origin for the Gaia observatory) in the Barycentric Coordinate 
+Time (TCB) time scale, with the reference position being the barycenter of the solar system.
+
+The \elem{TIMESYS} element defines such a time system and gives itself the identifies itself with \attrval{ID}{time\_frame}.
+Then the \attr{obs\_time} \elem{FIELD} indicates that its values should be interpreted in that time system by referring
+back to the \elem{TIMESYS} element using \attrval{ref}{time\_frame}.
+
+Similarly, the \elem{COOSYS} element defines the coordinate system, and is referred to by the  \attr{ra} 
+and  \attr{dec} \elem{PARAM} elements.  Note that since the sky position is defined by \elem{PARAM}s instead 
+of \elem{FIELD}s, the same sky position applies to each row of the \elem{TABLE} without the values appearing in 
+\elem{TD} elements.
+
 Further (non-normative) information on best practices and usage patterns
 for \elem{TIMESYS} can be found in [13].
+
+%\label{timesys_example}
+\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
+\else\begingroup\small
+\fi
+\verbatiminput{timesys_example.vot}
+\ifhtx\End{tabular}
+\else
+\endgroup
+\fi
 
 
 \subsection{\texorpdfstring{\elem{RESOURCE} Element}
@@ -1011,7 +1067,7 @@ is presented in \Aref{sec:group}{the following section}.
 
 Furthermore the \elem{TABLE} element may contain {\elem{LINK}} elements
 that provide URL-type pointers, exactly like the {\elem{LINK}} elements 
-existing within a \elem{RESOURCE} element (see \Aref{sec:link}{section 3.5}).
+existing within a \elem{RESOURCE} element (see \Aref{sec:link}{section 3.7}).
 
 The last element included in a \elem{TABLE} is the optional \elem{DATA} 
 element (see \Aref{sec:data}{below}): a table without any
@@ -2139,14 +2195,15 @@ whitespace, representing the real and imaginary part respectively.
 \clearpage
 \section{A Simplified View of the VOTable 1.4 Schema}
 \label{dtd}
+
 The XML Schema [6] defining a VOTable 1.4 document
 is available from \ifhtx\else\\ \fi
-\url{http://www.ivoa.net/xml/VOTable/v1.4}
+\url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}
+as well as in \Arefx{XML-schema}{Appendix B} of this document.
 In this section we illustrate this XML Schema
 by a set of boxes describing the structure of a VOTable,
 and the list of attributes of each VOTable element.
 
-%\clearpage
 \subsection{Element Hierarchy}
 
 The hierarchy of the elements existing in VOTable 1.4 is illustrated below;
@@ -2178,8 +2235,7 @@ it uses the following conventions:
 \end{quote}
 \fi
 
-
-%\clearpage
+\clearpage
 \subsection{Attribute Summary}
 The list of the attributes is summarized in the table below, 
 with the following conventions:
@@ -2199,6 +2255,7 @@ with the following conventions:
 \ifhtx\End{tabular}\end{center}\else\end{quote}
 \fi
 
+\clearpage
 \section{MIME Type}
 \label{sec:mime}
 A VOTable document should be introduced by a 
@@ -2327,7 +2384,7 @@ version 1.2 are:
       \elem{VALUES} \attr{null} attribute is now deprecated in most cases.
       It is in any case explicitly deprecated for floating point values,
       in favour of NaN.
-\item The description of the \elem{LINK} element (\Aref{sec:link}{section 3.5})
+\item The description of the \elem{LINK} element (\Aref{sec:link}{section 3.7})
       has been clarified, and a new \attrval{content-role}{type}
       example added, with discussion of its application to SKOS concepts.
 \item The schema datatype declaration of the \elem{LINK} \attr{content-type}
@@ -2857,13 +2914,13 @@ element, their definition can be generated automatically from the set of
 The XML Schema of VOTable 1.4 is included here as a reference.
 \revision{2}{
 This schema includes a couple of extra optional attributes which are not
-part of VOTable-1.2 ({\em ID} in TR and {\em encoding} in TD),
+part of VOTable-1.4 ({\em ID} in TR and {\em encoding} in TD),
 but proved to be useful to fix some problems encountered in the
 usage of some code generators.
 }{}
 \ifhtx
-\W{xsd}{http://www.ivoa.net/xml/VOTable/v1.4}
-   {http://www.ivoa.net/xml/VOTable/v1.4}.
+\W{xsd}{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}
+   {http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}.
 \par
 \Beg{tabular}{\bg{LavenderBlush} CELLPADDING=10}{||l||}
 \else

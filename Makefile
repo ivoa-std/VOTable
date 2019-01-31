@@ -44,14 +44,14 @@ default: votable.pdf votable.html
 
 votable.pdf: votable.tex VOTable.attr.tex  VOTable.elem.tex \
              serial.png binary.pdf binary2.pdf ivoa-archi.pdf \
-             VOTable.xsd stc_example1.vot stc_example2.vot
+             VOTable.xsd stc_example1.vot stc_example2.vot timesys_example.vot
 	pdflatex votable && \
 	pdflatex votable && \
 	pdflatex votable
 
 votable.html: votable.tex votable.htx $(CGIPRINT) \
               binary.png binary2.png ivoa-archi.png \
-              VOTable.xsd stc_example1.vot stc_example2.vot
+              VOTable.xsd stc_example1.vot stc_example2.vot timesys_example.vot
 	$(CGIPRINT) votable.htx > votable.html
 
 upload: $(UPLOAD_NAME).tar
