@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Font;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +40,9 @@ public class BinFigure extends FigureIcon {
     }
 
     protected void doDrawing( Graphics2D g2 ) {
+        g2 = (Graphics2D) g2.create();
+        g2.setRenderingHint( RenderingHints.KEY_TEXT_ANTIALIASING,
+                             RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
         g2.setColor( Color.BLACK );
         int gx = xCell / 4;
         int gy = yCell / 4;
@@ -125,7 +129,7 @@ public class BinFigure extends FigureIcon {
         int str1Width = getStringWidth( str1, g );
         int str2Width = getStringWidth( str2, g );
         int boxOff = str1Width + str2Width - xCell + 2;
-        paintRect( g, gx + boxOff, gy, xCell, yCell, bg );
+        paintRect( g, gx, gy, str1Width, yCell, bg );
         StringDrawer stringer = new StringDrawer( Anchor.SOUTH_WEST, false, 1 );
         stringer.drawString( g, str1, gx, gy + yCell - 2 );
         Color color0 = g.getColor();
