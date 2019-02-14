@@ -722,10 +722,15 @@ tables without loss of information.
 \label{elem:VOTABLE}
 
 The overall VOTable document structure is described and controlled
-by its XML Schema [6].  For VOTable version 1.4, the schema is available 
-from \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}
-as well as in \Arefx{XML-schema}{Appendix B} of this document.
-
+by its XML Schema [6].  The schema for VOTable version 1.4 is
+given in \Arefx{XML-schema}{Appendix B} of this document.  It can also
+be retrieved
+from \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}.
+Since neither producers nor consumers of VOTables should depend on the
+minor version used, this URL should not appear in operational code,
+which should use the namespace URI instead to retrieve the current
+VOTable schema.
+ 
 A VOTable document consists of a single all-containing element
 called {\elem{VOTABLE}}, which contains descriptive elements and global definitions
 ({\elem{DESCRIPTION}}, \elem{GROUP}, \elem{PARAM}, \elem{INFO}),
@@ -741,17 +746,21 @@ followed by the data values
 
 As the root element, \elem{VOTABLE} has attributes which specify the VOTable version 
 number and XML namespaces used in the document. For VOTable 1.4, the \elem{VOTABLE}
-element MUST have at least these attributes:\newline
-\attrval{version}{1.4}\newline
-\attrval{xmlns:xsi}{http://www.w3.org/2001/XMLSchema-instance}\newline
-\attrval{xmlns}{http://www.ivoa.net/xml/VOTable/v1.3}\newline
+element MUST have define \attrval{version}{1.4}.  All VOTable
+1.4 elements come from the namespace 
+\nolinkurl{http://www.ivoa.net/xml/VOTable/v1.3}.  It is recommended to bind
+the empty namespace prefix to this URI, as in
+\attrval{xmlns}{http://www.ivoa.net/xml/VOTable/v1.3}, but instance
+documents are free to use whatever namespace prefix is convenient for them.
 
-Note that starting with VOTable 1.3, the namespace URI value will remain fixed at \url{http://www.ivoa.net/xml/VOTable/v1.3}
-until the next major version (2.0).  For convenience, that namespace URI 
-will resolve as a URL to the latest recommended schema for VOTable version 1.x.  So when 1.4 becomes 
-the latest recommended VOTable version, \url{http://www.ivoa.net/xml/VOTable/v1.3}
-will return the same schema as \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd} until a version 1.5 
-becomes recommended.
+Note that starting with VOTable 1.3, the namespace URI for VOTable will
+remain fixed at \nolinkurl{http://www.ivoa.net/xml/VOTable/v1.3}
+until the next major version as discussed in [7].  As per IVOA
+recommendations, this namespace URI will always redirect to the latest
+recommended schema for VOTable version 1.x.  Validators should use this
+URI to retrieve a schema file for validation.  While instance documents
+may include \attr{schemaLocation} attribute, they should not expect that
+validators actually honor it.
 
 Documents claiming to represent VOTables must
 include the reference to the VOTable schema, and 
@@ -759,18 +768,6 @@ pass through W3C XML Schema validators without error;
 notice that the validation is a necessary, {\em but not sufficient}, 
 condition for correctness.
 
-Before VOTable 1.4 becomes recommended, this \elem{VOTABLE} attribute will reference
-the version 1.4 schema:
-\begin{verbatim}
-	   xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 
-	   http://www.ivoa.net/xml/VOTable/votable-1.4.xsd"
-\end{verbatim}
-Once VOTable version 1.4 becomes recommended, the following schema reference will 
-be upward compatible until the next major version (2.0): 
-\begin{verbatim}
-	   xsi:schemaLocation="http://www.ivoa.net/xml/VOTable/v1.3 
-	   http://www.ivoa.net/xml/VOTable/v1.3"
-\end{verbatim}
 
 \subsection{Example}
 
@@ -2454,6 +2451,9 @@ Strasbourg}
 
 \noindent [6] {\it XML Schema: W3C Document}
 \\ \hspace*{2em}{\url{http://www.w3.org/XML/Schema}}
+
+\noindent [7] {it XML Schema Versioning Policies}
+\\ \hspace*{2em}{\url{http://ivoa.net/documents/Notes/XMLVers/}}
 
 \noindent [10] {\it Registry of FITS conventions}
 \\ \hspace*{2em}{\url{http://fits.gsfc.nasa.gov/fits\_registry.html}}
