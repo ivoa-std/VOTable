@@ -441,7 +441,7 @@ VOTable is also used as a serialization format for
 some of the IVOA Data Models.
 
 In order to represent semantically rich metadata, VOTable relies on
-the other IVOA standards UCD, Utype, Units and STC.
+the other IVOA standards UCD, Utype, and Units.
 This document explains how information structured according to those
 standards are managed within the VOTable framework.
 
@@ -1176,10 +1176,7 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
 
 \item   The \attr{utype} attribute, introduced in VOTable 1.1, is meant
         to express the role of the column in the context of an external
-        data model (see \Aref{sec:utype}{below}); it is used in
-        the example  \Aref{example1}{above} to specify {\em which 
-        coordinate component} a field represents, in connection with
-        the \attr{ref} attribute.
+        data model (see \Aref{sec:utype}{below}).
 
 \item   The \attr{ref} attribute is used to quote another element of
         the document in the definition of a \elem{FIELD} or \elem{PARAM}. 
@@ -1333,8 +1330,7 @@ should be introduced following the XML namespace conventions,
 as \attrval{utype}{{\rm\em datamodel\_identifier:role\_identifier}}.
 The mapping of \literalvalue{datamodel\_identifier} to an xml-type attribute
 is recommended, by means of the {\tt xmlns} convention
-which specifies the URI of the data model cited, as done
-in the example of \Arefs{example1}{section 3.1}.
+which specifies the URI of the data model cited.
 
 \subsection{\texorpdfstring{\elem{VALUES} Element}
                            {VALUES Element}}
@@ -2323,7 +2319,8 @@ version 1.1 are:
 \item   \elem{COOSYS} is deprecated, in favor of a reference
         to the {\em Space-Time Coordinate} (STC) data model
         (see \Arefs{sec:utype}{utype} and the IVOA note
-        {\it Referencing STC in VOTable}[7])
+        {\it Referencing STC in
+        VOTable}\footnote{\url{http://ivoa.net/documents/Notes/VOTableSTC/}})
 \item  \elem{GROUP} may appear as a direct child of
 	\elem{VOTABLE} and \elem{RESOURCE} (where {\em COOSYS} was 
 	acceptable)
@@ -2457,14 +2454,6 @@ Strasbourg}
 
 \noindent [6] {\it XML Schema: W3C Document}
 \\ \hspace*{2em}{\url{http://www.w3.org/XML/Schema}}
-
-\noindent [8] Arnold Rots
-        {\it Space-Time Coordinate Metadata for the Virtual Observatory (v1.30)}
-\\ \hspace*{2em}{\url{http://ivoa.net/Documents/latest/STC.html}}
-
-\noindent [9] Arnold Rots
-        {\it STC-S: Space-Time Coordinate (STC) Metadata Linear String Implementation}
-\\ \hspace*{2em}{\url{http://www.ivoa.net/Documents/latest/STC-S.html}}
 
 \noindent [10] {\it Registry of FITS conventions}
 \\ \hspace*{2em}{\url{http://fits.gsfc.nasa.gov/fits\_registry.html}}

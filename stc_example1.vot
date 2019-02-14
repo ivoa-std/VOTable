@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <VOTABLE version="1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
- xmlns:stc="http://www.ivoa.net/xml/STC/v1.30" >
+ xmlns="http://www.ivoa.net/xml/VOTable/v1.3" >
   <RESOURCE name="myFavouriteGalaxies">
     <COOSYS ID="sys" equinox="J2000" epoch="J2000" system="eq_FK5"/>
     <TABLE name="results">
