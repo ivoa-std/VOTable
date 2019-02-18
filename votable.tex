@@ -215,6 +215,8 @@
         \quad{\em University of Edinburgh, UK} \\
 \normalsize \twikiname{MarkusDemleitner}{Markus {\bf Demleitner}}
         \quad{\em Heidelberg University, Germany} \\
+        \normalsize \twikiname{TomDonaldson}{Tom {\bf Donaldson}}
+        \quad{\em Space Telescope Science Institute, USA} \\
 \normalsize \twikiname{CanielDurand}{Daniel {\bf Durand}}
         \quad{\em Canadian Astronomy Data Centre, Canada} \\
 \normalsize \twikiname{PierreFernique}{Pierre {\bf Fernique}}
@@ -921,9 +923,7 @@ a flux, and a magnitude.  The observation time values are given in days since
 Julian Date 2455197.5 (the time origin for the Gaia observatory) in the Barycentric Coordinate 
 Time (TCB) time scale, with the reference position being the barycenter of the solar system.
 
-The \elem{TIMESYS} element defines such a time system and gives itself the identifies itself with \attrval{ID}{time\_frame}.
-Then the \attr{obs\_time} \elem{FIELD} indicates that its values should be interpreted in that time system by referring
-back to the \elem{TIMESYS} element using \attrval{ref}{time\_frame}.
+In the example, the \elem{TIMESYS} element describes that time system.  The \elem{TIMESYS} ID value needs to be unique within the document so that it can be referenced by  \elem{FIELD}s or  \elem{PARAM}s.  Then the \attr{obs\_time} \elem{FIELD} indicates that its values should be interpreted in that time system by referring back to the \elem{TIMESYS} element using \attrval{ref}{time\_frame}.
 
 Similarly, the \elem{COOSYS} element defines the coordinate system, and is referred to by the  \attr{ra} 
 and  \attr{dec} \elem{PARAM} elements.  Note that since the sky position is defined by \elem{PARAM}s instead 
