@@ -717,13 +717,8 @@ tables without loss of information.
 The overall VOTable document structure is described and controlled
 by its XML Schema [6].  The schema for VOTable version 1.4 is
 given in \Arefx{XML-schema}{Appendix B} of this document.  It can also
-be retrieved
-from \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}.
-Since neither producers nor consumers of VOTables should depend on the
-minor version used, this URL should not appear in operational code,
-which should use the namespace URI instead to retrieve the current
-VOTable schema.
- 
+be retrieved from \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}.
+
 A VOTable document consists of a single all-containing element
 called {\elem{VOTABLE}}, which contains descriptive elements and global definitions
 ({\elem{DESCRIPTION}}, \elem{GROUP}, \elem{PARAM}, \elem{INFO}),
@@ -739,9 +734,8 @@ followed by the data values
 
 As the root element, \elem{VOTABLE} has attributes which specify the VOTable version 
 number and XML namespaces used in the document. For VOTable 1.4, the \elem{VOTABLE}
-element MUST have define \attrval{version}{1.4}.  All VOTable
-1.4 elements come from the namespace 
-\nolinkurl{http://www.ivoa.net/xml/VOTable/v1.3}.  It is recommended to bind
+element MUST define \attrval{version}{1.4}.  All VOTable 1.4 elements come from the 
+namespace \nolinkurl{http://www.ivoa.net/xml/VOTable/v1.3}.  It is recommended to bind
 the empty namespace prefix to this URI, as in
 \attrval{xmlns}{http://www.ivoa.net/xml/VOTable/v1.3}, but instance
 documents are free to use whatever namespace prefix is convenient for them.
@@ -750,17 +744,17 @@ Note that starting with VOTable 1.3, the namespace URI for VOTable will
 remain fixed at \nolinkurl{http://www.ivoa.net/xml/VOTable/v1.3}
 until the next major version as discussed in [7].  As per IVOA
 recommendations, this namespace URI will always redirect to the latest
-recommended schema for VOTable version 1.x.  Validators should use this
-URI to retrieve a schema file for validation.  While instance documents
-may include \attr{schemaLocation} attribute, they should not expect that
-validators actually honor it.
+recommended schema for VOTable version 1.x.  
 
-Documents claiming to represent VOTables must
-include the reference to the VOTable schema, and 
-pass through W3C XML Schema validators without error;
-notice that the validation is a necessary, {\em but not sufficient}, 
-condition for correctness.
+VOTable consumers doing schema validation
+are free to use either this latest recommended schema or the version-specific
+schema relevant to the VOTable version. So, while instance documents
+may include \attr{schemaLocation} attribute, consumers are not required
+to honor it.  
 
+Documents claiming to represent VOTables must validate against the 
+relevant version of the VOTable schema without error.  Notice that the 
+validation is a necessary, {\em but not sufficient}, condition for correctness.
 
 \subsection{Example}
 
