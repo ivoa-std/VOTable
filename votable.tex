@@ -869,12 +869,14 @@ SHOULD appear before the element that references it.
 \label{elem:TIMESYS}
 
 The \elem{TIMESYS} element (introduced in VOTable 1.4) defines metadata
-for temporal coordinates.  As with \elem{COOSYS}, \elem{FIELD}s (and
-possibly \elem{PARAM}s) SHOULD reference the \elem{TIMESYS} giving their
-frame using the VOTable \attr{ref} attribute; absent such a \attr{ref},
-readers SHOULD assume the lexically first \elem{TIMESYS} element in the
-VOTable to be pertinent for time-like quantities. A \elem{TIMESYS} element referenced via a \attr{ref} attribute
-MUST appear before the element that references it.
+for temporal coordinates.  To reference the time system defined by a 
+\elem{TIMESYS} element,  \elem{FIELD}s (and possibly \elem{PARAM}s)
+MUST reference the \elem{TIMESYS} using the VOTable \attr{ref} attribute.
+
+If a \elem{FIELD} or \elem{PARAM} represents a time-like quantity but does not 
+reference a \elem{TIMESYS} element, then no assertion is made about its time 
+system. A \elem{TIMESYS} element referenced via a ref attribute MUST appear 
+before the element that references it.
 
 \elem{TIMESYS} has the following attributes:
 
