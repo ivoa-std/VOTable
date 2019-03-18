@@ -897,12 +897,18 @@ has \verb|yr|, \verb|a| or \verb|Ba| as its unit and no time origin is
 given. 
 \item[\attr{timescale}]  This is the time scale used.  Values SHOULD be
 taken from the IVOA \emph{timescale}
-vocabulary\footnote{\url{http://ivoa.net/rdf/timescale}}.  This
-attribute is mandatory.
+\ifhtx\A{http://ivoa.net/rdf/timescale}{vocabulary}.
+\else
+vocabulary\footnote{\url{http://ivoa.net/rdf/timescale}}.
+\fi
+This attribute is mandatory.
 \item[\attr{refposition}] The reference position again is a simple string,
 the values of which SHOULD be taken from the IVOA \emph{refposition}
-vocabulary\footnote{\url{http://ivoa.net/rdf/refposition}}.  This
-attribute is mandatory.
+\ifhtx\A{http://ivoa.net/rdf/refposition}{vocabulary}.
+\else
+vocabulary\footnote{\url{http://ivoa.net/rdf/refposition}}.
+\fi
+This attribute is mandatory.
 \end{description}
 
 The example below shows a VOTable in which each row would have an observation time, 
@@ -2299,8 +2305,10 @@ version 1.1 are:
 \item   \elem{COOSYS} is deprecated, in favor of a reference
         to the {\em Space-Time Coordinate} (STC) data model
         (see \Arefs{sec:utype}{utype} and the IVOA note
-        {\it Referencing STC in
-        VOTable}\footnote{\url{http://ivoa.net/documents/Notes/VOTableSTC/}})
+        \ifhtx\A{http://ivoa.net/documents/Notes/VOTableSTC/}{Referencing STC in VOTable})
+        \else{\it Referencing STC in 
+        	VOTable}\footnote{\url{http://ivoa.net/documents/Notes/VOTableSTC/}})
+        \fi
 \item  \elem{GROUP} may appear as a direct child of
 	\elem{VOTABLE} and \elem{RESOURCE} (where {\em COOSYS} was 
 	acceptable)
