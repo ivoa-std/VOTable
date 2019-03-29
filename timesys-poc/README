@@ -23,7 +23,8 @@ too involved for this PoC.
 
 To see how the timeseries are merged, simply run astropy_timesys.py.
 This will write an essentially metadataless VOTable file joined.vot.  If
-you scatter plot this, you should see a pattern.
+you scatter plot this with an aspect ratio of about 6:1, you should see
+a pattern...
 
 
 To extend the tests, look at makeseries.py, which generates the
