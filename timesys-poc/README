@@ -1,0 +1,33 @@
+This is a proof of concept for the new TIMESYS element in VOTable 1.4;
+the basic use case is: load some fairly randomly serialised time series,
+uniformise the time coordinate and concatenate them.
+
+This happens in astropy_timesys.py (which ought to work with python 2 and
+3 and astropy >= 1.  If you want to see the input VOTables, check the
+foot of the file.  To see the kind of code that evaluates TIMESYS
+metadata, see the to_jd function (though most of that is really generic
+conversion of various time representations to jd), and
+to_tcb_barycenter.
+
+WARNING: the light travel time correction from BARYCENTER to HELIOCENTER
+pretty certainly is wrong and needs more thought; a more general routine
+for light travel time correction would be highly desirable but is a bit
+too involved for this PoC.
+
+
+To see how the timeseries are merged, simply run astropy_timesys.py.
+This will write an essentially metadataless VOTable file joined.vot.  If
+you scatter plot this, you should see a pattern.
+
+
+To extend the tests, look at makeseries.py, which generates the
+TIME_SERIES_LITERALS in astropy_timeseries (in a vi, you can place the
+cursor on its assignment in the source code and type ``!}python
+makeseries.py`` to update the time series).  You'll see the time_makers,
+and to convince yourself that what's happening here is actually
+non-trivial, try changing the metadata and watch the resulting
+timeseries break.
+
+(Markus Demleitner <msdemlei@ari.uni-heidelberg.de>; 2019-03)
+
+
