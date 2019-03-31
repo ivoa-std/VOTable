@@ -749,7 +749,7 @@ recommended schema for VOTable version 1.x.
 VOTable consumers doing schema validation
 are free to use either this latest recommended schema or the version-specific
 schema relevant to the VOTable version. So, while instance documents
-may include \attr{schemaLocation} attribute, consumers are not required
+may include the \attr{schemaLocation} attribute, consumers are not required
 to honor it.  
 
 Documents claiming to represent VOTables must validate against the 
@@ -875,7 +875,7 @@ MUST reference the \elem{TIMESYS} using the VOTable \attr{ref} attribute.
 
 If a \elem{FIELD} or \elem{PARAM} represents a time-like quantity but does not 
 reference a \elem{TIMESYS} element, then no assertion is made about its time 
-system. A \elem{TIMESYS} element referenced via a ref attribute MUST appear 
+system. A \elem{TIMESYS} element referenced via a \attr{ref} attribute MUST appear 
 before the element that references it.
 
 \elem{TIMESYS} has the following attributes:
@@ -1179,7 +1179,7 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
         It is used in the example of \Aref{example1}{the example} 
         to indicate the coordinate system in which the coordinates 
         are expressed
-        (reference to the \elem{GROUP} element which specifies the
+        (reference to the \elem{COOSYS} element which specifies the
         coordinate frame).
 
 \item   The \attr{type} attribute is {\em not} part of this standard,
