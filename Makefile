@@ -38,7 +38,7 @@ BINFIGURE = java -classpath $(XDOC_CLASSPATH):. BinFigure
 IMGs = circ2.gif leadsto2.gif oplus.gif serial.png binary.png binary2.png \
        ivoa-archi.png
 XSD  = VOTable.xsd
-UPLOAD_NAME = REC-VOTable-1.3-20130920
+UPLOAD_NAME = WD-VOTable-1.4-20190403
 
 default: votable.pdf votable.html
 
@@ -62,7 +62,8 @@ $(UPLOAD_NAME).tar: votable.html votable.pdf $(IMGs)
 	cp votable.html tmp/$(UPLOAD_NAME).html
 	cp votable.pdf tmp/$(UPLOAD_NAME).pdf
 	cp $(IMGs) tmp/
-	cd tmp; tar cvf ../$@ $(UPLOAD_NAME).html $(UPLOAD_NAME).pdf $(IMGs)
+	cp $(XSD) tmp/
+	cd tmp; tar cvf ../$@ $(UPLOAD_NAME).html $(UPLOAD_NAME).pdf $(IMGs) $(XSD)
 	rm -rf tmp/
 
 cgiprint/bin/cgiprint:
