@@ -284,7 +284,7 @@
         <xs:annotation>
           <xs:documentation>
             This is the time scale used.  Values SHOULD be
-            taken from the IVOA timescale (http://ivoa.net/rdf/timescale).
+            taken from the IVOA timescale (http://www.ivoa.net/rdf/timescale).
           </xs:documentation>
         </xs:annotation>
       </xs:attribute>
@@ -292,7 +292,7 @@
         <xs:annotation>
           <xs:documentation>
             The reference position SHOULD be taken from the IVOA 
-            refposition vocabulary (http://ivoa.net/rdf/refposition).
+            refposition vocabulary (http://www.ivoa.net/rdf/refposition).
           </xs:documentation>
         </xs:annotation>
       </xs:attribute>
