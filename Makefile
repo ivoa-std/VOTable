@@ -38,7 +38,7 @@ BINFIGURE = java -classpath $(XDOC_CLASSPATH):. BinFigure
 IMGs = circ2.gif leadsto2.gif oplus.gif serial.png binary.png binary2.png \
        ivoa-archi.png
 XSD  = VOTable.xsd
-UPLOAD_NAME = PR-VOTable-1.4-20190604
+UPLOAD_NAME = PR-VOTable-1.4-20190611
 
 default: votable.pdf votable.html
 
