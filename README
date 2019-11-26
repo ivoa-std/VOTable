@@ -1,8 +1,0 @@
-The HTML form of the VOTable document is currently built from the LaTeX
-sources using cgiprint, a tool developed at CDS by Francois Ochsenbein.
-
-*NOTE* that cgprint is a one-pass tool and does not handle crossreferencing.
-Any references in the (HTML) text to numbered sections need to be hard coded. 
-Therefore, if you change the document structure (e.g. add, move, or delete
-sections) you must go through all the references by hand and ensure that
-they point to the right places.
