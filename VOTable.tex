@@ -1,113 +1,23 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
 
-%%%%%%%%%%%%%%%%%%%%%%%%%% To allow same version tex / htx
-\def\ifhtx{\iffalse}    % Lines used only for the HTML version
 \def\editrevision{2}\def\showrevision{0} % 2: shows 2 versions
 \long\def\revision#1#2#3{\ifnum#1>\editrevision{#3}\else %
   \ifnum\showrevision>1{\em\fg{DarkGoldenrod}[#3]}\fi
   \ifnum\showrevision>0{\fg{blue}#2}\else{#2}\fi
   \fi}
-\ifhtx                  % Declarations for HTX (HTML)
-%\begin{head}
-%  \tag{META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1"}
-%  \begin{title}VOTable \Version\ Proposal\end{title}
-%  \tag{META NAME="robots" content="index"}
-%  \tag{META NAME="description" content="VOTable Proposal"}
-%  \tag{META REV="made" HREF="mailto:VOTable@ivoa.net"}
-%  \tag{META NAME="GENERATOR" CONTENT="StarOffice/5.2 (Linux)"}
-%  \tag{META NAME="AUTHOR" CONTENT="Francois Ochsenbein, Roy Williams"}
-%  \tag{META NAME="CREATED" CONTENT="20020315;23390000"}
-%  \tag{META NAME="CHANGEDBY" CONTENT="Francois Ochsenbein"}
-%  \tag{META NAME="CHANGED" CONTENT="20020315"}
-%\end{head}
-%\def\ArefS#1{\Aref{#1}{Section~\ref{#1}}}
-\def\Arefx#1#2{\Aref{#1}{#2}}
-\def\Arefs#1#2{\Aref{#1}{#2}}
-\def\Tref#1#2{\Aref{#1}{#2}}
-\def\Fref#1#2{\Aref{#1}{#2}}
-\def\twikiname#1#2{\makebox[10em][l]{\qquad\A{http://www.ivoa.net/twiki/bin/view/IVOA/#1}{#2}}}
-\def\verbatiminput#1{\inputverbatim{#1}}
+
 \def\texorpdfstring#1#2{#1}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\cgidef{ -tex
-\filex  html
-\slash  {{\fg{blue}/}}
-\attr   #1{{\tt{\fg{DarkRed}#1}}}
-\elem   #1{{\tt{\fg{DarkRed}#1}}}
-\elemdef #2{{\fg{blue}$<$}{\tt{\fg{DarkRed}#1}#2}{\fg{blue}$>$}}
-\xtag    #1{\elemdef{#1}{}}
-\attrval #2{{\tt{\fg{DarkRed}#1}="{\fg{DarkMagenta}#2}"}}
-\elemdef #2{{\fg{blue}<}{\tt{\fg{DarkRed}#1}#2}{\fg{blue}>}}
-\literalvalue   #1{"{\fg{DarkMagenta}#1}"}
-{comment} #1{{\fg{darkblue}\em(#1)} }{}
-\Plain #1{\plain{#1}}
-\order  {~\image{oplus.gif} }
-\unorder        {~\image{circ2.gif} }
-\deprecated     {~\image{dagger.gif} }
-\choice   {\image{leadsto2.gif} }
-\left   #1{}
-\right  #1{}
-\requiredattr #1{{\tt\bf{\fg{DarkBlue}#1}}}
-\modified #3 {#2}  %%% modified{marker}{new}{old}
-}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-\else                   % Declarations for LaTeX
-\documentclass[10pt,notitlepage,onecolumn,lcustom]{ivoa}
-%\documentclass[12pt,notitlepage,onecolumn]{ivoa}
-%\documentclass{article}
-%\usepackage[pdftex]{graphicx}  % Accept Images
-\usepackage{color}              % Accept Colors
 \usepackage{verbatim}           % Accept inputverbatim
 
-%% Comment/uncomment lines below to follow your LateX distribution...
-%%
-%% If document is processed with latex, dvips and ps2pdf
-%%
-\ifx\pdftexversion\undefined
-  \usepackage[dvips]{graphicx}
-  \DeclareGraphicsExtensions{.eps,.ps}
-%% Uncomment following line if you want PDF thumbnails
-%  \usepackage[ps2pdf]{thumbpdf}
-% for old hyperref, use:
-  \usepackage[ps2pdf]{hyperref}
-%% for recent hyperref, use:
-%  \usepackage[ps2pdf,bookmarks=true,bookmarksnumbered=true,hypertexnames=false,breaklinks=true,%
-%  colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}
-
-%%
-%% else if document is processed with pdflatex
-%%
-\else
-  \usepackage[pdftex]{graphicx} %% graphics for pdftex (supports .pdf .jpg .png)
-  \usepackage{epstopdf}         %% requires epstopdf
-%% this is to support .ps files :
-  \makeatletter
-  \g@addto@macro\Gin@extensions{,.ps}
-  \@namedef{Gin@rule@.ps}#1{{pdf}{.pdf}{`ps2pdf #1}}
-  \makeatother
-%% comment above lines if you have included ps files
-%\DeclareGraphicsExtensions{.pdf,.jpg,.png}
-%% Uncomment following line if you want PDF thumbnails
-%  \usepackage[pdftex]{thumbpdf}
-%% for old hyperref, use:
-%  \usepackage[ps2pdf]{hyperref}
-% for recent hyperref, use:
-  \usepackage[pdftex,bookmarks=true,bookmarksnumbered=true,hypertexnames=false,breaklinks=true,%
-  colorlinks,linkcolor=blue,urlcolor=blue]{hyperref}
-  \pdfadjustspacing=1
-  %\def\A#1#2{{#2}\footnote{#1}}
   \let\A=\href
-  %\def\A#1#2{\href{#1}{#2}}
   \def\Aref#1#2{section~\ref{#1}}
   \def\Arefs#1#2{section~\ref{#1}}
   \def\Arefx#1#2{appendix~\ref{#1}}
   \def\Tref#1#2{Table~\ref{#1}}
   \def\Fref#1#2{Figure~\ref{#1}}
-\fi
 
 \let\fg=\color                  % fg = foreground color
-\let\Beg=\begin
 \topmargin=-1cm
 \raggedbottom
 \oddsidemargin=0cm
@@ -117,35 +27,21 @@
 \arrayrulewidth=0.75pt\renewcommand{\arraystretch}{1.2}
 \definecolor{DarkRed}{rgb}{0.5,0,0}
 \definecolor{DarkBlue}{rgb}{0,0,0.5}
-\definecolor{DarkGreen}{rgb}{0,0.5,0}
 \definecolor{DarkPurple}{rgb}{0.3,0.1,0.5}
 \definecolor{DarkGoldenrod}{rgb}{0.72,0.5,0.05}
 \def\modified#1#2#3{#2}  %%% modified{marker}{new}{old}
-\def\filex{pdf} % File extension
 \def\slash {{\fg{blue}/}}
 \def\attr#1{{\tt{\fg{DarkRed}#1}}}
 \def\requiredattr#1{{\tt\bf{\fg{DarkBlue}#1}}}
 \def\elem#1{{\tt{\fg{DarkRed}#1}}}
 \def\attrval#1#2{{\tt{\fg{DarkRed}#1}="{\fg{DarkPurple}#2}"}}
 \def\elemdef#1#2{{\fg{blue}$<$}{\tt{\fg{DarkRed}#1}#2}{\fg{blue}$>$}}
-%\def\ArefS#1{Section~\ref{#1}}
 \def\literalvalue#1{{\tt"}{\fg{DarkPurple}#1}{\tt"}}
 \def\order{$\oplus$ }
 \def\unorder{{\large $\circ$ }}
 \def\deprecated {$\dagger$ }
-%\def\paramonly {$^{(p)}$}
 \def\choice{{$\mapsto$ }}
-\def\twikiname#1#2{\makebox[10em][l]{{#2}}}
-%\def\inputverbatim#1{%
-%\begingroup \catcode``=13 \@noligs \tt \let\do\@makeother \dospecials
-%\obeylines \obeyspaces \frenchspacing \input #1 \endgroup }
-\def\thickrule{\noindent\rule{\textwidth}{1pt}}
-\def\Plain#1{{\sf #1}}
-\begin{document}
-\newenvironment{TABULAR}[2]{\begin{tabular}{#2}}{\end{tabular}}
 \newenvironment{plain}{\begin{quote}}{\end{quote}}
-%\def\plain#1{#1}
-\fi
 
 
 \title{VOTable Format Definition}
@@ -218,12 +114,7 @@ the standard.
 % collaboration of separately funded projects to develop standards and
 % infrastructure that enable VO applications.
 
-\clearpage
-\ifhtx\Beg{tabular}{cellpadding=5 \bg{LightYellow}}{||p||}\fi
-\tableofcontents
-\ifhtx\End{tabular}\fi
 
-\clearpage
 \section{Introduction}
 
 The VOTable format is an XML standard for the interchange of data
@@ -401,8 +292,7 @@ next sections its syntax when expressed as XML. The data model of
 VOTable can be expressed as:    
 
 \medskip
-\ifhtx\begin{tabular}{RRCp{0.8\textwidth}}
-\else\begin{tabular}{rrcp{0.7\textwidth}}\fi
+\begin{tabular}{rrcp{0.7\textwidth}}
 \hspace{3em}&{\bf VOTable} &=& hierarchy of {\bf Metadata} + associated
         {\bf TableData}, arranged as a set of {\bf Tables}\\
 &{\bf Metadata} &=& {\bf Parameters} + {\bf Infos} + {\bf Descriptions}
@@ -474,12 +364,9 @@ and associated parameters (\elem{PARAM}).
 
 \subsection{Primitives}
 
-\ifhtx\label{primitives}
-\begin{center}\Beg{tabular}{CELLSPACING=4 CELLPADDING=4}{|rlrl|}
-\else
 \begin{table}[hbt]
- \begin{center}\begin{tabular}{|r|l|c|r|}
-\fi\hline
+\begin{center}\begin{tabular}{|r|l|c|r|}
+\hline
   {\attr{datatype}} & Meaning & \attr{FITS} &
       { Bytes} \\
  \hline
@@ -508,10 +395,8 @@ and associated parameters (\elem{PARAM}).
  %floatComplex & 8 \\
  %doubleComplex & 16 \\
 \hline\end{tabular}\end{center}
-\ifhtx\par
-\else\caption{\label{primitives}List of the Primitives
+\caption{\label{primitives}List of the Primitives
 {\em(details in \Aref{sec:datatypes}{})}}\end{table}
-\fi
 
 Each Cell is composed from Primitives, each of which is a datatype
 of fixed-length binary representation, as listed in 
@@ -717,14 +602,9 @@ This simple example of a VOTable document lists 3 galaxies with their
 position, velocity and error, and their estimated distance.
 
 \label{example1}
-\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
-\else\begingroup\small
-\fi
+\begingroup\small
 \verbatiminput{stc_example1.vot}
-\ifhtx\End{tabular}
-\else
 \endgroup
-\fi
 
 This simple \elem{VOTABLE} document shows a single \elem{RESOURCE} made of a single \elem{TABLE};
 the table is made of 6 columns, each described by a \elem{FIELD}, and has
@@ -852,17 +732,13 @@ has \verb|yr|, \verb|a| or \verb|Ba| as its unit and no time origin is
 given. 
 \item[\attr{timescale}]  This is the time scale used.  Values SHOULD be
 taken from the IVOA \emph{timescale}
-\ifhtx\A{http://www.ivoa.net/rdf/timescale}{vocabulary}.
-\else
-vocabulary\footnote{\url{http://www.ivoa.net/rdf/timescale}}.
-\fi
+vocabulary
+(\url{http://www.ivoa.net/rdf/timescale}).
 This attribute is mandatory.
 \item[\attr{refposition}] The reference position again is a simple string,
 the values of which SHOULD be taken from the IVOA \emph{refposition}
-\ifhtx\A{http://www.ivoa.net/rdf/refposition}{vocabulary}.
-\else
-vocabulary\footnote{\url{http://www.ivoa.net/rdf/refposition}}.
-\fi
+vocabulary
+(\url{http://www.ivoa.net/rdf/refposition}).
 This attribute is mandatory.
 \end{description}
 
@@ -888,14 +764,9 @@ Further (non-normative) information on best practices and usage patterns
 for \elem{TIMESYS} can be found in [13].
 
 %\label{timesys_example}
-\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
-\else\begingroup\small
-\fi
+\begingroup\small
 \verbatiminput{timesys_example.vot}
-\ifhtx\End{tabular}
-\else
 \endgroup
-\fi
 
 
 \subsection{\texorpdfstring{\elem{RESOURCE} Element}
@@ -1288,8 +1159,7 @@ is designed to hold subsidiary information about the {\em domain} of the
 data. For instance, in the example (\Aref{example1}{section 3.1})
 we could rewrite the RA field definition as:
 
-\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
-\else\begingroup\small\fi
+\begingroup\small
 \begin{verbatim}
       <FIELD name="RA" ID="col1" ucd="pos.eq.ra;meta.main"
              datatype="float" width="6" precision="2" unit="deg">
@@ -1299,7 +1169,7 @@ we could rewrite the RA field definition as:
         </VALUES>
       </FIELD>
 \end{verbatim}
-\ifhtx\End{tabular}\else\endgroup\fi
+\endgroup
 
 \noindent The scope of the domain described by the \elem{VALUES} element
 (and by its \elem{MIN}, \elem{MAX} and \elem{OPTION} sub-elements)
@@ -1401,15 +1271,14 @@ A simple example of a group made of the velocity and its error,
 based on the example of \Aref{example1}{section 3.1}, 
 can be the following:
 
-\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
-\fi%\else\begingroup\fi
+\begingroup
 \begin{verbatim}
     <GROUP name="Velocity">
       <DESCRIPTION>Velocity and its error</DESCRIPTION>
       <FIELDref ref="col4"/>
       <FIELDref ref="col5"/>
     </GROUP>
-\end{verbatim}\ifhtx\End{tabular}\fi%\else\endgroup\fi
+\end{verbatim}\endgroup
 
 
 The \elem{GROUP} element can have the \attr{name}, \attr{ID}, \attr{ucd},
@@ -1433,7 +1302,6 @@ it is possible to associate the actual frequency of a radio survey with
 a table of flux measurements using
 the following declaration:
 
-\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}\fi
 \begin{verbatim}
     <FIELD name="Flux" ID="col4" ucd="phot.flux;em.radio.200-400MHz" 
            datatype="float" width="6" precision="1" unit="mJy"/>
@@ -1446,7 +1314,7 @@ the following declaration:
       <FIELDref ref="col4"/>
       <FIELDref ref="col5"/>
     </GROUP>
-\end{verbatim}\ifhtx\End{tabular}\fi
+\end{verbatim}
 
 \par
 Similarly, \elem{GROUP} can be used to associate several parameters
@@ -1491,13 +1359,10 @@ the content of each row appears in the same order as the order of the
 {\elem{FIELD}} definitions.
 
 \label{Image1}
-\ifhtx\tag{IMG SRC="serial.png" NAME="Image1" ALIGN=BOTTOM BORDER=0}\br
-\else
 \begin{figure}[hbt]
 \includegraphics[width=\textwidth]{serial.png}
 \caption{\label{fig:serialization}Data serialization}
 \end{figure}
-\fi
 
 Each \elem{DATA} part of the VOTable document can be viewed as
 a stream coming out of a pipeline.
@@ -1558,8 +1423,7 @@ or {\em unicodeChar} datatype), no
 separator should exist. Here is an example of a two-row table 
 that  has arrays in the table cells:
 
-\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
-\else\begingroup\small\fi
+\begingroup\small
 \label{example2}
 \begin{verbatim}
 <TABLE>
@@ -1573,7 +1437,7 @@ that  has arrays in the table cells:
   </TABLEDATA></DATA>
 </TABLE>
 \end{verbatim}
-\ifhtx\End{tabular}\else\endgroup\fi
+\endgroup
 
 The first entry is a fixed-length array of 10 characters; since
 the value being presented ({\tt Apple}) has 5 characters, this
@@ -1689,14 +1553,11 @@ empty \elem{TD} element is available for the BINARY serialization
 (see \Aref{sec:NULL}{section 5.5}).
 
 \label{Image2}
-\ifhtx\begin{tabular}{c}
-\tag{IMG SRC="binary.png" NAME="Image2" ALIGN=LEFT BORDER=0}\end{tabular}
-\else\begin{center}
+\begin{center}
 \begin{figure}[htb]
 \includegraphics[width=\textwidth]{binary.pdf}
 \caption{\label{fig:bin}Data Storage in BINARY mode}
 \end{figure}\end{center}
-\fi
 
 The BINARY serialization has been available in all versions of VOTable.
 From VOTable 1.3 however, the alternative BINARY2 serialization is
@@ -1743,14 +1604,11 @@ example in \Aref{example2}{section 5.1} is illustrated in
 \Fref{fig:bin2}{Figure 3}.
 
 \label{Image3}
-\ifhtx\begin{tabular}{c}
-\tag{IMG SRC="binary2.png" NAME="Image3" ALIGN=LEFT BORDER=0}\end{tabular}
-\else\begin{center}
+\begin{center}
 \begin{figure}[htb]
 \includegraphics[width=\textwidth]{binary2.pdf}
 \caption{\label{fig:bin2}Data Storage in BINARY2 mode}
 \end{figure}\end{center}
-\fi
 
 \subsection{Null values}
 \label{sec:NULL}
@@ -2138,7 +1996,7 @@ whitespace, representing the real and imaginary part respectively.
 \label{dtd}
 
 The XML Schema [6] defining a VOTable 1.4 document
-is available from \ifhtx\else\\ \fi
+is available from
 \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}
 as well as in \Arefx{XML-schema}{Appendix B} of this document.
 In this section we illustrate this XML Schema
@@ -2165,19 +2023,15 @@ it uses the following conventions:
         and are therefore explained in a dedicated box of the figure.
 \end{itemize}
 
-\ifhtx\begin{center}\Beg{tabular}{\bg{LavenderBlush} CELLPADDING=10}{||l||}
-\else\bigskip
+\bigskip
 \begin{quote}\small
 %\begin{table}[htbp]\caption{\label{tab:elem}View of the relations between
 %  VOTable {\bf elements}}.
-\fi
 %\inputverbatim{VOTable_v1.0.dtd}
 \input{VOTable.elem.tex}
 %\verbatiminput{VOTable_v1x.dtd}\normalsize
-\ifhtx\End{tabular}\end{center}\else
 %\end{table}
 \end{quote}
-\fi
 
 \clearpage
 \subsection{Attribute Summary}
@@ -2191,13 +2045,10 @@ with the following conventions:
         for possible extensions (mentioned in an Appendix).
 \end{itemize}
 
-\ifhtx\begin{center}\Beg{tabular}{\bg{LavenderBlush} CELLPADDING=4}{||l||}
-\else\bigskip
+\bigskip
 \begin{quote}\small
-\fi
 \input{VOTable.attr.tex}
-\ifhtx\End{tabular}\end{center}\else\end{quote}
-\fi
+\end{quote}
 
 \clearpage
 \section{MIME Type}
@@ -2261,16 +2112,11 @@ by a service producing VOTables with the TABLEDATA serialization:
 The differences between version 1.2 of VOTable and the preceding
 version 1.1 are:
 
-\ifhtx\Beg{tabular}{\bg{LavenderBlush} CELLPADDING=4}{||p||}
-\fi
 \begin{itemize}
 \item   \elem{COOSYS} is deprecated, in favor of a reference
         to the {\em Space-Time Coordinate} (STC) data model
         (see \Arefs{sec:utype}{utype} and the IVOA note
-        \ifhtx\A{http://ivoa.net/documents/Notes/VOTableSTC/}{Referencing STC in VOTable})
-        \else{\it Referencing STC in 
-        	VOTable}\footnote{\url{http://ivoa.net/documents/Notes/VOTableSTC/}})
-        \fi
+        \href{http://ivoa.net/documents/Notes/VOTableSTC/}{Referencing STC in VOTable})
 \item  \elem{GROUP} may appear as a direct child of
 	\elem{VOTABLE} and \elem{RESOURCE} (where {\em COOSYS} was 
 	acceptable)
@@ -2303,15 +2149,12 @@ version 1.1 are:
 	\Arefx{sec:addesc}{Appendix A7} now contains a new proposal 
 	(May/June 2009) for multiple descriptions and titles.
 \end{itemize}
-\ifhtx\End{tabular}\fi
 
 \subsection{Differences Between Versions 1.2 and 1.3}
 \label{diff1.2-1.3}
 The differences between version 1.3 of VOTable and the preceding
 version 1.2 are:
 
-\ifhtx\Beg{tabular}{\bg{LavenderBlush} CELLPADDING=4}{||p||}
-\fi
 \begin{itemize}
 \item The \elem{BINARY2} serialization has been introduced
       (\Aref{sec:BIN2}{section 5.4}).
@@ -2352,15 +2195,12 @@ version 1.2 are:
 \item A new \Aref{sec:voarch}{section 1.4} has been added explaining
       the place of VOTable in the IVOA Architecture.
 \end{itemize}
-\ifhtx\End{tabular}\fi
 
 \subsection{Differences Between Versions 1.3 and 1.4}
 \label{diff1.3-1.4}
 The differences between version 1.4 of VOTable and the preceding
 version 1.3 are:
 
-\ifhtx\Beg{tabular}{\bg{LavenderBlush} CELLPADDING=4}{||p||}
-\fi
 \begin{itemize}
 \item Applying erratum VOTable 1.3-1, un-deprecating COOSYS.
 \item Applying erratum VOTable 1.3-2, permitting \verb|F0| in
@@ -2370,7 +2210,6 @@ version 1.3 are:
 \item Add a new TIMESYS element as a simple means for 
      supplying metadata for time values in the VOTable.
 \end{itemize}
-\ifhtx\End{tabular}\fi
 
 \section{References}
 \noindent [1] Accomazzi {\it  et. al, Describing Astronomical Catalogues and
@@ -2419,11 +2258,9 @@ Strasbourg}
 %%%     A P P E N D I C E S
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\ifhtx\par\thickrule\par\Beg{tabular}{\bg{LightBlue} CELLPADDING=5}{l}\quad
-\else\clearpage\fi
+\clearpage
 \appendix
 \noindent {\bf\LARGE Appendices}
-\ifhtx\End{tabular}\fi
 
 \bigskip
 
@@ -2551,15 +2388,10 @@ in the collection of {\it name}{{\tt=}}{\it value} pairs.
 The following is an example of a transformation of the VOTable
 in \Aref{example1}{the example} into a form interface:
 \label{form1}
-\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
-\else\begingroup\small
-\fi
+\begingroup\small
 \verbatiminput{stc_example2.vot}
-\ifhtx\End{tabular}
-\else
 %\caption{\label{example1}A simple VOTable example}
 \endgroup
-\fi
 
 \noindent Note that the {\elem{RESOURCE}} displaying the parameters accessible 
 for a query has the {\attrval{type}{meta}}
@@ -2651,8 +2483,7 @@ is assumed to contain URIs.
 
 An example of a table describing a set of spectra could look like the following:
 
-\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}
-\else\small\fi
+\small
 \begin{verbatim}
 <TABLE name="SpectroLog">
   <FIELD name="Target" ucd="meta.id" datatype="char" arraysize="30*"/>
@@ -2669,7 +2500,7 @@ An example of a table describing a set of spectra could look like the following:
     <TR><TD>NGC6543</TD><TD>SWS07</TD><TD>2544</TD><TD>01302004</TD></TR>
   </TABLEDATA></DATA>
 </TABLE>
-\end{verbatim}\ifhtx\End{tabular}\else\normalsize\fi
+\end{verbatim}\normalsize
 
 \noindent
 The reading program has therefore to retrieve the data 
@@ -2716,7 +2547,6 @@ allows the data server to decide, at the cell level, whether it is more
 efficient to distribute the data as binary-encoded or as edited
 values. The result may look like the following:
 
-\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}\fi
 \begin{verbatim}
 <TABLE name="SpectroLog">
   <FIELD name="Target" ucd="meta.id" datatype="char" arraysize="30*"/>
@@ -2738,7 +2568,6 @@ values. The result may look like the following:
   </TABLEDATA></DATA>
 </TABLE>
 \end{verbatim}
-\ifhtx\End{tabular}\fi
 \par
 
 \noindent 
@@ -2801,7 +2630,6 @@ the \elem{XMLDATA} serialization introduces the designation of
 each  \elem{FIELD} by a dedicated tag. An example could look like
 the following:
 
-\ifhtx\Beg{tabular}{\bg{LightCyan} CELLPADDING=5}{||l||}\fi
 \begin{verbatim}
 <TABLE name="Messier">
   <FIELD name="Number" ID="M" ucd="meta.record" datatype="int" >
@@ -2836,7 +2664,6 @@ the following:
   </XMLDATA></DATA>
 </TABLE>
 \end{verbatim}
-\ifhtx\End{tabular}\fi
 \par
 
 \noindent The full document would need an XML-Schema definition of the tags
@@ -2854,21 +2681,12 @@ part of VOTable-1.4 ({\em ID} in TR and {\em encoding} in TD),
 but proved to be useful to fix some problems encountered in the
 usage of some code generators.
 }{}
-\ifhtx
-\W{xsd}{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}
-   {http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}.
-\par
-\Beg{tabular}{\bg{LavenderBlush} CELLPADDING=10}{||l||}
-\else
 \bigskip
 %%%%%%%XML-Schema%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \small
-\fi
 \verbatiminput{VOTable.xsd}
-\ifhtx\End{tabular}\else
 \normalsize
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\fi
 
 
 % NOTE: IVOA recommendations must be cited from docrepo rather than ivoabib
