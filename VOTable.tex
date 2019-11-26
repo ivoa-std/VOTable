@@ -1,36 +1,27 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
 
-\def\editrevision{2}\def\showrevision{0} % 2: shows 2 versions
-\long\def\revision#1#2#3{\ifnum#1>\editrevision{#3}\else %
-  \ifnum\showrevision>1{\em\fg{DarkGoldenrod}[#3]}\fi
-  \ifnum\showrevision>0{\fg{blue}#2}\else{#2}\fi
-  \fi}
+\usepackage{verbatim}
 
-\def\texorpdfstring#1#2{#1}
-\usepackage{verbatim}           % Accept inputverbatim
-
-  \let\A=\href
-  \def\Aref#1#2{section~\ref{#1}}
-  \def\Arefs#1#2{section~\ref{#1}}
-  \def\Arefx#1#2{appendix~\ref{#1}}
-  \def\Tref#1#2{Table~\ref{#1}}
-  \def\Fref#1#2{Figure~\ref{#1}}
-
-\let\fg=\color                  % fg = foreground color
+\let\A=\href
+\def\Aref#1{section~\ref{#1}}
+\def\Arefs#1{section~\ref{#1}}
+\def\Arefx#1{appendix~\ref{#1}}
+\def\Tref#1{Table~\ref{#1}}
+\def\Fref#1{Figure~\ref{#1}}
+\let\fg=\color
 \topmargin=-1cm
 \raggedbottom
 \oddsidemargin=-0.8cm
 \evensidemargin=-0.8cm
-\textwidth=17.5cm               % The default width is too small...
-\textheight=23.5cm              % The default width is too small...
+\textwidth=17.5cm
+\textheight=23.5cm
 \parindent=0pt
 \arrayrulewidth=0.75pt\renewcommand{\arraystretch}{1.2}
 \definecolor{DarkRed}{rgb}{0.5,0,0}
 \definecolor{DarkBlue}{rgb}{0,0,0.5}
 \definecolor{DarkPurple}{rgb}{0.3,0.1,0.5}
 \definecolor{DarkGoldenrod}{rgb}{0.72,0.5,0.05}
-\def\modified#1#2#3{#2}  %%% modified{marker}{new}{old}
 \def\slash {{\fg{blue}/}}
 \def\attr#1{{\tt{\fg{DarkRed}#1}}}
 \def\requiredattr#1{{\tt\bf{\fg{DarkBlue}#1}}}
@@ -311,7 +302,7 @@ VOTable can be expressed as:
         \right.$
         \\
 &{\bf Primitive} &=& integer, character, float, floatComplex, etc
-(see \Tref{primitives}{table of primitives} below).
+(see \Tref{primitives} below).
 \end{tabular}
 
 \medskip
@@ -322,8 +313,8 @@ attributes) of the table.
 Each \elem{FIELD} represents the metadata 
 that can be found at the
 top of the column in a paper version of the table: 
-in the example introduced in \Aref{example1}{the
-section} below, the first \elem{FIELD} has its \attr{name} attribute
+in the example introduced in \Aref{example1}
+below, the first \elem{FIELD} has its \attr{name} attribute
 set to \literalvalue{RA}. The Field can be thought of as a class definition,
 and the table cells below it are the instances of that class.
 
@@ -333,9 +324,9 @@ except that it has a \attr{value} attribute.
 Parameters can be seen as ``constant columns'', containing for instance
 FITS keywords or any other
 information pertaining to the table itself or its environment, such as the
-{\tt Telescope} parameter in the example of \Arefs{example1}{section 3.1}.
+{\tt Telescope} parameter in the example of \Arefs{example1}.
 
-An informative parameter ({\elem{INFO}}) (see \Arefs{elem:INFO}{INFO})
+An informative parameter ({\elem{INFO}}) (see \Arefs{elem:INFO})
 is a restricted form of the {\elem{PARAM}} ---  it is always understood
 as a {\em string} (i.e. \attrval{datatype}{char}
 and \attrval{arraysize}{*} are {\em implied}).
@@ -397,25 +388,21 @@ and associated parameters (\elem{PARAM}).
  %doubleComplex & 16 \\
 \hline\end{tabular}\end{center}
 \caption{\label{primitives}List of the Primitives
-{\em(details in \Aref{sec:datatypes}{})}}\end{table}
+{\em(details in \Aref{sec:datatypes})}}\end{table}
 
 Each Cell is composed from Primitives, each of which is a datatype
 of fixed-length binary representation, as listed in 
-\Tref{primitives}{the accompanying table}.
-\modified{1.2-090606}{
+\Tref{primitives}.
 Cells may consist of a single Primitive (this is
 the default), or of an {\em array} (which may be multidimensional)
-of Primitives (see \Aref{array}{the next section}).}{
-Cells may consist of a single Primitive (this is
-the default), or of a multidimensional array of Primitives (see
-\Aref{array}{the next section}).}
+of Primitives (see \Aref{array}).
 
 Except for the Bit type, each primitive has the fixed length in
-bytes given in \Tref{primitives}{the table}. 
+bytes given in \Tref{primitives}. 
 Bit scalars and arrays are stored in
 the minimum number of bytes feasible (so that $b$ bits take the integer
 part of $(b+7)/8$ bytes).  These primitives
-are described in more detail in \Aref{sec:datatypes}{section 6}.
+are described in more detail in \Aref{sec:datatypes}.
 
 VOTables support two kinds of characters: ASCII 1-byte characters
 and Unicode (UCS-2) 2-byte characters. Unicode is a way to represent
@@ -429,9 +416,7 @@ Note that strings are not a primitive type: strings are
 represented in VOTable as an array of characters. %in an characters are.
 
 
-\modified{1.2-090606}{
-\subsection{Columns as Arrays}\label{array}}{
-\subsection{Multidimensional Arrays}\label{array}}
+\subsection{Columns as Arrays}\label{array}
 \label{sec:dim}
 
 A table cell can contain an {\em array} of a given primitive type,
@@ -478,7 +463,7 @@ given the logic above, it is possible to define a variable-length array
 of fixed-length strings,
 but not a fixed-length array of variable-length strings.
 A convention to express an array of variable-length strings
-exists (see \Aref{sec:arraystring}{in the appendix}) but is not
+exists (see \Aref{sec:arraystring}) but is not
 part of this standard.
 
 \textbf{Note:} \attr{arraysize} should be present if, and only if, each table
@@ -523,14 +508,14 @@ of astronomical instrumentation. In the frame of the
 means of {\em data models}, and from its version 1.1,
 {\em VOTable} can refer to these data models by means
 of the \attr{utype} attribute described in
-\Aref{sec:utype}{section 4.6}.
+\Aref{sec:utype}.
 
 \subsubsection*{What can VOTable do but not FITS?}
 
 VOTable supports separating of data from metadata and the
 streaming of tables, and other ideas from modern distributed
 computing. It bridges two ways to express structured data: XML and
-FITS. It uses UCDs -- see \Aref{sec:ucd}{below}) 
+FITS. It uses UCDs -- see \Aref{sec:ucd}) 
 to formally express the semantic
 content of a parameter or field. It has the hierarchy and flexibility
 of XML: using \elem{GROUP} elements introduced in version 1.1, 
@@ -557,7 +542,7 @@ tables without loss of information.
 
 The overall VOTable document structure is described and controlled
 by its XML Schema [6].  The schema for VOTable version 1.4 is
-given in \Arefx{XML-schema}{Appendix B} of this document.  It can also
+given in \Arefx{XML-schema} of this document.  It can also
 be retrieved from \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}.
 
 A VOTable document consists of a single all-containing element
@@ -569,9 +554,9 @@ and possibly other \elem{RESOURCE} elements.
 
 The \elem{TABLE} element, the actual heart of VOTable, contains 
 a description of the columns and parameters 
-(described in \Aref{sec:field}{the next section})
+(described in \Aref{sec:field})
 followed by the data values 
-(described in \Aref{sec:data}{the following section}).
+(described in \Aref{sec:data}).
 
 As the root element, \elem{VOTABLE} has attributes which specify the VOTable version 
 number and XML namespaces used in the document. For VOTable 1.4, the \elem{VOTABLE}
@@ -616,8 +601,7 @@ and follow the same order as their \elem{FIELD} description:
 {\sl RA, Dec, Name, RVel, e\_RVel, R}.  
 
 
-\subsection{\texorpdfstring{\attr{name}, \attr{ID} and \attr{ref} attributes}
-                           {name, ID and ref attributes}}
+\subsection{{\attr{name}, \attr{ID} and \attr{ref} attributes}}
 \label{sec:name}
 
 Most of the elements defined by VOTable may have or have to have {\em names},
@@ -661,8 +645,7 @@ between a \elem{TABLE} and its corresponding closing \elem{\slash TABLE} tag,
 {\attr{name}} attributes of \elem{FIELD}, \elem{PARAM} and
 optional \elem{GROUP} elements should be all different.
 
-\subsection{\texorpdfstring{\elem{VOTABLE} Element}
-                           {VOTABLE Element}}
+\subsection{\elem{VOTABLE} Element}
 \label{sec:definitions}
 
 The \elem{VOTABLE} element may contain definitions consisting of
@@ -670,16 +653,15 @@ a \elem{DESCRIPTION}, followed by any mixture of parameters and
 informative notes eventually structured in {\em groups}.
 These elements represent values which are meaningful over all tables
 included in a \elem{VOTABLE} document --- definitions specific to
-a \elem{RESOURCE} (\Aref{elem:RESOURCE}{section 3.6})
-or a \elem{TABLE} (\Aref{elem:TABLE}{section 3.8}) are better placed 
+a \elem{RESOURCE} (\Aref{elem:RESOURCE})
+or a \elem{TABLE} (\Aref{elem:TABLE}) are better placed 
 within their most appropriate element.
 
 Note that version 1.0 of VOTable required the usage of a \elem{DEFINITIONS}
 element holding the VOTable global definitions --- this
 usage is deprecated since version 1.1.
 
-\subsection{\texorpdfstring{\elem{COOSYS} Element}
-	{COOSYS Element}}
+\subsection{\elem{COOSYS} Element}
 \label{elem:COOSYS}
 
 The \elem{COOSYS} element defines a celestial coordinate system, to
@@ -700,8 +682,7 @@ to define the positions of the objects studied in the enclosed tables.
 A \elem{COOSYS} element referenced via a \attr{ref} attribute
 SHOULD appear before the element that references it.
 
-\subsection{\texorpdfstring{\elem{TIMESYS} Element}
-	{TIMESYS Element}}
+\subsection{\elem{TIMESYS} Element}
 \label{elem:TIMESYS}
 
 The \elem{TIMESYS} element (introduced in VOTable 1.4) defines metadata
@@ -770,8 +751,7 @@ for \elem{TIMESYS} can be found in [13].
 \endgroup
 
 
-\subsection{\texorpdfstring{\elem{RESOURCE} Element}
-                           {RESOURCE Element}}
+\subsection{\elem{RESOURCE} Element}
 \label{sec:resource}
 \label{elem:RESOURCE}
 
@@ -793,7 +773,7 @@ of related tables. The \elem{RESOURCE} is recursive (it can contain other
 a \elem{RESOURCE} may become a tree structure.
 
 A \elem{RESOURCE} may have one or both of the \attr{name} or \attr{ID}
-attributes (see \Aref{sec:name}{section 3.2}); it may also be qualified by
+attributes (see \Aref{sec:name}); it may also be qualified by
 \attrval{type}{meta}, meaning that the resource is {\em descriptive}
 only, i.e. does not contain any actual data: no \elem{DATA} element
 should exist in any of its sub-elements. A \elem{RESOURCE} without
@@ -801,10 +781,9 @@ this attribute {\em may} however have no \elem{DATA} sub-element.
 
 Finally, the \elem{RESOURCE} element may have a \attr{utype} attribute
 to link the element to some external data model 
-(introduced in version 1.1, see \Aref{sec:utype}{section 4.6}).
+(introduced in version 1.1, see \Aref{sec:utype}).
 
-\subsection{\texorpdfstring{\elem{LINK} Element}
-                           {LINK Element}}
+\subsection{\elem{LINK} Element}
 \label{sec:link}
 \label{elem:LINK}
 
@@ -859,20 +838,19 @@ it can serve as a hint to the application about what to expect.
 In the Astrores format, from which VOTable is derived, 
 there are additional semantics for the {\elem{LINK}}
 element; the \elem{href} attribute is used as a template for creating
-URLs. This behavior is explained in \Arefx{LINK}{Appendix A.1}, 
+URLs. This behavior is explained in \Arefx{LINK}, 
 and it represents
 a possible extension of VOTable.
 
-\subsection{\texorpdfstring{\elem{TABLE} Element}
-                           {TABLE Element}}
+\subsection{\elem{TABLE} Element}
 \label{elem:TABLE}
 
 The \elem{TABLE} element represents the basic data structure in VOTable;
 it comprises a description of the table structure (the {\em metadata})
 essentially in the form of \elem{PARAM} and \elem{FIELD} elements
-(detailed in \Aref{sec:field}{the next section}),
+(detailed in \Aref{sec:field}),
 followed by the {\em values} of the described fields in a \elem{DATA}
-element (detailed in \Aref{sec:data}{the section below}).
+element (detailed in \Aref{sec:data}).
 
 The \elem{TABLE} element is always contained in a \elem{RESOURCE} element:
 in other words
@@ -885,20 +863,20 @@ a {\elem{DESCRIPTION}} element for descriptive remarks, followed
 by a mixed collection of \elem{PARAM}, \elem{FIELD} or \elem{GROUP} elements
 which describe a parameter (constant column), a field (column) or a group of
 columns respectively. \elem{PARAM} and \elem{FIELD} elements are detailed in 
-\Aref{sec:field}{the next section}, and the \elem{GROUP} element
-is presented in \Aref{sec:group}{the following section}.
+\Aref{sec:field}, and the \elem{GROUP} element
+is presented in \Aref{sec:group}.
 
 Furthermore the \elem{TABLE} element may contain {\elem{LINK}} elements
 that provide URL-type pointers, exactly like the {\elem{LINK}} elements 
-existing within a \elem{RESOURCE} element (see \Aref{sec:link}{section 3.7}).
+existing within a \elem{RESOURCE} element (see \Aref{sec:link}).
 
 The last element included in a \elem{TABLE} is the optional \elem{DATA} 
-element (see \Aref{sec:data}{below}): a table without any
+element (see \Aref{sec:data}): a table without any
 actual data is quite valid, and is typically used to supply a complete
 description of an existing resource e.g. for query purposes.
 
 The \elem{TABLE} element may have the naming attributes \attr{name} and/or 
-\attr{ID} (see \Aref{sec:name}{name and ID conventions}). A \elem{TABLE}
+\attr{ID} (see \Aref{sec:name}). A \elem{TABLE}
 may also have a \attr{ref} attribute referencing the ID of another
 table previously described, which is interpreted as
 {\em defining a table having a structure identical to the one referenced}:
@@ -911,17 +889,16 @@ about the referencing.
 
 Finally, the \elem{TABLE} element may have a \attr{utype} and \attr{ucd}
 attribute to specify the table semantics, similarly to  the \elem{FIELD} and
-\elem{PARAM} elements (see \Aref{elem:FIELD}{section 4.1}).
+\elem{PARAM} elements (see \Aref{elem:FIELD}).
 
-\section{\texorpdfstring{\elem{FIELD}s and \elem{PARAM}eters}
-                        {FIELDs and PARAMeters}}
+\section{\elem{FIELD}s and \elem{PARAM}eters}
 \label{sec:field}
 
 The atoms of the table structure are represented by \elem{FIELD} and
 \elem{PARAM} elements, where \elem{FIELD} represents the description
 of an actual table column, while \elem{PARAM} supplies a value
 attached to the table, like the \attr{Telescope}
-in the example of \Arefs{example1}{section 3.1}. A \elem{PARAM} may be
+in the example of \Arefs{example1}. A \elem{PARAM} may be
 viewed as a \elem{FIELD} which keeps a {\em constant value} over all
 the rows of a table, and the only difference in the set of attributes
 of the two elements
@@ -931,12 +908,12 @@ which does not exist in a \elem{FIELD}.
 The  \elem{FIELD} elements describe the actual columns of the table;
 the order in which the \elem{FIELD}s are declared is important,
 as this order {\em must} be the same one as the order of the 
-columns in \Aref{sec:data}{the data part}.
+columns in \Aref{sec:data}.
 
 A {\elem{FIELD}} or \elem{PARAM} element may have several sub-elements, 
 including the informational {\elem{DESCRIPTION}}
 and {\elem{LINK}} elements (several descriptions and titles
-are possible, see \Arefx{sec:addesc}{appendix on additional descriptions}); 
+are possible, see \Arefx{sec:addesc}); 
 it may also include a {\elem{VALUES}} element
 that can express limits and ranges of the values that the
 corresponding cell can contain, such as minimum (\elem{MIN}), 
@@ -951,7 +928,7 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
 \begin{itemize}
 \item   The \attr{name} and/or \attr{ID}. The \attr{ID} attribute is required
         if the field has to be referenced (see 
-        \Aref{sec:name}{the generic ID rule}).
+        \Aref{sec:name}).
         It may help to include the ordinal number of 
         the column in the table in the value of the \attr{ID} attribute
         as e.g. \attrval{ID}{col3} when a single table is involved: 
@@ -963,47 +940,45 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
 
 \item   The \attr{datatype}, which expresses the nature of the data 
         that is described as one of the permitted primitives 
-        (see \Tref{primitives}{the table above} and their exact meaning 
-        in \Aref{sec:datatypes}{section 6}).
+        (see \Tref{primitives} and their exact meaning 
+        in \Aref{sec:datatypes}).
         This attribute determines
         how data are read and stored internally;
         it is {\em required}. 
 
 \item   The \attr{arraysize} attribute exists when 
         the corresponding table cell contains more than one of the specified
-        datatype, as explained in \Aref{sec:dim}{section 2.2}.
+        datatype, as explained in \Aref{sec:dim}.
         Note that strings are not a primitive type,
         and have to be described as an array of characters.  The
         arraysize attribute should be omitted unless the corresponding
         table cell contents is intended to be understood as an array
-        (see also \Aref{sec:dim}{section 2.2}).
+        (see also \Aref{sec:dim}).
 
 \item   {\fg{black}}The \attr{width} and \attr{precision} attributes define the 
         numerical accuracy associated with the data 
-        (see \Aref{sec:form}{below}).
+        (see \Aref{sec:form}).
 
 \item	The \attr{xtype} attribute, added in VOTable 1.2, specifies an
 	{\em extended} (or {\em external}) datatype. It is meant
 	to give details about the column contents beyond the 
-	primitive \attr{datatype}\revision{2}{, like timestamps.}
-	{; a typical example is 
-	\attrval{type}{iso8601} for timestamps.}
+	primitive \attr{datatype}, like timestamps.
 
 \item   The \attr{unit} attribute specifies the units in which
         the values of the corresponding column are expressed
-        (see \Aref{sec:unit}{below})
+        (see \Aref{sec:unit})
 
 \item   The \attr{ucd} attribute supplies a standardized classification
         of the physical quantity expressed in the column
-        (see \Aref{sec:ucd}{below}).
+        (see \Aref{sec:ucd}).
 
 \item   The \attr{utype} attribute, introduced in VOTable 1.1, is meant
         to express the role of the column in the context of an external
-        data model (see \Aref{sec:utype}{below}).
+        data model (see \Aref{sec:utype}).
 
 \item   The \attr{ref} attribute is used to quote another element of
         the document in the definition of a \elem{FIELD} or \elem{PARAM}. 
-        It is used in the example of \Aref{example1}{the example} 
+        It is used in the example of \Aref{example1} 
         to indicate the coordinate system in which the coordinates 
         are expressed
         (reference to the \elem{COOSYS} element which specifies the
@@ -1011,9 +986,9 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
 
 \item   The \attr{type} attribute is {\em not} part of this standard,
         but is reserved for future extensions (see 
-        \Arefx{LINK}{Link substitution},
-        \Arefx{query}{Query Extension} and 
-        \Arefx{location}{fields as pointers}).
+        \Arefx{LINK},
+        \Arefx{query} and 
+        \Arefx{location}).
 
 \end{itemize}
 
@@ -1054,13 +1029,13 @@ Two attributes were retained for this purpose:
 The existence and presentation of the special {\em null} value of 
 a field (when the actual value of the field is unknown) is
 another aspect of the numerical accuracy, which is part of the
-\elem{VALUES} sub-element (see \Aref{sec:values}{below}).
+\elem{VALUES} sub-element (see \Aref{sec:values}).
 
-\subsection{\texorpdfstring{Extended Datatype \attr{xtype}}
-                           {Extended Datatype xtype}} \label{sec:xtype}
+\subsection{Extended Datatype \attr{xtype}}
+\label{sec:xtype}
 
 The \attr{xtype} attribute expands the basic
-datatype primitives (in \Tref{primitives}{table of primitives})
+datatype primitives (in \Tref{primitives})
 representing the storage units which are valid in any of the 
 VOTable serializations,
 and corresponds therefore exactly to the {\em FITS} definitions.
@@ -1128,8 +1103,7 @@ vocabulary are still acceptable in this version of VOTable.
 \end{tabular}
 
 
-\subsection{\texorpdfstring{The \attr{utype} Attribute}
-                           {The utype Attribute}}
+\subsection{The \attr{utype} Attribute}
 \label{sec:utype}
 In many contexts, it is important to specify that \elem{FIELD}s or 
 \elem{PARAM}eters convey the values defined in an external {\em data
@@ -1151,13 +1125,12 @@ The mapping of \literalvalue{datamodel\_identifier} to an xml-type attribute
 is recommended, by means of the {\tt xmlns} convention
 which specifies the URI of the data model cited.
 
-\subsection{\texorpdfstring{\elem{VALUES} Element}
-                           {VALUES Element}}
+\subsection{\elem{VALUES} Element}
 \label{sec:values}
 
 The {\elem{VALUES}} element of the {\elem{FIELD}}
 is designed to hold subsidiary information about the {\em domain} of the
-data. For instance, in the example (\Aref{example1}{section 3.1})
+data. For instance, in the example (\Aref{example1})
 we could rewrite the RA field definition as:
 
 \begingroup\small
@@ -1213,7 +1186,7 @@ when unparsable data is found, and the null value will be substituted
 instead.
 The value of the \attr{null} attribute must follow the same rules
 as the TABLEDATA serialization for the appropriate datatype
-described in \Aref{sec:datatypes}{section 6},
+described in \Aref{sec:datatypes},
 and may never contain an array value.
 This mechanism is only intended for use with integer types;
 it should not be used for floating point types, which can use NaN instead.
@@ -1223,7 +1196,7 @@ columns in the \elem{BINARY} serialization.
 Since VOTable 1.3 however other mechanisms are available for representing
 null values in the \elem{TABLEDATA} and \elem{BINARY2} serializations.
 Representation of nulls using the \elem{VALUES} element and otherwise
-is discussed further in \Aref{sec:NULL}{section 5.5}.
+is discussed further in \Aref{sec:NULL}.
 
 Finally the \attr{ref} attribute of a \elem{VALUES} element
 can be used to avoid a repetition of the domain definition,
@@ -1233,8 +1206,7 @@ When specified, the  \attr{ref} attribute completely defines
 the domain without any other element or attribute, e.g.
 \elemdef{VALUES}{ \attrval{ref}{RAdomain}\slash}.
 
-\subsection{\texorpdfstring{\elem{INFO} Element}
-                           {INFO Element}}
+\subsection{\elem{INFO} Element}
 \label{elem:INFO}
 The \elem{INFO} element is a {\elem{PARAM}} element restricted 
 to be of type {\em string}
@@ -1254,8 +1226,7 @@ or at the end of a \elem{TABLE}. Typical uses of \elem{INFO}
 include error reports, or explanations about choices made by the
 data processing system which generates the VOTable document.
 
-\subsection{\texorpdfstring{\elem{GROUP}ing \elem{FIELD}s and \elem{PARAM}eters}
-                           {GROUPing FIELDs and PARAMeters}}
+\subsection{\elem{GROUP}ing \elem{FIELD}s and \elem{PARAM}eters}
 \label{sec:group}
 \label{elem:GROUP}
 \label{elem:FIELDref}
@@ -1269,7 +1240,7 @@ and the \elem{GROUP} designates its member fields via
 \elem{FIELDref} elements.
 
 A simple example of a group made of the velocity and its error, 
-based on the example of \Aref{example1}{section 3.1}, 
+based on the example of \Aref{example1}, 
 can be the following:
 
 \begingroup
@@ -1372,7 +1343,7 @@ methods, then it may be encoded for compression or other reasons. The
 result may be embedded in the XML file ({\it local} data), or it may
 be {\it remote} data.
 
-\Fref{fig:serialization}{The figure}
+\Fref{fig:serialization}
 shows how the abstract table is rendered into the
 VOTable document. First the data is {\it serialized}, either
 as XML, a FITS binary table, or the VOTable
@@ -1386,8 +1357,7 @@ VOTable.
 The serialization elements and their attributes are
 described in the next sections.
 
-\subsection{\texorpdfstring{\elem{TABLEDATA} Serialization}
-                           {TABLEDATA Serialization}}
+\subsection{\elem{TABLEDATA} Serialization}
 \label{sec:TABLEDATA}
 \label{elem:TD}
 \label{elem:TR}
@@ -1400,7 +1370,7 @@ elements, which in turn contain {\elem{TD}}
 elements --- i.e. the same conventions as in HTML.
 The number of {\elem{TD}} elements in each {\elem{TR}} element
 must be equal to the number of {\elem{FIELD}} elements declaring the table.
-An example is contained in \Aref{example1}{section 3.1},
+An example is contained in \Aref{example1},
 surrounded by the \elemdef{TABLEDATA}{} and \elemdef{\slash TABLEDATA}{}
 delimiters.
 
@@ -1408,11 +1378,10 @@ Each item in the {\elem{TD}} tag
 contains a value which must be compatible with 
 the {\attr{datatype}} attribute of the corresponding {\elem{FIELD}} definition.
 If the value is the same as the {\attr{null}} value for that field
-(see \Aref{sec:values}{section 4.7})
+(see \Aref{sec:values})
 then the item is assumed to contain no data.
 Valid representations of values in a cell, depending on their
-\attr{datatype}, are detailed in \Aref{sec:datatypes}{the complete
-description of datatypes}.
+\attr{datatype}, are detailed in \Aref{sec:datatypes}.
 If the {\elem{TD}} element is empty ({\verb|<TD/>| or \verb|<TD></TD>|)
 the cell is considered to contain no data, i.e.\ to be null.
 
@@ -1460,8 +1429,7 @@ the white space is significant for \literalvalue{char} or
 {\fg{DarkPurple}\verb+<TD> Apple</TD>+} are {\em not} identical.
 
 
-\subsection{\texorpdfstring{\elem{FITS} Serialization}
-                           {FITS Serialization}}
+\subsection{\elem{FITS} Serialization}
 \label{sec:FITS}
 \label{elem:FITS}
 
@@ -1510,8 +1478,7 @@ numbered from 1 up, the main header being numbered 0), and the
 these.
 
 
-\subsection{\texorpdfstring{\elem{BINARY} Serialization}
-                           {BINARY Serialization}}
+\subsection{\elem{BINARY} Serialization}
 \label{sec:BIN}
 
 The binary format is intended to be easy to read by parsers, so
@@ -1541,8 +1508,8 @@ by the variable-length array by multiplying the size and number
 of the primitives.
 
 The way the stream of bytes is arranged for the data of the 
-example in \Aref{example2}{section 5.1} is illustrated in 
-\Fref{fig:bin}{Figure 2}.
+example in \Aref{example2} is illustrated in 
+\Fref{fig:bin}.
 In this case the second column must be declared like this:
 \begin{verbatim}
   <FIELD name="aShort" datatype="short">
@@ -1551,7 +1518,7 @@ In this case the second column must be declared like this:
 \end{verbatim}
 to indicate a magic value representing nulls, since no equivalent of the
 empty \elem{TD} element is available for the BINARY serialization
-(see \Aref{sec:NULL}{section 5.5}).
+(see \Aref{sec:NULL}).
 
 \label{Image2}
 \begin{center}
@@ -1566,8 +1533,7 @@ an alternative, providing more straightforward null-flagging capabilities.
 In VOTable 1.3 and above BINARY remains a legal serialization, but for most
 purposes VOTable producers are advised to use BINARY2 instead.
 
-\subsection{\texorpdfstring{\elem{BINARY2} Serialization}
-                           {BINARY2 Serialization}}
+\subsection{\elem{BINARY2} Serialization}
 \label{sec:BIN2}
 
 The BINARY2 format, introduced at VOTable 1.3, is the same as BINARY,
@@ -1601,8 +1567,8 @@ flagged as null is represented as 4 zero-valued bytes, indicating
 a zero-length value.
 
 The way the stream of bytes is arranged for the data of the
-example in \Aref{example2}{section 5.1} is illustrated in
-\Fref{fig:bin2}{Figure 3}.
+example in \Aref{example2} is illustrated in
+\Fref{fig:bin2}.
 
 \label{Image3}
 \begin{center}
@@ -1698,7 +1664,7 @@ In this version (1.4) of VOTable, it is not possible to encode
 individual columns of the table: the whole table must be encoded in
 the same way. However, the possibility of encoding selected table cells
 is  being examined for future versions of VOTable
-(see \Arefx{sec:b64}{appendix below}).
+(see \Arefx{sec:b64}).
 
 In order to use an encoding of the data, it must be enclosed in a
 {\elem{STREAM}}
@@ -1802,16 +1768,16 @@ embedded image on an HTML page).
 \label{sec:datatypes}
 
 This section describes the primitives summarized in 
-\Tref{primitives}{the table of primitives}
+\Tref{primitives}
 and their representations in the \elem{BINARY}/\elem{BINARY2}  
 and \elem{TABLEDATA} serializations 
-(see \Aref{sec:data}{section 5}).
+(see \Aref{sec:data}).
 In the following, the term ``hexadigit'' designates the ASCII numbers
 \literalvalue{0} to \literalvalue{9}, or the ASCII lower- or upper-case letters
 \literalvalue{a} to \literalvalue{f} (i.e. a digit in a hexadecimal representation
 of a number).
 
-The representation of null values is discussed in \Aref{sec:NULL}{section 5.5}.
+The representation of null values is discussed in \Aref{sec:NULL}.
 
 \begin{itemize}
 \item {\bf Logical}\quad If the value of the {\attr{datatype}}
@@ -1873,7 +1839,7 @@ or \verb+&#38;+ (decimal representation) or
 or \verb+&#x3C;+ and \verb+&#x3E;+.
 Also note also the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
-(\Arefs{elem:TD}{section 5.1})
+(\Arefs{elem:TD})
 
 \item {\bf Unicode Character}\quad If the value of the {\attr{datatype}}
 attribute specifies data type {\literalvalue{unicodeChar}},
@@ -1889,7 +1855,7 @@ and e.g. the Cyrillic uppercase ``Ya'' can be written
 \verb+&#x042F;+ in UTF-8.
 Also note the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
-(\Arefs{elem:TD}{section 5.1})
+(\Arefs{elem:TD})
 
 
 \item {\bf 16-Bit Integer}\quad If the value of the {\attr{datatype}}
@@ -1999,7 +1965,7 @@ whitespace, representing the real and imaginary part respectively.
 The XML Schema [6] defining a VOTable 1.4 document
 is available from
 \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}
-as well as in \Arefx{XML-schema}{Appendix B} of this document.
+as well as in \Arefx{XML-schema} of this document.
 In this section we illustrate this XML Schema
 by a set of boxes describing the structure of a VOTable,
 and the list of attributes of each VOTable element.
@@ -2116,15 +2082,15 @@ version 1.1 are:
 \begin{itemize}
 \item   \elem{COOSYS} is deprecated, in favor of a reference
         to the {\em Space-Time Coordinate} (STC) data model
-        (see \Arefs{sec:utype}{utype} and the IVOA note
+        (see \Arefs{sec:utype} and the IVOA note
         \href{http://ivoa.net/documents/Notes/VOTableSTC/}{Referencing STC in VOTable})
 \item  \elem{GROUP} may appear as a direct child of
 	\elem{VOTABLE} and \elem{RESOURCE} (where {\em COOSYS} was 
 	acceptable)
-\item  The usage of UCD1+ is recommended (\Arefs{sec:ucd}{section 4.5})
+\item  The usage of UCD1+ is recommended (\Arefs{sec:ucd})
 \item  The \attr{xtype} attribute was added 
-	(see  \Arefs{sec:xtype}{section 4.3})
-\item  The {\elem{INFO}} element (\Arefs{elem:INFO}{INFO}) is made 
+	(see  \Arefs{sec:xtype})
+\item  The {\elem{INFO}} element (\Arefs{elem:INFO}) is made 
 	more similar
         to the \elem{PARAM} element, but with \attrval{datatype}{char}
         and \attrval{arraysize}{*} (i.e. is a {\em String});
@@ -2138,16 +2104,16 @@ version 1.1 are:
 	a \attr{utype} and \attr{ucd} attribute.
 \item  Naming conventions of \elem{GROUP} elements which specify some
         properties of a relational schema 
-	(see \Arefs{sec:relation}{section 4.10}).
+	(see \Arefs{sec:relation}).
 \item   The recommended and acceptable mime types have been made explicit
-	(\Arefs{sec:mime}{section 7.3})
+	(\Arefs{sec:mime})
 \item   The representation of arrays in cells has been made explicit 
-	(\Arefs{sec:dim}{section 2.2})
+	(\Arefs{sec:dim})
 \item   Detailed and clarified the conventions and recommendations concerning
 	\attr{name}, \attr{ID} and \attr{ref} attributes
 \item	Appendix A7 was a proposition for additional \attr{utype} 
         attributes in groups and tables; it is now included in VOTable 1.2.
-	\Arefx{sec:addesc}{Appendix A7} now contains a new proposal 
+	\Arefx{sec:addesc} now contains a new proposal 
 	(May/June 2009) for multiple descriptions and titles.
 \end{itemize}
 
@@ -2158,7 +2124,7 @@ version 1.2 are:
 
 \begin{itemize}
 \item The \elem{BINARY2} serialization has been introduced
-      (\Aref{sec:BIN2}{section 5.4}).
+      (\Aref{sec:BIN2}).
       \elem{BINARY} is mildly deprecated.
 \item The usage and semantics of an empty \elem{TD} element in the
       \elem{TABLEDATA} serialization have changed.
@@ -2168,32 +2134,32 @@ version 1.2 are:
       (previously it indicated NaN for floating point types).
       This change means that the different serializations no longer have
       exactly the same capabilities for data representation.
-\item A new \Aref{sec:NULL}{section 5.5} has been added to clarify
+\item A new \Aref{sec:NULL} has been added to clarify
       usage and encoding for null values.
 \item In view of the new options for flagging null values introduced by the
       BINARY2 and TABLEDATA changes above, use of the
       \elem{VALUES} \attr{null} attribute is now deprecated in most cases.
       It is in any case explicitly deprecated for floating point values,
       in favour of NaN.
-\item The description of the \elem{LINK} element (\Aref{sec:link}{section 3.7})
+\item The description of the \elem{LINK} element (\Aref{sec:link})
       has been clarified, and a new \attrval{content-role}{type}
       example added, with discussion of its application to SKOS concepts.
 \item The schema datatype declaration of the \elem{LINK} \attr{content-type}
       attribute has been changed from {\tt NMTOKEN} to {\tt token}.
       The {\tt NMTOKEN} datatype in VOTable 1.2 was a mistake, since it
       would not have permitted the MIME type example in the text.
-\item The MIME type section (now \Aref{sec:mime}{section 8}) now describes
+\item The MIME type section (now \Aref{sec:mime}) now describes
       the new {\tt serialization} parameter that can be used to specify
       serialization type.
-\item The representation of STC information in \Aref{example1}{section 3.1}
-      and \Aref{query}{appendix A.2}
+\item The representation of STC information in \Aref{example1}
+      and \Aref{query}
       has been modified to reflect the recommended usage from the
       {\em STC in VOTable} Note [7].  This usage is recommended even for
       VOTable 1.2, so this change to the VOTable document represents
       an update of advice rather than a change to the normative part
       of the VOTable standard.  Additionally, text has been added
       encouraging declaration of the STC metadata where possible.
-\item A new \Aref{sec:voarch}{section 1.4} has been added explaining
+\item A new \Aref{sec:voarch} has been added explaining
       the place of VOTable in the IVOA Architecture.
 \end{itemize}
 
@@ -2295,7 +2261,7 @@ When a {\elem{LINK}} element appears within a \elem{RESOURCE} or a
 extra functionality is implied: the {\attr{href}}
 attribute may not be a simple link, but instead 
 a template for a link. If, in the  example of 
-\Aref{example1}{myFavouriteGalaxies}, we add the link
+\Aref{example1}, we add the link
 
 \begin{verbatim}
   <LINK href="http://ivoa.net/lookup?Galaxy=${Name}&amp;RA=${RA}&amp;DE=${DE}"/>
@@ -2322,12 +2288,12 @@ column of the table. This mechanism can be used to connect each row
 of the table to further information resources.
 
 %The {\attr{action}} attribute is related to the Query mechanism described in
-%the \Aref{query}{next section}.
+%the \Aref{query}.
 
 
 The purpose of the link is defined by the {\attr{content-role}}
 attribute. The allowed values are {\literalvalue{query}} 
-(see \Aref{query}{query mechanism}), 
+(see \Aref{query}), 
 {\literalvalue{hints}} for information for use by the application,
 and {\literalvalue{doc}} for  human-readable documentation.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -2387,7 +2353,7 @@ which are {\em not} part of the form, i.e. are ignored
 in the collection of {\it name}{{\tt=}}{\it value} pairs.
 
 The following is an example of a transformation of the VOTable
-in \Aref{example1}{the example} into a form interface:
+in \Aref{example1} into a form interface:
 \label{form1}
 \begingroup\small
 \verbatiminput{stc_example2.vot}
@@ -2516,7 +2482,7 @@ which designate elements of a multipart message, using the protocol
 prefix {\tt cid:} [RFC2111]
 
 Note that the {\em VOTable LINK substitution} proposed in 
-\Aref{LINK}{Appendix A} fills a similar functionality: 
+\Aref{LINK} fills a similar functionality: 
 generate a pointer which can incorporate in its address components
 from the \elem{DATA} part for the VOTable.
 
@@ -2573,14 +2539,14 @@ values. The result may look like the following:
 
 \noindent 
 When decoded, the contents of the last column is the binary representation
-of the spectrum, as defined in \Aref{sec:BIN}{the BINARY serialization};
+of the spectrum, as defined in \Aref{sec:BIN};
 no length prefix is required here, the total length of the array being
 implicitly defined by the length of the encoded text.
 
 \subsection{Very Large Arrays}
 % Feb. 2004, Mails 1054, 1123
 The \elem{BINARY} and \elem{BINARY2} serializations of variable-length arrays 
-(\Aref{sec:BIN}{section 5.3}, \Aref{sec:BIN2}{5.4}) uses a 4-byte prefix containg the number of
+(\Aref{sec:BIN}, \Aref{sec:BIN2}) uses a 4-byte prefix containg the number of
 items of the array. This convention imposes an absolute maximal
 number of $2^{31}-1$ elements. This limit could be releaved 
 with a new \attr{arrayprefix} attribute.
@@ -2621,8 +2587,7 @@ a set of tables (resource) in addition to its description.
 Providing descriptions in several languages would be another
 obvious advantage of this extension.
 
-\subsection{\texorpdfstring{A New {\tt XMLDATA} Serialization}
-                           {A New XMLDATA Serialization}}
+\subsection{A New {\tt XMLDATA} Serialization}
 % Following discussions Tony Linde / Roy Williams
 % in January 2004 on the VOTable group
 In order to facilitate the  use of standard XML query tools 
@@ -2676,12 +2641,10 @@ element, their definition can be generated automatically from the set of
 \section{The VOTable V1.4 XML Schema}
 \label{XML-schema}
 The XML Schema of VOTable 1.4 is included here as a reference.
-\revision{2}{
 This schema includes a couple of extra optional attributes which are not
 part of VOTable-1.4 ({\em ID} in TR and {\em encoding} in TD),
 but proved to be useful to fix some problems encountered in the
 usage of some code generators.
-}{}
 \bigskip
 %%%%%%%XML-Schema%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \small
