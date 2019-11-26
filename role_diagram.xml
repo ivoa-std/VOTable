@@ -1,0 +1,29 @@
+<!--
+Document authors (ivoatex maintainers have different rules):
+
+* svn cp this file to role_diagram.xml, and then:
+
+* Remove all <rec> elements in there referring to standards not related
+  to the current one,
+
+* change the tag name for the current one from rec to thisrec
+
+* make role_diagram.pdf
+
+For the time being, keep both role_diagram.pdf and role_diagram.svg as
+created by this in the VCS.  This helps document builds on machines
+with missing dependencies.
+-->
+
+<archdiag xmlns="http://ivoa.net/archdiag">
+
+	<thisrec name="VOTable" x="360" y="405"/>
+
+	<rec name="DALI" x="655" y="350"/>
+
+	<prerec name="Utypes" x="490" y="195"/>
+     
+	<rec name="UCD" x="200" y="250"/>
+	<rec name="VOUnits" x="200" y="330"/>
+
+</archdiag>
