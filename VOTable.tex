@@ -117,7 +117,8 @@ a uniform structure, as specified in the table description
 Each row in a table is a sequence of table cells, and each of these contains
 either a primitive data type, or an array of such primitives.
 VOTable is derived from the
-Astrores format [1], itself modeled on the FITS Table format [2];
+Astrores format \citep{astrores}, itself modeled on the FITS Table format
+\citep{std:FITS};
 VOTable was designed to be close to the FITS Binary Table format.
 
 \subsection{Why VOTable?}
@@ -500,8 +501,9 @@ are semantically identical to the TDISP keyword.
 \subsubsection*{What can FITS do but not VOTable?}
 
 FITS has complex semantics, with many conventions
-(see {\em e.g.} the \A{http://fits.gsfc.nasa.gov/fits_registry.html}
-{Registry of FITS Conventions} [10]) which have been developed
+(see {\em e.g.} the Registry of FITS
+ Conventions\footnote{\url{http://fits.gsfc.nasa.gov/fits_registry.html}})
+which have been developed
 mainly to be able to cope with the increasing complexity
 of astronomical instrumentation. In the frame of the
 {\em Virtual Observatory} the complexity is described by
@@ -541,7 +543,7 @@ tables without loss of information.
 \label{elem:VOTABLE}
 
 The overall VOTable document structure is described and controlled
-by its XML Schema [6].  The schema for VOTable version 1.4 is
+by its XML Schema \citep{std:XSD}.  The schema for VOTable version 1.4 is
 given in \Arefx{XML-schema} of this document.  It can also
 be retrieved from \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}.
 
@@ -568,7 +570,8 @@ documents are free to use whatever namespace prefix is convenient for them.
 
 Note that starting with VOTable 1.3, the namespace URI for VOTable will
 remain fixed at \nolinkurl{http://www.ivoa.net/xml/VOTable/v1.3}
-until the next major version as discussed in [7].  As per IVOA
+until the next major version as discussed in \citet{2018ivoa.spec.0529H}.
+As per IVOA
 recommendations, this namespace URI will always redirect to the latest
 recommended schema for VOTable version 1.x.  
 
@@ -743,7 +746,7 @@ the same sky position applies to each row of the \elem{TABLE} without the values
 appearing in \elem{TD} elements.
 
 Further (non-normative) information on best practices and usage patterns
-for \elem{TIMESYS} can be found in [13].
+for \elem{TIMESYS} can be found in \citet{timesys}.
 
 %\label{timesys_example}
 \begingroup\small
@@ -1041,9 +1044,9 @@ VOTable serializations,
 and corresponds therefore exactly to the {\em FITS} definitions.
 It fills the gap between the datatypes
 known by FITS and those required to express queries 
-(Astronomical Data Query Language or ADQL, see [12])
+(Astronomical Data Query Language or ADQL, \citet{2008ivoa.spec.1030O})
 and their results in tabular form (Table Access Protocol or TAP, 
-see [11]).
+\citet{2010ivoa.spec.0327D}).
 
 The \attr{xtype} attribute is the way to 
 specify that a parameter represents a {\em  timestamp} 
@@ -1055,8 +1058,10 @@ parameters required to specify a spatial position may also have an associated
 \attr{xtype}.
 
 The actual values of the \attr{xtype} attribute are not defined
-in this VOTable specification.  The IVOA recommendation, Data Access Layer Interface 
-(DALI, see [8]), defines the use of \attr{xtype} for various use cases.
+in this VOTable specification.
+The IVOA recommendation Data Access Layer Interface 
+or DALI \citep{2017ivoa.spec.0517D},
+defines the use of \attr{xtype} for various use cases.
 
 \subsection{Units}
 \label{sec:unit}
@@ -1065,7 +1070,8 @@ The quantities in a column of the table may be expressed in
 some physical unit,
 which is specified by the {\attr{unit}}
 attribute of the {\elem{FIELD}}.
-The  syntax of the {\em unit} string is defined in reference [3];
+The  syntax of the {\em unit} string is defined in
+the VOUnit specification, \citet{2014ivoa.spec.0523D};
 it is basically written as a string without blanks or spaces,
 where the symbols {\bf.} or {\bf*} indicate a multiplication,
 {\bf/} stands for the division, and no special symbol is required
@@ -1073,8 +1079,6 @@ for a power.
 Examples are \attrval{unit}{m2} for m$^2$,
 \attrval{unit}{cm-2.s-1.keV-1} for cm$^{-2}$s$^{-1}$keV$^{-1}$,
 or \attrval{unit}{erg/s} for erg\,s$^{-1}$.
-Reference [3] contains the recommended rules for writing string
-representations of the unit strings, called VOUnits.
 
 \subsection{Unified Content Descriptors}
 \label{sec:ucd}
@@ -1085,7 +1089,7 @@ contained in the astronomical tables.
 Two versions of UCDs have been developed:
 the initial version (UCD1) created at CDS, which uses
 atomic words separated by underscores (e.g. {\tt POS\_EQ\_RA\_MAIN});
-and a more flexible one, UCD1+ [4],
+and a more flexible one, UCD1+ \citep{2018ivoa.spec.0527M},
 developed in the frame of the IVOA Semantics Working Group, which uses
 a reduced vocabulary of dot-separated atoms which can be
 combined with semi-colons (e.g. {\tt pos.eq.ra;meta.main}).
@@ -1433,7 +1437,8 @@ the white space is significant for \literalvalue{char} or
 \label{sec:FITS}
 \label{elem:FITS}
 
-The FITS format for binary tables [2] is in widespread use in astronomy,
+The FITS format for binary tables \citep{std:FITS}
+is in widespread use in astronomy,
 and its structure has had a major influence on the VOTable specification.
 Metadata is stored in a header section, followed by the data. The
 metadata is essentially equivalent to the metadata of the VOTable
@@ -1749,7 +1754,7 @@ lifetime and are then automatically deleted.
 The {\attr{expires}}
 attribute expresses when a remote resource ceases to become valid,
 and is expressed in Universal Time in the same way as the FITS
-specification [2], itself conforming to the ISO 8601 standard.
+specification, itself conforming to the ISO 8601 standard.
 
 The {\attr{rights}}
 attribute expresses authentication information that may be necessary
@@ -1962,7 +1967,7 @@ whitespace, representing the real and imaginary part respectively.
 \section{A Simplified View of the VOTable 1.4 Schema}
 \label{dtd}
 
-The XML Schema [6] defining a VOTable 1.4 document
+The XML Schema defining a VOTable 1.4 document
 is available from
 \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}
 as well as in \Arefx{XML-schema} of this document.
@@ -2154,7 +2159,7 @@ version 1.2 are:
 \item The representation of STC information in \Aref{example1}
       and \Aref{query}
       has been modified to reflect the recommended usage from the
-      {\em STC in VOTable} Note [7].  This usage is recommended even for
+      {\em STC in VOTable} Note.  This usage is recommended even for
       VOTable 1.2, so this change to the VOTable document represents
       an update of advice rather than a change to the normative part
       of the VOTable standard.  Additionally, text has been added
@@ -2178,48 +2183,10 @@ version 1.3 are:
      supplying metadata for time values in the VOTable.
 \end{itemize}
 
-\section{References}
-\noindent [1] Accomazzi {\it  et. al, Describing Astronomical Catalogues and
-Query Results with XML
-}\\ \hspace*{2em}{\url{http://cds.u-strasbg.fr/doc/astrores.htx}}
 
-\noindent [2] {\it FITS: Flexible Image Transport
-Specification}, specifically the Binary Tables
-Extension
-\\ \hspace*{2em}{\url{http://fits.gsfc.nasa.gov/}}
-
-\noindent [3] {\it Units in the VO}
-\\ \hspace*{2em}{\url{http://www.ivoa.net/documents/latest/VOUnits.html}}
-
-\noindent [4] {\it Unified Content
-Descriptors}
-\\ \hspace*{2em}{\url{http://cds.u-strasbg.fr/doc/UCD.htx}} (UCD1)
-\\ \hspace*{2em}{\url{http://www.ivoa.net/twiki/bin/view/IVOA/IvoaUCD}}
-
-\noindent [5] {\it ASU: Astronomical Server URL, CDS
-Strasbourg}
-\\ \hspace*{2em}{\url{http://cds.u-strasbg.fr/doc/asu.html}}
-
-\noindent [6] {\it XML Schema: W3C Document}
-\\ \hspace*{2em}{\url{http://www.w3.org/XML/Schema}}
-
-\noindent [7] {\it XML Schema Versioning Policies}
-\\ \hspace*{2em}{\url{http://ivoa.net/documents/Notes/XMLVers/}}
-\par
-\noindent [8] {\it Data Access Layer Interface}
-\\ \hspace*{2em}{\url{http://www.ivoa.net/documents/DALI/}}
-
-\noindent [10] {\it Registry of FITS conventions}
-\\ \hspace*{2em}{\url{http://fits.gsfc.nasa.gov/fits\_registry.html}}
-
-\noindent [11] {\it Table Access Protocol}
-\\ \hspace*{2em}{\url{http://ivoa.net/Documents/latest/TAP.html}}
-\par
-\noindent [12] {\it IVOA Astronomical Data Query Language}
-\\ \hspace*{2em}{\url{http://ivoa.net/Documents/latest/ADQL.html}}
-\par
-\noindent [13] {\it A Proposal for a TIMESYS Element in VOTable}
-\\ \hspace*{2em}{\url{http://ivoa.net/documents/Notes/TimeSys/}}
+% NOTE: IVOA recommendations must be cited from docrepo rather than ivoabib
+% (REC entries there are for legacy documents only)
+\bibliography{ivoatex/ivoabib,ivoatex/docrepo,localrefs}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%     A P P E N D I C E S
@@ -2250,7 +2217,7 @@ for VOTable improvements.
 \label{LINK}
 
 \begin{quote}\em \fg{DarkBlue}
-  The \elem{LINK} element in Astrores [1]
+  The \elem{LINK} element in Astrores \citep{astrores}
   contains a mechanism for string substitution,
   which is a powerful way of defining a link to external data
   which adapts to each record contained in the table \elem{DATA}.
@@ -2328,10 +2295,11 @@ which would carry the \attrval{type}{hidden} attribute.
   attribute can turn VOTable into a powerful query interface.
 \end{quote}
 
-\noindent In Astrores [1], the details on the input parameters available in
+\noindent In Astrores \citep{astrores},
+the details on the input parameters available in
 queries are described by the 
 {\elem{PARAM}} and {\elem{FIELD}} elements, and the syntax used
-to generate the actual query is described in the ASU [5] procotol:
+to generate the actual query is described in the ASU procotol \citep{asu}:
 the {\elem{FIELD}} or \elem{PARAM} elements are
 paired in the form {\it name}{{\tt=}}{\it value},
 where {\it name} is the contents of the
@@ -2652,10 +2620,6 @@ usage of some code generators.
 \normalsize
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-% NOTE: IVOA recommendations must be cited from docrepo rather than ivoabib
-% (REC entries there are for legacy documents only)
-\bibliography{ivoatex/ivoabib,ivoatex/docrepo}
 
 
 \end{document}
