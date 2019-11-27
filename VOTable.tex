@@ -27,8 +27,8 @@
 \def\requiredattr#1{{\tt\bf{\fg{DarkBlue}#1}}}
 \def\elem#1{{\tt{\fg{DarkRed}#1}}}
 \def\attrval#1#2{{\tt{\fg{DarkRed}#1}="{\fg{DarkPurple}#2}"}}
-\def\elemdef#1#2{{\fg{blue}$<$}{\tt{\fg{DarkRed}#1}#2}{\fg{blue}$>$}}
-\def\literalvalue#1{{\tt"}{\fg{DarkPurple}#1}{\tt"}}
+\def\elemdef#1#2{{\tt\fg{blue}<}{\tt{\fg{DarkRed}#1}#2}{\tt\fg{blue}>}}
+\def\literalvalue#1{{\tt"}{{\fg{DarkPurple}#1}}{\tt"}}
 \def\order{$\oplus$ }
 \def\unorder{{\large $\circ$ }}
 \def\deprecated {$\dagger$ }
@@ -151,7 +151,7 @@ pulling the whole dataset with it: just as we are used to the idea of
 sending a pointer to a document (URL) in place of the document, so we
 can now send metadata-rich pointers to data tables in place of the
 tables themselves. The remote data is referenced with the URL syntax
-{{\sf protocol://location}},
+\textsf{protocol://location},
 meaning that arbitrarily complex protocols are allowed.
 
 When we are working with very large tables in a
@@ -1840,7 +1840,7 @@ Characters should be represented in the \elem{TABLEDATA} serialization
 using the normal rules for encoding XML text: 
 the ampersand (\&) can be written \verb+&amp;+ (symbolic representation)
 or \verb+&#38;+ (decimal representation) or 
-\verb+&#x26;+ (hexadecimal representation); the less-than ($<$) and greater-then ($>$) symbols should be coded \verb+&lt;+ and \verb+&gt;+ 
+\verb+&#x26;+ (hexadecimal representation); the less-than ({\tt<}) and greater-than ({\tt>}) symbols should be coded \verb+&lt;+ and \verb+&gt;+ 
 or \verb+&#x3C;+ and \verb+&#x3E;+.
 Also note also the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
@@ -2034,14 +2034,14 @@ Associating a MIME type to a document enables the {\em data consumer}
 ({\em e.g.} a visualisation tool).
 
 In the HTTP protocol (RFC 2616), the MIME type is the value specified by the
-{\sf Content-Type:} header. The recommended MIME type describing
-a VOTable document is {\literalvalue{\sf application/x-votable+xml}}:
+{\textsf{Content-Type:}} header. The recommended MIME type describing
+a VOTable document is {\literalvalue{\textsf{application/x-votable+xml}}:
 the {\bf x-} prefix indicates an experimental type, and
 is required for non-registered media types; and the 
 {\bf+xml} suffix (defined by RFC 3023 section 7)
 indicates that the type describes a specialization of XML.
 This type may be accompanied by an optional parameter
-{\literalvalue{\sf serialization}}
+{\literalvalue{\textsf{serialization}}
 with a value specifying the serialization type used for table data within the
 document, one of TABLEDATA, FITS, BINARY or BINARY2,
 interpreted case-insensitively.
@@ -2049,7 +2049,7 @@ In the absence of this parameter, any of the serializations may be
 encountered.  If multiple different serializations are used in the same
 document, this parameter must not be used.
 
-Alternatively the {\literalvalue{\sf text/xml}} MIME type is acceptable
+Alternatively the {\literalvalue{\textsf{text/xml}}} MIME type is acceptable
 for services delivering data which are expected to be
 visualized by humans in a browser; this MIME type 
 would preferably be associated with an XSL style sheet,
@@ -2061,17 +2061,17 @@ line breaks must be represented as a CRLF sequence
 (RFC 2046, section 4.1.1).
 
 For both of these MIME types, RFC 3023 also defines the optional
-parameter {\literalvalue{\sf charset}}.
+parameter {\literalvalue{\textsf{charset}}}.
 If this parameter is not supplied, US-ASCII is assumed.
 
 Any of the following Content-Type header values may therefore be used
 by a service producing VOTables with the TABLEDATA serialization:
 \begin{itemize}
-  \item {\sf text/xml}
-  \item {\sf text/xml; charset="iso-8859-1"}
-  \item {\sf application/x-votable+xml}
-  \item {\sf application/x-votable+xml; serialization=tabledata}
-  \item {\sf application/x-votable+xml; serialization=TABLEDATA; charset=iso-8859-1}
+  \item {\textsf{text/xml}}
+  \item {\textsf{text/xml; charset={"}iso-8859-1"}}
+  \item {\textsf{application/x-votable+xml}}
+  \item {\textsf{application/x-votable+xml; serialization=tabledata}}
+  \item {\textsf{application/x-votable+xml; serialization=TABLEDATA; charset=iso-8859-1}}
 \end{itemize}
 
 
@@ -2301,11 +2301,11 @@ queries are described by the
 {\elem{PARAM}} and {\elem{FIELD}} elements, and the syntax used
 to generate the actual query is described in the ASU procotol \citep{asu}:
 the {\elem{FIELD}} or \elem{PARAM} elements are
-paired in the form {\it name}{{\tt=}}{\it value},
+paired in the form {\it name}{\tt{=}}{\it value},
 where {\it name} is the contents of the
 \attr{name} attribute of a \elem{FIELD} or \elem{PARAM}, 
 and  {\it value} represents a constraint
-written with the ASU conventions (e.g. \literalvalue{$<8$}
+written with the ASU conventions (e.g. \literalvalue{<8}
  or {\literalvalue{12.0..12.5}}
 which denotes a range of values). 
 Such pairs are  appended to the
@@ -2318,7 +2318,7 @@ describe a {\elem{FORM}}.
 A special \attrval{type}{no\_query} attribute of the
 \elem{PARAM} or \elem{FIELD} elements marks the fields
 which are {\em not} part of the form, i.e. are ignored 
-in the collection of {\it name}{{\tt=}}{\it value} pairs.
+in the collection of {\it name}{\tt{=}}{\it value} pairs.
 
 The following is an example of a transformation of the VOTable
 in \Aref{example1} into a form interface:
