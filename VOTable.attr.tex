@@ -1,0 +1,237 @@
+\def\attrx#1{{\em\fg{DarkRed}#1}}
+\begin{tabular}{cccccc}      %%%  6 columns in main table
+
+%%% Row 1
+\begin{tabular}{@{}c@{}}	%%% Start cell r1c1
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{VOTABLE}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:VOTABLE})}}\\ \hline{}
+		\attr{ID}\\		%%% what could be the usage of ID here ?
+		\attr{version}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r1c1
+
+&
+\begin{tabular}{@{}c@{}}	%%% Start cell r1c2
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{COOSYS}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:COOSYS})}}\\ \hline{}
+		\requiredattr{ID}\\
+		\attr{equinox}\\
+		\attr{epoch}\\
+		\attr{system}\\
+	\hline\end{tabular}
+	\\ \\
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{TIMESYS}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:TIMESYS})}}\\ \hline{}
+		\requiredattr{ID}\\
+		\attr{timeorigin}\\
+		\requiredattr{timescale}\\
+		\requiredattr{refposition}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r1c2
+
+&
+\begin{tabular}{@{}c@{}}	%%% Start cell r1c3
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{INFO}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:INFO})}}\\ \hline{}
+		\attr{ID}\\
+		\requiredattr{name}\\
+		\requiredattr{value}\\
+		\attr{xtype}\\
+		\attr{ref}\\
+		\attr{unit}\\
+		\attr{ucd}\\
+		\attr{utype}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r1c3
+
+&
+\begin{tabular}{@{}c@{}}	%%% Start cell r1c4
+\begin{tabular}{|l|}\hline
+	\multicolumn{1}{|c|}{\elem{GROUP}}\\
+	\multicolumn{1}{|c|}{{\em(\Aref{elem:GROUP})}}\\ \hline{}
+	\attr{ID}\\
+	\attr{name}\\
+	\attr{ref}\\
+	\attr{ucd}\\
+	\attr{utype}\\
+	\hline\end{tabular}
+\\ \\
+\begin{tabular}{|l|}\hline
+	\multicolumn{1}{|c|}{\elem{RESOURCE}}\\
+	\multicolumn{1}{|c|}{{\em(\Aref{elem:RESOURCE})}}\\ \hline{}
+	\attr{ID}\\
+	\attr{name}\\
+	\attr{type}\\
+	\attr{utype}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r1c3
+
+&
+\begin{tabular}{@{}c@{}}	%%% Start cell r1c5
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{PARAM}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:PARAM})}}\\ \hline{}
+		\attr{ID}\\
+		\attr{unit}\\
+		\requiredattr{datatype}\\
+		\attr{precision}\\
+		\attr{width}\\
+		\attr{xtype}\\
+		\attr{ref}\\
+		\requiredattr{name}\\
+		\attr{ucd}\\
+		\attr{utype}\\
+		\attr{arraysize}\\
+		\requiredattr{value}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r1c4
+
+&
+\begin{tabular}{@{}c@{}}	%%% Start cell r1c6
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{FIELD}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:FIELD})}}\\ \hline{}
+		\attr{ID}\\
+		\attr{unit}\\
+		\requiredattr{datatype}\\
+		\attr{precision}\\
+		\attr{width}\\
+		\attr{xtype}\\
+		\attr{ref}\\
+		\requiredattr{name}\\
+		\attr{ucd}\\
+		\attr{utype}\\
+		\attr{arraysize}\\
+		\attrx{type}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r1c5
+
+\\ \\
+\\ \\
+
+%%% Row 2
+\begin{tabular}{@{}c@{}}	%%% Start cell r2c1
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{TABLE}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:TABLE})}}\\ \hline{}
+		\attr{ID}\\
+		\attr{name}\\
+		\attr{ucd}\\
+		\attr{utype}\\
+		\attr{ref}\\
+		\attr{nrows}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r2c1
+
+&
+\begin{tabular}{@{}c@{}}	%%% Start cell r2c2
+\begin{tabular}{|l|}\hline
+	\multicolumn{1}{|c|}{\elem{FIELDref}}\\
+	\multicolumn{1}{|c|}{{\em(\Aref{elem:FIELDref})}}\\ 
+	\hline{}
+	\requiredattr{ref}\\
+	\attr{ucd}\\
+	\attr{utype}\\
+	\hline\end{tabular}
+\\ \\
+\begin{tabular}{|l|}\hline
+	\multicolumn{1}{|c|}{\elem{PARAMref}}\\
+	\multicolumn{1}{|c|}{{\em(\Aref{elem:PARAMref})}}\\ 
+	\hline{}
+	\requiredattr{ref}\\
+	\attr{ucd}\\
+	\attr{utype}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r2c2
+
+&
+\begin{tabular}{@{}c@{}}	%%% Start cell r2c3
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{STREAM}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:STREAM})}}\\ \hline{}
+		\attr{type}\\
+		\attr{href}\\
+		\attr{actuate}\\
+		\attr{encoding}\\
+		\attr{expires}\\
+		\attr{rights}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r2c2
+
+&
+\begin{tabular}{@{}c@{}}	%%% Start cell r2c4
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{FITS}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:FITS})}}\\ \hline{}
+		\attr{extnum}\\
+	\hline\end{tabular}
+	\\ \\
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{TR}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:TR})}}\\ \hline{}
+		\attrx{ID}\\
+	\hline\end{tabular}
+	\\ \\
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{TD}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:TD})}}\\ \hline{}
+		%\attr{ref}\\
+		\attrx{encoding}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r2c3
+
+&
+\begin{tabular}{@{}c@{}}	%%% Start cell r2c5
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{MIN}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:MIN})}}\\ \hline{}
+		\requiredattr{value}\\
+		\attr{inclusive}\\
+	\hline\end{tabular}
+	\\ \\
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{MAX}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:MAX})}}\\ \hline{}
+		\requiredattr{value}\\
+		\attr{inclusive}\\
+	\hline\end{tabular}
+	\\ \\
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{OPTION}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:OPTION})}}\\ \hline{}
+		\attr{name}\\
+		\requiredattr{value}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r2c5
+
+&
+\begin{tabular}{@{}c@{}}	%%% Start cell r2c6
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{VALUES}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:VALUES})}}\\ \hline{}
+		\attr{ID}\\
+		\attr{type}\\
+		\attr{null}\\
+		\attr{ref}\\
+		%\attr{invalid}\\
+	\hline\end{tabular}
+	\\ \\
+	\begin{tabular}{|l|}\hline
+		\multicolumn{1}{|c|}{\elem{LINK}}\\
+		\multicolumn{1}{|c|}{{\em(\Aref{elem:LINK})}}\\ \hline{}
+		\attr{ID}\\
+		\attr{content-role}\\
+		\attr{content-type}\\
+		\attr{title}\\
+		\attr{value}\\
+		\attr{href}\\
+		%\attr{gref}\\
+		\attrx{action}\\
+	\hline\end{tabular}
+\end{tabular}			%%% End cell r2c6
+
+\end{tabular}     %%%  End main table

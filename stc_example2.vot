@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VOTABLE version="1.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns="http://www.ivoa.net/xml/VOTable/v1.3" >
+  <RESOURCE name="myFavouriteGalaxies" type="meta">
+    <TABLE name="results">
+      <DESCRIPTION>Velocities and Distance estimations</DESCRIPTION>
+      <GROUP utype="stc:CatalogEntryLocation">
+        <PARAM name="href" datatype="char" arraysize="*"
+               utype="stc:AstroCoordSystem.href" value="ivo://STClib/CoordSys#UTC-ICRS-TOPO"/>
+        <PARAM name="URI" datatype="char" arraysize="*"
+               utype="stc:DataModel.URI" value="http://www.ivoa.net/xml/STC/stc-v1.30.xsd"/>
+        <FIELDref utype="stc:AstroCoords.Position2D.Value2.C1" ref="col1"/>
+        <FIELDref utype="stc:AstroCoords.Position2D.Value2.C2" ref="col2"/>
+      </GROUP>
+      <PARAM name="-out.max" ucd="meta.number" datatype="int" value="50">
+        <DESCRIPTION>Maximal number of records to retrieve</DESCRIPTION>
+      </PARAM>
+      <FIELD name="RA"   ID="col1" ucd="pos.eq.ra;meta.main"
+             datatype="float" width="6" precision="2" unit="deg"/>
+      <FIELD name="Dec"  ID="col2" ucd="pos.eq.dec;meta.main"
+             datatype="float" width="6" precision="2" unit="deg"/>
+      <FIELD name="Name" ID="col3" ucd="meta.id;meta.main"
+             datatype="char" arraysize="8*"/>
+      <FIELD name="RVel" ID="col4" ucd="spect.dopplerVeloc" datatype="int"
+             width="5" unit="km/s"/>
+      <FIELD name="e_RVel" ID="col5" ucd="stat.error;spect.dopplerVeloc"
+             datatype="int" width="3" unit="km/s"/>
+      <FIELD name="R" ID="col6" ucd="pos.distance;pos.heliocentric"
+             datatype="float" width="4" precision="1" unit="Mpc">
+        <DESCRIPTION>Distance of Galaxy, assuming H=75km/s/Mpc</DESCRIPTION>
+      </FIELD>
+      <LINK content-role="query" action="myQuery?-source=myGalaxies&amp;" />
+    </TABLE>
+  </RESOURCE>
+</VOTABLE>
