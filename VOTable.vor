@@ -7,14 +7,14 @@
 	xmlns:vstd="http://www.ivoa.net/xml/StandardsRegExt/v1.0" 
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
 	xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0"
-	xmlns:vot="http://www.ivoa.net/xml/VOTable/VOTable-1.4"
+	xmlns:vot="http://www.ivoa.net/xml/VOTable/v1.3"
 	xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
 		http://www.ivoa.net/xml/VOResource/v1.0
 	http://www.ivoa.net/xml/StandardsRegExt/v1.0
 		http://www.ivoa.net/xml/StandardsRegExt/v1.0
 	http://www.ivoa.net/xml/VOResource/v1.0
 		http://www.ivoa.net/xml/VOResource/v1.0
-		http://www.ivoa.net/xml/VOTable/VOTable-1.4">
+		http://www.ivoa.net/xml/VOTable/v1.3">
 
   <title>VO Table</title>
   <identifier>ivo://ivoa.net/std/VOTable</identifier>
@@ -80,8 +80,8 @@ This document describes the structures making up the VOTable standard. The main 
 
   <endorsedVersion status="rec">1.4</endorsedVersion>
 
-	<schema namespace="http://www.ivoa.net/xml/VOTable/VOTable-1.4">
-		<location>http://www.ivoa.net/xml/VOTable/VOTable-1.4</location>
+	<schema namespace="http://www.ivoa.net/xml/VOTable/v1.3">
+		<location>http://www.ivoa.net/xml/VOTable/v1.3</location>
 		<description>VOTable is meant to serialize tabular documents in the context of Virtual Observatory applications. This schema corresponds to the VOTable document available from http://www.ivoa.net/Documents/latest/VOT.html</description>
 	</schema>
 
