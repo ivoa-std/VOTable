@@ -1,7 +1,7 @@
 <ri:Resource 
 	xsi:type="vstd:Standard" 
-	created="2016-10-21T09:01:00Z"
-	updated="2016-10-21T09:01:00Z"
+	created="2020-05-11T00:00:00Z"
+	updated="2020-05-11T00:00:00Z"
 	status="active"
 	xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" 
 	xmlns:vstd="http://www.ivoa.net/xml/StandardsRegExt/v1.0" 
@@ -16,7 +16,7 @@
 		http://www.ivoa.net/xml/VOResource/v1.0
 		http://www.ivoa.net/xml/VOTable/v1.3">
 
-  <title>VO Table</title>
+  <title>VO Table Format Definition</title>
   <identifier>ivo://ivoa.net/std/VOTable</identifier>
   <curation>
     <publisher>IVOA</publisher>
