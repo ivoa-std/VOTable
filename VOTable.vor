@@ -14,6 +14,7 @@
 		http://www.ivoa.net/xml/StandardsRegExt/v1.0
 	http://www.ivoa.net/xml/VOResource/v1.0
 		http://www.ivoa.net/xml/VOResource/v1.0
+		http://www.ivoa.net/xml/VOTable/v1.3
 		http://www.ivoa.net/xml/VOTable/v1.3">
 
   <title>VO Table Format Definition</title>
