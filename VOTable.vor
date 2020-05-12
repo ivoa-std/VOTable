@@ -1,0 +1,93 @@
+<ri:Resource 
+	xsi:type="vstd:Standard" 
+	created="2020-05-11T00:00:00Z"
+	updated="2020-05-11T00:00:00Z"
+	status="active"
+	xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" 
+	xmlns:vstd="http://www.ivoa.net/xml/StandardsRegExt/v1.0" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:ri="http://www.ivoa.net/xml/RegistryInterface/v1.0"
+	xmlns:vot="http://www.ivoa.net/xml/VOTable/v1.3"
+	xsi:schemaLocation="http://www.ivoa.net/xml/VOResource/v1.0
+		http://www.ivoa.net/xml/VOResource/v1.0
+	http://www.ivoa.net/xml/StandardsRegExt/v1.0
+		http://www.ivoa.net/xml/StandardsRegExt/v1.0
+	http://www.ivoa.net/xml/VOResource/v1.0
+		http://www.ivoa.net/xml/VOResource/v1.0
+		http://www.ivoa.net/xml/VOTable/v1.3
+		http://www.ivoa.net/xml/VOTable/v1.3">
+
+  <title>VO Table Format Definition</title>
+  <identifier>ivo://ivoa.net/std/VOTable</identifier>
+  <curation>
+    <publisher>IVOA</publisher>
+
+    <creator>
+      <name>Francois Ochsenbein</name>
+    </creator>
+    <creator>
+      <name>Roy Williams</name>
+    </creator>
+    <creator>
+      <name>Clive Davenhall</name>
+    </creator>
+    <creator>
+      <name>Markus Demleitner</name>
+    </creator>
+    <creator>
+      <name>Tom Donaldson</name>
+    </creator>
+    <creator>
+      <name>Daniel Durand</name>
+    </creator>
+    <creator>
+      <name>Pierre Fernique</name>
+    </creator>
+    <creator>
+      <name>David Giaretta</name>
+    </creator>
+    <creator>
+      <name>Robert Hanisch</name>
+    </creator>
+    <creator>
+      <name>Tom McGlynn</name>
+    </creator>
+    <creator>
+      <name>Alex Szalay</name>
+    </creator>
+    <creator>
+      <name>Mark Taylor</name>
+    </creator>
+    <creator>
+      <name>Andreas Wicenec</name>
+    </creator>
+
+    <date role="update">2019-10-21</date>
+	<date role="update">2013-09-20</date>
+	<date role="update">2009-11-30</date>
+	<date role="creation">2004-08-11</date>
+	
+    <version>1.4</version>
+    <contact>
+      <name>Applications WG</name>
+      <email>apps@ivoa.net</email>
+    </contact>
+  </curation>
+  <content>
+    <subject>Virtual observatory</subject>
+    <description>
+This document describes the structures making up the VOTable standard. The main part of this document describes the adopted part of the VOTable standard; it is followed by appendices presenting extensions which have been proposed and/or discussed, but which are not part of the standard.
+    </description>
+    <referenceURL>http://www.ivoa.net/documents/VOTable</referenceURL>
+    <type>Other</type>
+  	<contentLevel>Research</contentLevel>
+  </content>
+
+  <endorsedVersion status="rec">1.4</endorsedVersion>
+
+	<schema namespace="http://www.ivoa.net/xml/VOTable/v1.3">
+		<location>http://www.ivoa.net/xml/VOTable/v1.3</location>
+		<description>VOTable is meant to serialize tabular documents in the context of Virtual Observatory applications. This schema corresponds to the VOTable document available from http://www.ivoa.net/Documents/latest/VOT.html</description>
+	</schema>
+
+</ri:Resource>
