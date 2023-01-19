@@ -62,6 +62,9 @@
 \editor[http://www.ivoa.net/twiki/bin/view/IVOA/MarkTaylor]{Mark Taylor}
 \editor[http://www.ivoa.net/twiki/bin/view/IVOA/TomDonaldson]{Tom Donaldson}
 
+\previousversion[http://www.ivoa.net/documents/VOTable/20191021/]
+                {http://www.ivoa.net/documents/VOTable/20191021/
+                 (V1.3 2013-09-20)}
 \previousversion[http://www.ivoa.net/documents/VOTable/20130920/]
                 {http://www.ivoa.net/documents/VOTable/20130920/
                  (V1.3 2013-09-20)}
@@ -1089,7 +1092,7 @@ contained in the astronomical tables.
 Two versions of UCDs have been developed:
 the initial version (UCD1) created at CDS, which uses
 atomic words separated by underscores (e.g. {\tt POS\_EQ\_RA\_MAIN});
-and a more flexible one, UCD1+ \citep{2018ivoa.spec.0527M},
+and a more flexible one, UCD1+ \citep{2021ivoa.spec.0616C},
 developed in the frame of the IVOA Semantics Working Group, which uses
 a reduced vocabulary of dot-separated atoms which can be
 combined with semi-colons (e.g. {\tt pos.eq.ra;meta.main}).
@@ -1180,6 +1183,14 @@ can have an \attr{inclusive} attribute to specify whether the \attr{value}
 quoted belongs to the domain or not, and the  \elem{OPTION} element
 can have a \attr{name} attribute to describe the ``special'' quoted 
 \attr{value}.
+
+Unless a \elem{FIELD} has a nonempty \attr{xtype}, the value of the
+\attr{value} attribute always is a single TABLEDATA literal of
+the datatype and gives a global limit for all cells of the array; arrays
+are conceptually homogeneous in VOTable.  When the parent of a
+\elem{VALUES} element does have an \attr{xtype}, special rules apply;
+clients should only try to parse limits of xtyped fields when they know
+the xtype.
 
 The \elem{VALUES} element may also have a \attr{null} attribute 
 to define a non-standard value that is used to specify 
