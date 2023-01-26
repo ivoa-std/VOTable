@@ -1,4 +1,3 @@
-
 binary.pdf
 binary.png
 binary2.pdf
@@ -17,3 +16,6 @@ docrepo.bib
 gitmeta.tex
 REC-VOTable-1.4.zip
 VOTable.html
+*.fdb_latexmk
+*.fls
+*.swp
