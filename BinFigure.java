@@ -52,7 +52,7 @@ public class BinFigure extends FigureIcon {
                        new int[] { 1, 2, 4, 8, 16 },
                        new float[] { 1.62f, 4.56f, 3.44f },
                        (byte) Integer.parseInt( "01000000", 2 ) );
-        gy += drawRow( g2, gx, gy, 
+        gy += drawRow( g2, gx, gy,
                        "Orange   ",
                        (short) 15,
                        new int[] { 23, -11, 9 },
@@ -64,7 +64,7 @@ public class BinFigure extends FigureIcon {
 
     private int drawRow( Graphics g, int gx, int gy,
                          String strVal, short shortVal,
-                         int[] intsVal, float[] floatsVal, byte flags ) { 
+                         int[] intsVal, float[] floatsVal, byte flags ) {
         int ncol = 4;
         if ( isBinary2 ) {
             g.setFont( new Font( "Dialog", Font.PLAIN, fontSize ) );
