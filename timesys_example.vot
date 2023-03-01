@@ -7,7 +7,7 @@
       <FIELD datatype="double" name="obs_time" ucd="time.epoch" unit="d" ref="time_frame"/>
       <FIELD datatype="float" name="flux" ucd="phot.flux;em.opt.V" unit="s**-1"/>
       <FIELD datatype="float" name="mag" ucd="phot.mag;em.opt.V" unit="mag"/>
-      <FIELD datatype="float" name="flux_error" ucd="stat.error;phot.flux;em.opt.V" 
+      <FIELD datatype="float" name="flux_error" ucd="stat.error;phot.flux;em.opt.V"
         unit="s**-1"/>
       <PARAM datatype="double" name="ra" ucd="pos.eq.ra" value="45.7164887146879" ref="system"/>
       <PARAM datatype="double" name="dec" ucd="pos.eq.dec" value="1.18583048057467" ref="system"/>
