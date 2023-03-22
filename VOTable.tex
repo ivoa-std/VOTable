@@ -686,14 +686,13 @@ which is generally the case.
 
 \item[\attr{equinox}] Fixes the
 equatorial or ecliptic systems (as e.g., \verb|"J2000"| as the default
-<<<<<<< HEAD
 for \verb|"eq_FK5"| or \verb|"B1950"|, as the default for
 \verb|"eq_FK4"|).
 
 \item[\attr{epoch}] Specifies the epoch of the positions
 if necessary, again as an astroYear (i.e, prefixed with J or B depending
-on whether Julian or Besselian years are used).  Both equinox and epoch MUST 
-expressed in the Julian or Besselian calendar.
+on whether Julian or Besselian years are used).  COOSYS only supports time 
+specifications in Julian or Besselian years.
 
 \item[\attr{refposition}] The reference position for which the positions
 are given.  The values of this attribute should be taken form the IVOA
