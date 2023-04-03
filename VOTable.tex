@@ -1115,8 +1115,9 @@ vocabulary are still acceptable in this version of VOTable.
 In many contexts, it is important to specify that \elem{FIELD}s or
 \elem{PARAM}eters convey the values defined in an external {\em data
 model}. For instance, it can be fundamental for an application to
-be aware that a given \elem{FIELD} expresses { the} surface brightness
-measured with a specific filter and within a 12x6arcsec elliptical aperture.
+be aware that a given \elem{FIELD} expresses \emph{the} surface brightness
+measured with a specific filter and within a
+$12\times6\,\textrm{arcsec}$ elliptical aperture.
 None of the other \attr{name}, \attr{ID}
 or \attr{ucd} attributes can fill this role, and
 the \attr{utype} (usage-specific or {\em unique} type) attribute was
@@ -1125,12 +1126,12 @@ By extension, most elements may refer to some external data model,
 and the \attr{utype} attribute is also legal in \elem{RESOURCE},
 \elem{TABLE} and \elem{GROUP} elements.
 
-In order to avoid name collisions, the data model identification
-should be introduced following the XML namespace conventions,
-as \attrval{utype}{{\rm\em datamodel\_identifier:role\_identifier}}.
-The mapping of \literalvalue{datamodel\_identifier} to an xml-type attribute
-is recommended, by means of the {\tt xmlns} convention
-which specifies the URI of the data model cited.
+Note that the \attr{utype} attribute is \emph{not} an XML QName.  This
+means that even when utypes are written with colons (e.g.,
+\texttt{adhoc:service}), whatever is in front of the colon has no
+relationship to XML namespace URIs.  In other words, utypes are opaque
+strings (except, where defined that way by standards using them, for
+case-folding).
 
 \subsection{\elem{VALUES} Element}
 \label{sec:values}
