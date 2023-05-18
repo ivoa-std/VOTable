@@ -639,9 +639,12 @@ The {\attr{ID}} attribute %(as defined by Xpointer standard)
 is therefore required in the elements which {\em have to be referenced},
 but the elements having an {\attr{ID}} attribute do not need to be
 referenced.
-From VOTable 1.2, it is further
-recommended to place the \attr{ID} attribute {\em prior to} referencing
-it whenever possible.
+
+The relative position of an \attr{ID} and its corresponding reference(s)
+may have an impact on the performance or functionality of streaming parsers.
+For this reason, earlier versions of VOTable recommended placing
+the \attr{ID} attribute before any references to it,
+but there may be cases where the opposite is more appropriate.
 
 While the {\attr{ID}} attribute has to be unique in a VOTable document,
 the {\attr{name}} attribute need not. It is however recommended,
