@@ -66,3 +66,12 @@ ivoatex/Makefile:
 	@echo "*** ivoatex submodule not found.  Initialising submodules."
 	@echo
 	git submodule update --init
+
+STILTS ?= stilts
+test:
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=VOTable.xsd" \
+		coosys_example.vot
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=VOTable.xsd" \
+		timesys_example.vot
