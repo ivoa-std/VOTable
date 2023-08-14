@@ -671,17 +671,44 @@ usage is deprecated since version 1.1.
 \label{elem:COOSYS}
 
 The \elem{COOSYS} element defines a celestial coordinate system, to
-which the components of a position on the celestial sphere refer. It has
-an \attr{ID} attribute -- required if the \elem{COOSYS} element has to
+which the components of a position on the celestial sphere refer.  It
+has the following attributes, all of them (syntactically) optional:
+
+\begin{description}
+\item[\attr{ID}] Required if the \elem{COOSYS} element has to
 be referred to via the \attr{ref} attribute of the position components,
-which is generally the case --, a \attr{system} attribute which
-specifies the coordinate system among \verb|"ICRS"|, \verb|"eq_FK5"|,
+which is generally the case.
+
+\item[\attr{system}] Specifies the coordinate system among
+\verb|"ICRS"|, \verb|"eq_FK5"|,
 \verb|"eq_FK4"|, \verb|"ecl_FK4"|, \verb|"ecl_FK5"|, \verb|"galactic"|,
-\verb|"supergalactic"|. The \attr{equinox} attribute fixes the
+\verb|"supergalactic"|.
+
+\item[\attr{equinox}] Fixes the
 equatorial or ecliptic systems (as e.g., \verb|"J2000"| as the default
-for \verb|"eq_FK5"| or \verb|"B1950"| as the default for
-\verb|"eq_FK4"|), and \attr{epoch} specifies the epoch of the positions
-if necessary.  Note that the \elem{COOSYS} may be deprecated in the
+for \verb|"eq_FK5"| or \verb|"B1950"|, as the default for
+\verb|"eq_FK4"|).
+
+\item[\attr{epoch}] Specifies the epoch of the positions
+if necessary, again as an astroYear (i.e, prefixed with J or B depending
+on whether Julian or Besselian years are used).
+
+\item[\attr{refposition}] The reference position for which the positions
+are given.  The values of this attribute should be taken form the IVOA
+\emph{refposition} vocabulary (\url{http://www.ivoa.net/rdf/refposition}).
+At the time or writing, this vocabulary includes the terms
+% GENERATED: !vocterms refposition
+\textsl{BARYCENTER},
+\textsl{EMBARYCENTER},
+\textsl{GEOCENTER},
+\textsl{HELIOCENTER},
+\textsl{TOPOCENTER},
+\textsl{UNKNOWN}
+% /GENERATED
+\end{description}
+
+
+Note that the \elem{COOSYS} may be deprecated in the
 future in favor of a more generic way of describing the conventions used
 to define the positions of the objects studied in the enclosed tables.
 
@@ -723,9 +750,9 @@ taken from the IVOA \emph{timescale}
 vocabulary
 (\url{http://www.ivoa.net/rdf/timescale}).
 This attribute is mandatory.
-\item[\attr{refposition}] The reference position again is a simple string,
-the values of which SHOULD be taken from the IVOA \emph{refposition}
-vocabulary
+\item[\attr{refposition}] The reference position again is a simple string.
+As with the COOSYS attribute of this name, the values SHOULD be
+taken from the IVOA \emph{refposition} vocabulary
 (\url{http://www.ivoa.net/rdf/refposition}).
 This attribute is mandatory.
 \end{description}
@@ -2196,8 +2223,15 @@ version 1.3 are:
 \end{itemize}
 
 
-% NOTE: IVOA recommendations must be cited from docrepo rather than ivoabib
-% (REC entries there are for legacy documents only)
+\subsection{Differences Between Versions 1.4 and 1.5}
+\label{diff1.4-1.5}
+
+\begin{itemize}
+\item COOSYS now has a refposition attribute analogous to TIMESYS.
+\end{itemize}
+
+% NOTE: IVOA recommendations must be cited from docrepo.bib
+
 \bibliography{ivoatex/ivoabib,ivoatex/docrepo,localrefs}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
