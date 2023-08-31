@@ -684,10 +684,27 @@ has the following attributes, all of them (syntactically) optional:
 be referred to via the \attr{ref} attribute of the position components,
 which is generally the case.
 
-\item[\attr{system}] Specifies the coordinate system among
-\verb|"ICRS"|, \verb|"eq_FK5"|,
-\verb|"eq_FK4"|, \verb|"ecl_FK4"|, \verb|"ecl_FK5"|, \verb|"galactic"|,
-\verb|"supergalactic"|.
+\item[\attr{system}] Specifies the reference frame of the coordinates.
+The value must be taken from the IVOA \emph{refframe} vocabulary
+(\url{http://www.ivoa.net/rdf/refframe}).  At the time of writing, this
+vocabulary includes the terms:
+% GENERATED: !vocterms refframe
+\textsl{AZ\_EL},
+\textsl{BODY},
+\textsl{ecl\_FK4},
+\textsl{ECLIPTIC},
+\textsl{EQUATORIAL},
+\textsl{FK4},
+\textsl{FK5},
+\textsl{GALACTIC},
+\textsl{GALACTIC\_I},
+\textsl{GENERIC\_GALACTIC},
+\textsl{ICRS},
+\textsl{SUPER\_GALACTIC},
+\textsl{UNKNOWN}
+% /GENERATED
+As that vocabulary can be extended at any time, clients should fail
+gracefully when they encounter unknown reference frames.
 
 \item[\attr{equinox}] Fixes the
 equatorial or ecliptic systems (as e.g., \verb|"J2000"| as the default
