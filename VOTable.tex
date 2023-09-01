@@ -1223,7 +1223,31 @@ the datatype and gives a global limit for all cells of the array; arrays
 are conceptually homogeneous in VOTable.  When the parent of a
 \elem{VALUES} element does have an \attr{xtype}, special rules apply;
 clients should only try to parse limits of xtyped fields when they know
-the xtype.
+the xtype.  For instance, with:
+
+\begin{verbatim}
+<FIELD name="flux" datatype="float" unit="Jy">
+  <VALUES><MIN value="0"/><MAX value="1e-4"/></VALUES>
+</FIELD>
+
+<FIELD name="fluxes" datatype="float" arraysize="30" unit="Jy">
+  <VALUES><MIN value="0"/><MAX value="1e-4"/></VALUES>
+</FIELD>
+
+<PARAM name="CIRCLE" datatype="float" arraysize="3" xtype="circle">
+  <VALUES><MAX value="312.5 -41 2"/></VALUES>
+</PARAM>
+\end{verbatim}
+
+both the single value of \emph{flux} and all items in the \emph{fluxes}
+array are declared as being between 0 and $10^{-4}$, and clients could,
+for instance, raise warnings if they are not.  In the last example,
+\emph{CIRCLE}, clients not familiar with \attrval{xtype }{circle} would
+ignore the MAX declaration.  Clients familiar with this xtype's
+particular interpretation of MAX would learn about a spatial coverage of
+a spherical circle with radius two degrees around the point
+$(312.5^\circ,-41^\circ)$; see the SODA specification
+\citep{2017ivoa.spec.0517B} for the context of this particular example.
 
 The \elem{VALUES} element may also have a \attr{null} attribute
 to define a non-standard value that is used to specify
