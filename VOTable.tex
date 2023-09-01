@@ -3,6 +3,8 @@
 
 \usepackage{verbatim}
 
+\newcommand{\aap}{Astronomy and Astrophysics}
+
 \let\A=\href
 \def\Aref#1{section~\ref{#1}}
 \def\Arefs#1{section~\ref{#1}}
@@ -691,7 +693,8 @@ for \verb|"eq_FK5"| or \verb|"B1950"|, as the default for
 
 \item[\attr{epoch}] Specifies the epoch of the positions
 if necessary, again as an astroYear (i.e, prefixed with J or B depending
-on whether Julian or Besselian years are used).
+on whether Julian or Besselian years are used).  COOSYS only supports time 
+specifications in Julian or Besselian years.
 
 \item[\attr{refposition}] The reference position for which the positions
 are given.  The values of this attribute should be taken form the IVOA
@@ -706,8 +709,6 @@ At the time or writing, this vocabulary includes the terms
 \textsl{UNKNOWN}
 % /GENERATED
 \end{description}
-
-
 Note that the \elem{COOSYS} may be deprecated in the
 future in favor of a more generic way of describing the conventions used
 to define the positions of the objects studied in the enclosed tables.
@@ -734,7 +735,7 @@ before the element that references it.
 \item[\attr{ID}] This attribute is used to reference \elem{TIMESYS}
 elements from the elements using the time system.
 \item[\attr{timeorigin}] This is the time origin of the time coordinate,
-given as a Julian Date for the the time scale and reference point
+given as a Julian Date for the  time scale and reference point
 defined.  It is usually given as a floating point
 literal; for convenience, the magic strings \verb|MJD-origin| (standing
 for 2400000.5) and \verb|JD-origin| (standing for 0) are also allowed.
@@ -745,6 +746,10 @@ representations currently are Gregorian calendar years with
 \attrval{xtype}{timestamp}, or years in the Julian or Besselian calendar when a column
 has \verb|yr|, \verb|a| or \verb|Ba| as its unit and no time origin is
 given.
+When using calendar epochs written in julian or besselian years, note that 
+conventionally Julian years are tied to the TDB timescale and Besselian years to 
+the ET timescale \citep{2015A&A...574A..36R}.
+
 \item[\attr{timescale}]  This is the time scale used.  Values SHOULD be
 taken from the IVOA \emph{timescale}
 vocabulary
