@@ -23,6 +23,7 @@
 .Version 1.4wd-a: TD: updates for initial draft of v1.4.
 .Version 1.4: TD: Change version to 1.4
 .Version 1.5pre1: MD: adding refposition attribute in COOSYS
+.Version 1.5pre2: MD: vocabularising frame attribute in COOSYS
 -->
 <xs:schema
    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
@@ -228,7 +229,7 @@
       <xs:attribute name="ID" type="xs:ID" use="required"/>
       <xs:attribute name="equinox" type="astroYear"/>
       <xs:attribute name="epoch" type="astroYear"/>
-      <xs:attribute name="system" default="eq_FK5">
+      <xs:attribute name="system" default="FK5">
         <xs:annotation>
           <xs:documentation>
             Values for this attribute must be taken from the IVOA
