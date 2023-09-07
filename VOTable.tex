@@ -684,10 +684,34 @@ has the following attributes, all of them (syntactically) optional:
 be referred to via the \attr{ref} attribute of the position components,
 which is generally the case.
 
-\item[\attr{system}] Specifies the coordinate system among
-\verb|"ICRS"|, \verb|"eq_FK5"|,
-\verb|"eq_FK4"|, \verb|"ecl_FK4"|, \verb|"ecl_FK5"|, \verb|"galactic"|,
-\verb|"supergalactic"|.
+\item[\attr{system}] Specifies the reference frame of the coordinates.
+The value must be taken from the IVOA \emph{refframe} vocabulary
+(\url{http://www.ivoa.net/rdf/refframe}).  At the time of writing, this
+vocabulary includes the terms:
+% GENERATED: !vocterms refframe
+\textsl{AZ\_EL},
+\textsl{BODY},
+\textsl{ecl\_FK4},
+\textsl{ECLIPTIC},
+\textsl{EQUATORIAL},
+\textsl{FK4},
+\textsl{FK5},
+\textsl{GALACTIC},
+\textsl{GALACTIC\_I},
+\textsl{GENERIC\_GALACTIC},
+\textsl{ICRS},
+\textsl{SUPER\_GALACTIC},
+\textsl{UNKNOWN}
+% /GENERATED
+
+As that vocabulary can be extended at any time, clients should fail
+gracefully when they encounter unknown reference frames.  Until VOTable
+1.4, these identifiers were defined in the VOTable schema, and some
+systems had different identifiers.  These legacy identifiers are still
+in the vocabulary, but they are deprecated.  Clients should use the
+vocabulary (see sect. 3 of \citet{2023ivoa.spec.0206D} for how to do
+that without RDF tooling) to map the legacy identifiers to current
+identifiers.
 
 \item[\attr{equinox}] Fixes the
 equatorial or ecliptic systems (as e.g., \verb|"J2000"| as the default
@@ -696,7 +720,7 @@ for \verb|"eq_FK5"| or \verb|"B1950"|, as the default for
 
 \item[\attr{epoch}] Specifies the epoch of the positions
 if necessary, again as an astroYear (i.e, prefixed with J or B depending
-on whether Julian or Besselian years are used).  COOSYS only supports time 
+on whether Julian or Besselian years are used).  COOSYS only supports time
 specifications in Julian or Besselian years.
 
 \item[\attr{refposition}] The reference position for which the positions
@@ -749,8 +773,8 @@ representations currently are Gregorian calendar years with
 \attrval{xtype}{timestamp}, or years in the Julian or Besselian calendar when a column
 has \verb|yr|, \verb|a| or \verb|Ba| as its unit and no time origin is
 given.
-When using calendar epochs written in julian or besselian years, note that 
-conventionally Julian years are tied to the TDB timescale and Besselian years to 
+When using calendar epochs written in julian or besselian years, note that
+conventionally Julian years are tied to the TDB timescale and Besselian years to
 the ET timescale \citep{2015A&A...574A..36R}.
 
 \item[\attr{timescale}]  This is the time scale used.  Values SHOULD be
@@ -2260,6 +2284,8 @@ version 1.3 are:
 
 \begin{itemize}
 \item COOSYS now has a refposition attribute analogous to TIMESYS.
+\item The frame identifiers in COOSYS are now taken from the refframe
+IVOA vocabulary.
 \end{itemize}
 
 % NOTE: IVOA recommendations must be cited from docrepo.bib
