@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<VOTABLE version="1.4" xmlns="http://www.ivoa.net/xml/VOTable/v1.3">
+<VOTABLE version="1.5" xmlns="http://www.ivoa.net/xml/VOTable/v1.3">
   <RESOURCE>
     <COOSYS ID="system" epoch="J2015.5" system="ICRS"/>
     <TIMESYS ID="time_frame" refposition="BARYCENTER" timeorigin="2455197.5" timescale="TCB"/>
@@ -9,8 +8,10 @@
       <FIELD datatype="float" name="mag" ucd="phot.mag;em.opt.V" unit="mag"/>
       <FIELD datatype="float" name="flux_error" ucd="stat.error;phot.flux;em.opt.V"
         unit="s**-1"/>
-      <PARAM datatype="double" name="ra" ucd="pos.eq.ra" value="45.7164887146879" ref="system"/>
-      <PARAM datatype="double" name="dec" ucd="pos.eq.dec" value="1.18583048057467" ref="system"/>
+      <PARAM datatype="double" name="ra" ucd="pos.eq.ra" unit="deg"
+      	value="45.7164887146879" ref="system"/>
+      <PARAM datatype="double" name="dec" ucd="pos.eq.dec" unit="deg"
+      	value="1.18583048057467" ref="system"/>
       <DATA>
         <TABLEDATA>
           <TR>
