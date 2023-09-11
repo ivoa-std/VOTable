@@ -30,7 +30,7 @@ jobs:
     - name: Build the document
       run: |
         inkscape --version
-	make
+        make
         make role_diagram.pdf biblio forcetex ${{ env.doc_name }}-draft.pdf
     
     - name: Check the output
