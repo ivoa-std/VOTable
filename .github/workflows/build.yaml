@@ -20,8 +20,9 @@ jobs:
       
     - name: Build the document
       run: |
+        inkscape --version
         make
-        make biblio forcetex
+        make role_diagram.pdf biblio forcetex
       
     - name: Check the output
       run: |
