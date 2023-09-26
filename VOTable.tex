@@ -891,6 +891,15 @@ only, i.e. does not contain any actual data: no \elem{DATA} element
 should exist in any of its sub-elements. A \elem{RESOURCE} without
 this attribute {\em may} however have no \elem{DATA} sub-element.
 
+\elem{RESOURCE} qualified by \attrval{type}{meta} can be used e.g. to host
+MIVOT (Model Instances in VOTables) annotations \citep{2023ivoa.spec.0620M}.
+MIVOT defines a syntax to map VOTable
+data to any model serizalized in VO-DML \citep{2018ivoa.spec.0910L}. 
+It operates as a bridge between models and data that associates VOTable 
+metadata to data model leaves. 
+It also brings up data or metadata that were possibly missing in the actual dataset.
+MIVOT annotations have their own namespace; they have no impact on the VOTable schema.
+
 Finally, the \elem{RESOURCE} element may have a \attr{utype} attribute
 to link the element to some external data model
 (introduced in version 1.1, see \Aref{sec:utype}).

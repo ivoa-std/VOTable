@@ -7,7 +7,7 @@ DOCNAME = VOTable
 DOCVERSION = 1.5
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2023-09-13
+DOCDATE = 2023-09-15
 
 # What is it you're writing: NOTE, WD, PR, REC, PEN, or EN
 DOCTYPE = WD
