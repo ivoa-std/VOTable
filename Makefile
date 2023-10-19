@@ -71,7 +71,10 @@ STILTS ?= stilts
 test:
 	@$(STILTS) xsdvalidate \
 		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=VOTable.xsd" \
-		coosys_example.vot
+		timesys_example.vot
 	@$(STILTS) xsdvalidate \
 		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=VOTable.xsd" \
-		timesys_example.vot
+		stc_example1.vot
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=VOTable.xsd" \
+		stc_example2.vot

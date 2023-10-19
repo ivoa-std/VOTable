@@ -678,12 +678,9 @@ which the components of a position on the celestial sphere refer.  It
 has the following attributes, all of them (syntactically) optional:
 
 \begin{description}
-\item[\attr{ID}] Required if the \elem{COOSYS} element is to
-be referred to via the \attr{ref} attribute of the position components.
-This version of VOTable still recommends that practice, but in the
-future we intend to drop \attr{ref}-based back-references from
-components to \elem{COOSYS} in favour of \elem{FIELDref} and
-\elem{PARAMref} children (see below).
+\item[\attr{ID}] Required if the \elem{COOSYS} element has to
+be referred to via the \attr{ref} attribute of the position components,
+which is generally the case.
 
 \item[\attr{system}] Specifies the reference frame of the coordinates.
 The value must be taken from the IVOA \emph{refframe} vocabulary
@@ -738,57 +735,12 @@ At the time or writing, this vocabulary includes the terms
 % /GENERATED
 \end{description}
 
-To facilitate comparing data at different epochs (epoch propagation),
-since VOTable version 1.5, the \elem{COOSYS} element SHOULD also be used
-to group and label coordinates and their derivatives.  This is done by
-referencing the participating \elem{FIELD}-s and/or \elem{PARAM}-s from
-the element content using \elem{FIELDref} or \elem{PARAMref} with
-\attr{utype} attributes identifying the roles of the respective items.
-
-We define role names in terms of labels within the Coords data model
-\citep{2022ivoa.specQ1004R} where possible, using an ad-hoc prefix
-\verb|votable|:
-
-\begin{description}
-\item[votable:LonLatPoint-lon] The longitude (e.g., a Right Ascension).
-\item[votable:LonLatPoint-lat] The latitude (e.g., a Declination).
-\item[votable:ProperMotion-lon] The time derivative of the longitude in
-the tangential plane (``multiplied with $\cos(\delta)$'').  We currently
-define no way to annotate raw proper motions in longitude, which are
-very rare in modern catalogues.
-\item [votable:ProperMotion-lat] The time derivative of the latitude.
-\item[votable:LonLatPoint-dist] The radial coordinate.  Both parallaxes
-(when the unit of the referenced element is an angle) and actual
-distances (with length units) are admitted.
-\item[votable:ProperMotion-rv] The radial velocity.
-\end{description}
-
-None of these roles are mandatatory, but of course even rudimentary
-epoch propagation requires a full position and both proper motions.
-More roles (e.g., for errors) may be defined in the future.  VOTable
-readers therefore MUST accept VOTables with unknown COOSYS roles, though
-they MAY issue warnings for them.
-
-Note that there can be multiple \elem{COOSYS} elements per table.  An
-example would be when both equatorial and galactic coordinates are
-given, or when there are multiple reductions of the same underlying
-data.
-
 Also note that \elem{COOSYS} may be deprecated in the
 future in favor of a more generic way of describing the conventions used
 to define the positions of the objects studied in the enclosed tables.
 
 A \elem{COOSYS} element referenced via a \attr{ref} attribute
 SHOULD appear before the element that references it.
-
-Here is an example of a \elem{COOSYS} describing a series of position
-determinations and mean proper motions, while radial information is
-missing:
-
-\begingroup\small
-\verbatiminput{coosys_example.vot}
-\endgroup
-
 
 \subsection{\elem{TIMESYS} Element}
 \label{elem:TIMESYS}
@@ -894,9 +846,9 @@ this attribute {\em may} however have no \elem{DATA} sub-element.
 \elem{RESOURCE} qualified by \attrval{type}{meta} can be used e.g. to host
 MIVOT (Model Instances in VOTables) annotations \citep{2023ivoa.spec.0620M}.
 MIVOT defines a syntax to map VOTable
-data to any model serizalized in VO-DML \citep{2018ivoa.spec.0910L}. 
-It operates as a bridge between models and data that associates VOTable 
-metadata to data model leaves. 
+data to any model serizalized in VO-DML \citep{2018ivoa.spec.0910L}.
+It operates as a bridge between models and data that associates VOTable
+metadata to data model leaves.
 It also brings up data or metadata that were possibly missing in the actual dataset.
 MIVOT annotations have their own namespace; they have no impact on the VOTable schema.
 
@@ -2337,13 +2289,22 @@ version 1.3 are:
 
 \subsection{Differences Between Versions 1.4 and 1.5}
 \label{diff1.4-1.5}
+The differences between version 1.5 of VOTable and the preceding
+version 1.4 are:
 
 \begin{itemize}
-\item COOSYS now has a refposition attribute analogous to TIMESYS; it
-also admits FIELDref and PARAMref children now for building propagatable
-positions, and it is no longer derived from xs:string.  The latter means
-that you cannot have text content in COOSYS any more, which probably
-only was possible by accident and never had a meaning.
+\item COOSYS now has a \attr{refposition} attribute analogous to TIMESYS.
+\item The frame identifiers (\attr{system} attribute) in COOSYS are now taken
+from the refframe IVOA vocabulary.
+\item Clarifications and rewording on:
+  \begin{itemize}
+    \item the meaning of \elem{MIN} and \elem{MAX} \attr{value} attributes for
+    array types.
+    \item removing the recommendation to use xmlns to do utype prefix binding.
+    \item timescales for calendar epochs.
+    \item positioning advice for \attr{ID} and corresponding references.
+    \item noting that \elem{RESOURCE} elements can contain \elem{MIVOT} blocks.
+  \end{itemize}
 \end{itemize}
 
 % NOTE: IVOA recommendations must be cited from docrepo.bib
