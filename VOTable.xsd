@@ -238,7 +238,14 @@
            </xs:documentation>
          </xs:annotation>
        </xs:attribute>
-       <xs:attribute name="refposition" type="xs:token"/>
+       <xs:attribute name="refposition" type="xs:token">
+         <xs:annotation>
+           <xs:documentation>
+             The reference position SHOULD be taken from the IVOA
+             refposition vocabulary (http://www.ivoa.net/rdf/refposition).
+           </xs:documentation>
+         </xs:annotation>
+       </xs:attribute>
      </xs:extension>
    </xs:simpleContent>
 </xs:complexType>
