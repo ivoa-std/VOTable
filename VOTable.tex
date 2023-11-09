@@ -724,7 +724,7 @@ specifications in Julian or Besselian years.
 \item[\attr{refposition}] The reference position for which the positions
 are given.  The values of this attribute should be taken from the IVOA
 \emph{refposition} vocabulary (\url{http://www.ivoa.net/rdf/refposition}).
-At the time or writing, this vocabulary includes the terms
+At the time of writing, this vocabulary includes the terms
 % GENERATED: !vocterms refposition
 \textsl{BARYCENTER},
 \textsl{EMBARYCENTER},
@@ -777,14 +777,35 @@ conventionally Julian years are tied to the TDB timescale and Besselian years to
 the ET timescale \citep{2015A+A...574A..36R}.
 
 \item[\attr{timescale}]  This is the time scale used.  Values SHOULD be
-taken from the IVOA \emph{timescale}
-vocabulary
-(\url{http://www.ivoa.net/rdf/timescale}).
+taken from the IVOA \emph{timescale} vocabulary (\url{http://www.ivoa.net/rdf/timescale}).
+At the time of writing, this vocabulary includes the terms:
+% GENERATED: !vocterms timescale
+\textsl{GPS},
+\textsl{TAI},
+\textsl{TCB},
+\textsl{TCG},
+\textsl{TDB},
+\textsl{TT},
+\textsl{UNKNOWN},
+\textsl{UT},
+\textsl{UTC}
+% /GENERATED
+
 This attribute is mandatory.
 \item[\attr{refposition}] The reference position again is a simple string.
 As with the COOSYS attribute of this name, the values SHOULD be
 taken from the IVOA \emph{refposition} vocabulary
-(\url{http://www.ivoa.net/rdf/refposition}).
+(\url{http://www.ivoa.net/rdf/refposition}) which at the time of writing
+includes the terms
+% GENERATED: !vocterms refposition
+\textsl{BARYCENTER},
+\textsl{EMBARYCENTER},
+\textsl{GEOCENTER},
+\textsl{HELIOCENTER},
+\textsl{TOPOCENTER},
+\textsl{UNKNOWN}
+% /GENERATED.
+
 This attribute is mandatory.
 \end{description}
 
