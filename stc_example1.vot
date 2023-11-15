@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<VOTABLE version="1.4" xmlns="http://www.ivoa.net/xml/VOTable/v1.3">
+<VOTABLE version="1.5" xmlns="http://www.ivoa.net/xml/VOTable/v1.3">
   <RESOURCE name="myFavouriteGalaxies">
-    <COOSYS ID="sys" equinox="J2000" epoch="J2000" system="eq_FK5"/>
+    <COOSYS ID="sys" equinox="J2000" epoch="J2000" system="FK5"/>
     <TABLE name="results">
       <DESCRIPTION>Velocities and Distance estimations</DESCRIPTION>
       <PARAM name="Telescope" datatype="float" ucd="phys.size;instr.tel"

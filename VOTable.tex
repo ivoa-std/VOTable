@@ -16,7 +16,6 @@
 \evensidemargin=-0.8cm
 \textwidth=17.5cm
 \textheight=23.5cm
-\parindent=0pt
 \arrayrulewidth=0.75pt\renewcommand{\arraystretch}{1.2}
 \definecolor{DarkRed}{rgb}{0.5,0,0}
 \definecolor{DarkBlue}{rgb}{0,0,0.5}
@@ -82,7 +81,6 @@
 \begin{abstract}
 This document describes the structures making up
 the VOTable standard.
-
 The main part of this document describes the adopted part of the
 VOTable standard; it is followed by appendices presenting extensions
 which have been proposed and/or discussed, but which are not part of
@@ -158,7 +156,7 @@ tables themselves. The remote data is referenced with the URL syntax
 meaning that arbitrarily complex protocols are allowed.
 
 When we are working with very large tables in a
-distributed-computing environment (``the Grid"), the data
+distributed-computing environment (``the Grid''), the data
 stream between processors, with flows being filtered, joined, and
 cached in different geographic locations. It would be very difficult
 if the number of rows of the table were required in the header --
@@ -263,6 +261,7 @@ and the values of the attributes by being \literalvalue{coloured}.
 \end{figure}
 
 VOTable is a core IVOA standard.
+\Fref{fig:archdiag} shows the role this document plays within the IVOA architecture.
 
 Wherever tabular data is transferred between Virtual Observatory components,
 VOTable provides the preferred serialization format.
@@ -546,9 +545,9 @@ tables without loss of information.
 \label{elem:VOTABLE}
 
 The overall VOTable document structure is described and controlled
-by its XML Schema \citep{std:XSD}.  The schema for VOTable version 1.4 is
+by its XML Schema \citep{std:XSD}.  The schema for VOTable version \ivoaDocversion{} is
 given in \Arefx{XML-schema} of this document.  It can also
-be retrieved from \url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}.
+be retrieved from \url{http://www.ivoa.net/xml/VOTable/votable-1.5.xsd}.
 
 A VOTable document consists of a single all-containing element
 called {\elem{VOTABLE}}, which contains descriptive elements and global definitions
@@ -564,8 +563,8 @@ followed by the data values
 (described in \Aref{sec:data}).
 
 As the root element, \elem{VOTABLE} has attributes which specify the VOTable version
-number and XML namespaces used in the document. For VOTable 1.4, the \elem{VOTABLE}
-element MUST define \attrval{version}{1.4}.  All VOTable 1.4 elements come from the
+number and XML namespaces used in the document. For VOTable \ivoaDocversion{}, the \elem{VOTABLE}
+element MUST define \attrval{version}{\ivoaDocversion{}}.  All VOTable \ivoaDocversion{} elements come from the
 namespace \nolinkurl{http://www.ivoa.net/xml/VOTable/v1.3}.  It is recommended to bind
 the empty namespace prefix to this URI, as in
 \attrval{xmlns}{http://www.ivoa.net/xml/VOTable/v1.3}, but instance
@@ -703,8 +702,8 @@ vocabulary includes the terms:
 % /GENERATED
 
 As that vocabulary can be extended at any time, clients should fail
-gracefully when they encounter unknown reference frames.  Until VOTable
-1.4, these identifiers were defined in the VOTable schema, and some
+gracefully when they encounter unknown reference frames.  Up through
+VOTable 1.4, these identifiers were defined in the VOTable schema, and some
 systems had different identifiers.  These legacy identifiers are still
 in the vocabulary, but they are deprecated.  Clients should use the
 vocabulary (see sect. 3 of \citet{2023ivoa.spec.0206D} for how to do
@@ -713,8 +712,8 @@ identifiers.
 
 \item[\attr{equinox}] Fixes the
 equatorial or ecliptic systems (as e.g., \verb|"J2000"| as the default
-for \verb|"eq_FK5"| or \verb|"B1950"|, as the default for
-\verb|"eq_FK4"|).
+for \verb|"FK5"| or \verb|"B1950"|, as the default for
+\verb|"FK4"|).
 
 \item[\attr{epoch}] Specifies the epoch of the positions
 if necessary, again as an astroYear (i.e, prefixed with J or B depending
@@ -724,7 +723,7 @@ specifications in Julian or Besselian years.
 \item[\attr{refposition}] The reference position for which the positions
 are given.  The values of this attribute should be taken from the IVOA
 \emph{refposition} vocabulary (\url{http://www.ivoa.net/rdf/refposition}).
-At the time or writing, this vocabulary includes the terms
+At the time of writing, this vocabulary includes the terms
 % GENERATED: !vocterms refposition
 \textsl{BARYCENTER},
 \textsl{EMBARYCENTER},
@@ -777,14 +776,35 @@ conventionally Julian years are tied to the TDB timescale and Besselian years to
 the ET timescale \citep{2015A+A...574A..36R}.
 
 \item[\attr{timescale}]  This is the time scale used.  Values SHOULD be
-taken from the IVOA \emph{timescale}
-vocabulary
-(\url{http://www.ivoa.net/rdf/timescale}).
+taken from the IVOA \emph{timescale} vocabulary (\url{http://www.ivoa.net/rdf/timescale}).
+At the time of writing, this vocabulary includes the terms:
+% GENERATED: !vocterms timescale
+\textsl{GPS},
+\textsl{TAI},
+\textsl{TCB},
+\textsl{TCG},
+\textsl{TDB},
+\textsl{TT},
+\textsl{UNKNOWN},
+\textsl{UT},
+\textsl{UTC}
+% /GENERATED
+
 This attribute is mandatory.
 \item[\attr{refposition}] The reference position again is a simple string.
 As with the COOSYS attribute of this name, the values SHOULD be
 taken from the IVOA \emph{refposition} vocabulary
-(\url{http://www.ivoa.net/rdf/refposition}).
+(\url{http://www.ivoa.net/rdf/refposition}) which at the time of writing
+includes the terms
+% GENERATED: !vocterms refposition
+\textsl{BARYCENTER},
+\textsl{EMBARYCENTER},
+\textsl{GEOCENTER},
+\textsl{HELIOCENTER},
+\textsl{TOPOCENTER},
+\textsl{UNKNOWN}
+% /GENERATED.
+
 This attribute is mandatory.
 \end{description}
 
@@ -1274,10 +1294,10 @@ the xtype.  For instance, with:
 </PARAM>
 \end{verbatim}
 
-both the single value of \emph{flux} and all items in the \emph{fluxes}
+\noindent both the single value of \emph{flux} and all items in the \emph{fluxes}
 array are declared as being between 0 and $10^{-4}$, and clients could,
 for instance, raise warnings if they are not.  In the last example,
-\emph{CIRCLE}, clients not familiar with \attrval{xtype }{circle} would
+\emph{CIRCLE}, clients not familiar with \attrval{xtype}{circle} would
 ignore the MAX declaration.  Clients familiar with this xtype's
 particular interpretation of MAX would learn about a spatial coverage of
 a spherical circle with radius two degrees around the point
@@ -1768,7 +1788,7 @@ decoded by the VOTable reader. We might also use the encoding facilities to
 convert a binary file to text (through base64 encoding), so that binary
 data can be used in the XML document.
 
-In this version (1.4) of VOTable, it is not possible to encode
+In this version of VOTable, it is not possible to encode
 individual columns of the table: the whole table must be encoded in
 the same way. However, the possibility of encoding selected table cells
 is  being examined for future versions of VOTable
@@ -2067,12 +2087,12 @@ whitespace, representing the real and imaginary part respectively.
 
 
 \clearpage
-\section{A Simplified View of the VOTable 1.4 Schema}
+\section{A Simplified View of the VOTable \ivoaDocversion{} Schema}
 \label{dtd}
 
-The XML Schema defining a VOTable 1.4 document
+The XML Schema defining a VOTable \ivoaDocversion{} document
 is available from
-\url{http://www.ivoa.net/xml/VOTable/votable-1.4.xsd}
+\url{http://www.ivoa.net/xml/VOTable/votable-1.5.xsd}
 as well as in \Arefx{XML-schema} of this document.
 In this section we illustrate this XML Schema
 by a set of boxes describing the structure of a VOTable,
@@ -2083,7 +2103,7 @@ these diagrams, the schema is definitive.
 
 \subsection{Element Hierarchy}
 
-The hierarchy of the elements existing in VOTable 1.4 is illustrated below;
+The hierarchy of the elements existing in VOTable \ivoaDocversion{} is illustrated below;
 it uses the following conventions:
 \begin{itemize}
 \item   {\em italicized} text represents {\em optional} elements;
@@ -2116,7 +2136,7 @@ with the following conventions:
 \item   Attributes written in bold are \requiredattr{required attributes}
 \item   Attributes written in a {fixed font} are \attr{optional}.
 \item   Attributes written in {\it italics}
-        are not part of VOTable 1.4, but are {\it reserved}
+        are not part of VOTable \ivoaDocversion{}, but are {\it reserved}
         for possible extensions (mentioned in an Appendix).
 \end{itemize}
 
@@ -2729,11 +2749,11 @@ derived directly from the \attr{ID} attribute of the \elem{FIELD}
 element, their definition can be generated automatically from the set of
 \elem{FIELD} definitions.
 
-\section{The VOTable V1.4 XML Schema}
+\section{The VOTable version \ivoaDocversion{}  XML Schema}
 \label{XML-schema}
-The XML Schema of VOTable 1.4 is included here as a reference.
+The XML Schema of VOTable \ivoaDocversion{} is included here as a reference.
 This schema includes a couple of extra optional attributes which are not
-part of VOTable-1.4 ({\em ID} in TR and {\em encoding} in TD),
+part of VOTable-\ivoaDocversion{} ({\em ID} in TR and {\em encoding} in TD),
 but proved to be useful to fix some problems encountered in the
 usage of some code generators.
 \bigskip
