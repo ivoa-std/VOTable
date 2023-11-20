@@ -1160,15 +1160,15 @@ The quantities in a column of the table may be expressed in
 some physical unit,
 which is specified by the {\attr{unit}}
 attribute of the {\elem{FIELD}}.
-The  syntax of the {\em unit} string is defined in
-the VOUnit specification, \citet{2014ivoa.spec.0523D};
-it is basically written as a string without blanks or spaces,
-where the symbols {\bf.} or {\bf*} indicate a multiplication,
-{\bf/} stands for the division, and no special symbol is required
-for a power.
-Examples are \attrval{unit}{m2} for m$^2$,
-\attrval{unit}{cm-2.s-1.keV-1} for cm$^{-2}$s$^{-1}$keV$^{-1}$,
-or \attrval{unit}{erg/s} for erg\,s$^{-1}$.
+The syntax of the {\em unit} string SHOULD conform to
+the VOUnits specification, \citet{2014ivoa.spec.0523D};
+this requires a string without blanks or spaces
+where multiplication is indicated by the symbol ``{\tt.}'',
+division by the symbol ``{\tt/}''
+and exponentiation by the symbol ``{\tt**}''.
+Examples are \attrval{unit}{m**2} for m$^2$,
+\attrval{unit}{cm**-2.s**-1.keV**-1} for cm$^{-2}$s$^{-1}$keV$^{-1}$,
+or \attrval{unit}{m/s} for m\,s$^{-1}$.
 
 \subsection{Unified Content Descriptors}
 \label{sec:ucd}
@@ -2324,6 +2324,8 @@ from the refframe IVOA vocabulary.
     \item timescales for calendar epochs.
     \item positioning advice for \attr{ID} and corresponding references.
     \item noting that \elem{RESOURCE} elements can contain \elem{MIVOT} blocks.
+    \item \attr{unit} attribute SHOULD conform to VOUnits,
+          and correct examples accordingly.
   \end{itemize}
 \end{itemize}
 
