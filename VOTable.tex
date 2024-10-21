@@ -863,14 +863,16 @@ only, i.e. does not contain any actual data: no \elem{DATA} element
 should exist in any of its sub-elements. A \elem{RESOURCE} without
 this attribute {\em may} however have no \elem{DATA} sub-element.
 
-\elem{RESOURCE} qualified by \attrval{type}{meta} can be used e.g. to host
+\elem{RESOURCE} elements qualified by
+\attrval{type}{meta} are also used to transmit
 MIVOT (Model Instances in VOTables) annotations \citep{2023ivoa.spec.0620M}.
 MIVOT defines a syntax to map VOTable
-data to any model serizalized in VO-DML \citep{2018ivoa.spec.0910L}.
+contents to any model serizalized in VO-DML \citep{2018ivoa.spec.0910L}.
 It operates as a bridge between models and data that associates VOTable
-metadata to data model leaves.
-It also brings up data or metadata that were possibly missing in the actual dataset.
-MIVOT annotations have their own namespace; they have no impact on the VOTable schema.
+metadata to data model entities, possibly adding advanced metadata not
+representable in plain VOTable.
+MIVOT annotations have their own XMLnamespace;
+they have no impact on the VOTable schema.
 
 Finally, the \elem{RESOURCE} element may have a \attr{utype} attribute
 to link the element to some external data model
@@ -1138,20 +1140,19 @@ known by FITS and those required to express queries
 and their results in tabular form (Table Access Protocol or TAP,
 \citet{2010ivoa.spec.0327D}).
 
-The \attr{xtype} attribute is the way to
-specify that a parameter represents a {\em  timestamp}
+As an example, setting \attrval{xtype}{timestamp} instructs VOTable
+parsers to interpret a string as a {\em  timestamp}
 (an instant in an absolute time frame), materialized by a
 UTC date/time string following the ISO-8601 standard
 ({\tt YYYY-MM-DDThh:mm:ss} eventually followed by a decimal point
-and fractions of seconds);
-parameters required to specify a spatial position may also have an associated
-\attr{xtype}.
+and fractions of seconds).  Supporting parsers might then expose the
+corresponding values in whatever way appropriate for such timestamps in
+the host language.  VOTables software does not need to interpret xtypes,
+but it should preserve them when doing round-trips.
 
-The actual values of the \attr{xtype} attribute are not defined
-in this VOTable specification.
-The IVOA recommendation Data Access Layer Interface
-or DALI \citep{2017ivoa.spec.0517D},
-defines the use of \attr{xtype} for various use cases.
+The IVOA recommendation Data Access Layer Interface DALI
+\citep{2017ivoa.spec.0517D} defines the common values of \attr{xtype}
+and the literals of conforming column values.
 
 \subsection{Units}
 \label{sec:unit}
