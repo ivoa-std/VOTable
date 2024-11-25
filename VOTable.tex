@@ -644,6 +644,9 @@ may have an impact on the performance or functionality of streaming parsers.
 For this reason, earlier versions of VOTable recommended placing
 the \attr{ID} attribute before any references to it,
 but there may be cases where the opposite is more appropriate.
+In practical terms, no requirement has ever been placed on the ordering
+of an \attr{ID} and its references, so VOTable creators are free to use either
+order and parsers/consumers should handle either order.
 
 While the {\attr{ID}} attribute has to be unique in a VOTable document,
 the {\attr{name}} attribute need not. It is however recommended,
@@ -773,7 +776,7 @@ has \verb|yr|, \verb|a| or \verb|Ba| as its unit and no time origin is
 given.
 When using calendar epochs written in julian or besselian years, note that
 conventionally Julian years are tied to the TDB timescale and Besselian years to
-the ET timescale \citep{2015A+A...574A..36R}.
+the ET (equivalent to TT) timescale \citep{2015A+A...574A..36R}.
 
 \item[\attr{timescale}]  This is the time scale used.  Values SHOULD be
 taken from the IVOA \emph{timescale} vocabulary (\url{http://www.ivoa.net/rdf/timescale}).
@@ -863,16 +866,16 @@ only, i.e. does not contain any actual data: no \elem{DATA} element
 should exist in any of its sub-elements. A \elem{RESOURCE} without
 this attribute {\em may} however have no \elem{DATA} sub-element.
 
-\elem{RESOURCE} elements qualified by
-\attrval{type}{meta} are also used to transmit
+For example, a \elem{RESOURCE} qualified by
+\attrval{type}{meta} can be used to transmit
 MIVOT (Model Instances in VOTables) annotations \citep{2023ivoa.spec.0620M}.
 MIVOT defines a syntax to map VOTable
 contents to any model serizalized in VO-DML \citep{2018ivoa.spec.0910L}.
 It operates as a bridge between models and data that associates VOTable
 metadata to data model entities, possibly adding advanced metadata not
 representable in plain VOTable.
-MIVOT annotations have their own XMLnamespace;
-they have no impact on the VOTable schema.
+MIVOT annotations have their own XMLnamespace.  The VOTable schema allows MIVOT,
+and any elements from a foreign namespace, in a \elem{RESOURCE}.
 
 Finally, the \elem{RESOURCE} element may have a \attr{utype} attribute
 to link the element to some external data model
@@ -2573,7 +2576,7 @@ An example of a table describing a set of spectra could look like the following:
   <FIELD name="Spectrum" ucd="meta.ref.url" datatype="float" arraysize="*"
          unit="mW/m2/nm" type="location">
     <DESCRIPTION>Spectrum absolutely calibrated</DESCRIPTION>
-    <LINK type="location"
+    <LINK  content-role="location" 
         href="http://ivoa.spectr/server?obsno="/>
   </FIELD>
   <DATA><TABLEDATA>

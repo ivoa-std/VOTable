@@ -26,4 +26,6 @@ with missing dependencies.
 	<rec name="UCD" x="200" y="250"/>
 	<rec name="VOUnits" x="200" y="330"/>
 
+	<rec name="MIVOT" x="525" y="330" w="51"/>
+
 </archdiag>
