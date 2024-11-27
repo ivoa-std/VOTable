@@ -1,6 +1,7 @@
 \documentclass[11pt,a4paper]{ivoa}
 \input tthdefs
 
+\customcss{tablefix.css}
 \usepackage{verbatim}
 
 \let\A=\href
@@ -2576,7 +2577,7 @@ An example of a table describing a set of spectra could look like the following:
   <FIELD name="Spectrum" ucd="meta.ref.url" datatype="float" arraysize="*"
          unit="mW/m2/nm" type="location">
     <DESCRIPTION>Spectrum absolutely calibrated</DESCRIPTION>
-    <LINK  content-role="location" 
+    <LINK  content-role="location"
         href="http://ivoa.spectr/server?obsno="/>
   </FIELD>
   <DATA><TABLEDATA>
