@@ -1,0 +1,4 @@
+table.tabular > * > tr > td, table.tabular > tr > td {
+        border-top: none !important;
+        border-bottom: none !important;
+      }

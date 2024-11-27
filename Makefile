@@ -21,7 +21,8 @@ AUTHOR_EMAIL=???
 SOURCES = $(DOCNAME).tex role_diagram.pdf \
           VOTable.attr.tex VOTable.elem.tex \
           VOTable.xsd stc_example1.vot stc_example2.vot timesys_example.vot \
-          binary.pdf binary2.pdf
+          binary.pdf binary2.pdf \
+          tablefix.css
 
 # List of image files to be included in submitted package (anything that
 # can be rendered directly by common web browsers)
