@@ -62,19 +62,20 @@
       <name>Andreas Wicenec</name>
     </creator>
 
+    <date role="update">2025-01-16</date>
     <date role="update">2019-10-21</date>
 	<date role="update">2013-09-20</date>
 	<date role="update">2009-11-30</date>
 	<date role="creation">2004-08-11</date>
 	
-    <version>1.4</version>
+    <version>1.5</version>
     <contact>
       <name>Applications WG</name>
       <email>apps@ivoa.net</email>
     </contact>
   </curation>
   <content>
-    <subject>Virtual observatory</subject>
+    <subject>virtual-observatories</subject>
     <description>
 This document describes the structures making up the VOTable standard. The main part of this document describes the adopted part of the VOTable standard; it is followed by appendices presenting extensions which have been proposed and/or discussed, but which are not part of the standard.
     </description>
@@ -83,7 +84,7 @@ This document describes the structures making up the VOTable standard. The main 
   	<contentLevel>Research</contentLevel>
   </content>
 
-  <endorsedVersion status="rec">1.4</endorsedVersion>
+  <endorsedVersion status="rec">1.5</endorsedVersion>
 
 	<schema namespace="http://www.ivoa.net/xml/VOTable/v1.3">
 		<location>http://www.ivoa.net/xml/VOTable/v1.3</location>

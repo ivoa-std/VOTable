@@ -26,12 +26,13 @@
    in COOSYS, which no longer is derived from xs:string, either.
 .Version 1.5pre2: MD: vocabularising system attribute in COOSYS
 .Version 1.5pre3: TD: Undo the FIELDref/PARAMref addition to COOSYS
+.Version 1.5: TD: Update version to 1.5 for REC
 -->
 <xs:schema
    xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
    xmlns="http://www.ivoa.net/xml/VOTable/v1.3"
    targetNamespace="http://www.ivoa.net/xml/VOTable/v1.3"
-   version="1.5pre3"
+   version="1.5"
 >
 <xs:annotation><xs:documentation>
     VOTable is meant to serialize tabular documents in the
