@@ -7,14 +7,14 @@ DOCNAME = VOTable
 DOCVERSION = 1.5
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2024-02-13
+DOCDATE = 2025-01-16
 
 # What is it you're writing: NOTE, WD, PR, REC, PEN, or EN
-DOCTYPE = PR
+DOCTYPE = REC
 
 # An e-mail address of the person doing the submission to the document
 # repository (can be empty until a make upload is being made)
-AUTHOR_EMAIL=???
+AUTHOR_EMAIL=tdonaldson@stsci.edu
 
 # Source files for the TeX document (but the main file must always
 # be called $(DOCNAME).tex
