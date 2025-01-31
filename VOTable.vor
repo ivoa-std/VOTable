@@ -1,7 +1,7 @@
 <ri:Resource 
 	xsi:type="vstd:Standard" 
 	created="2020-05-11T00:00:00Z"
-	updated="2020-05-11T00:00:00Z"
+	updated="2025-01-30T00:00:00Z"
 	status="active"
 	xmlns:vr="http://www.ivoa.net/xml/VOResource/v1.0" 
 	xmlns:vstd="http://www.ivoa.net/xml/StandardsRegExt/v1.0" 
@@ -62,7 +62,7 @@
       <name>Andreas Wicenec</name>
     </creator>
 
-    <date role="update">2025-01-16</date>
+    <date role="update">2025-01-30</date>
     <date role="update">2019-10-21</date>
 	<date role="update">2013-09-20</date>
 	<date role="update">2009-11-30</date>
