@@ -4,6 +4,7 @@
 
 \customcss{tablefix.css}
 \usepackage{verbatim}
+\usepackage{todonotes}
 
 \let\A=\href
 \def\Aref#1{section~\ref{#1}}
@@ -411,15 +412,11 @@ part of $(b+7)/8$ bytes).  These primitives
 are described in more detail in \Aref{sec:datatypes}.
 
 VOTables support two kinds of characters: ASCII 1-byte characters
-and Unicode (UCS-2) 2-byte characters. Unicode is a way to represent
-characters that is an alternative to ASCII. It uses two bytes per
-character instead of one, it is strongly supported by XML tools, and
-it can handle a large variety of international alphabets. Therefore
-VOTable supports not only ASCII strings ({\attrval{datatype}{char}}),
-but also Unicode ({\attrval{datatype}{unicodeChar}}).
-
+and Unicode characters respresented as UTF-16 sequences (i.e., 2 bytes
+per character in the basic multilingual plane, 4 bytes per character
+outside of it).
 Note that strings are not a primitive type: strings are
-represented in VOTable as an array of characters. %in an characters are.
+represented in VOTable as an array of characters.
 
 
 \subsection{Columns as Arrays}\label{array}
@@ -1982,12 +1979,12 @@ the field shall contain a Unicode character.
 The \attr{arraysize} attribute
 indicates a string composed of Unicode text,
 which enables representation of text in many non-Latin alphabets.
-Each Unicode character is represented in the \elem{BINARY}/\elem{BINARY2} serialization by
-two bytes, using the big-endian UCS-2 encoding (ISO-10646-UCS-2).
-The representation of a Unicode character in the  \elem{TABLEDATA} serialization
-follows the XML specifications,
-and e.g. the Cyrillic uppercase ``Ya'' can be written
-\verb+&#x042F;+ in UTF-8.
+Each Unicode character is represented in the \elem{BINARY}/\elem{BINARY2}
+serialization using the big-endian UTF-16 encoding as specified in the
+unicode standard \citep{std:UNICODE}.\todo{Yikes! what's the field
+length then?}
+In \elem{TABLEDATA} serialization, character encoding is performed by
+the XML parser.
 Also note the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
 (\Arefs{elem:TD})
