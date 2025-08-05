@@ -224,16 +224,16 @@ The payload may be in two forms: parsed or unparsed character
 data. Examples are:
 
 \begin{verbatim}
-<text>Fran&#231;ois</text>
+<text>Fran&#xE7;ois</text>
 <text><![CDATA[ a & (b <= c) ]]></text>
 \end{verbatim}
 
-In the first example, the sequence {\tt \&\#231;} is interpreted as
-part of the ISO/IEC 10646 character set (Unicode), and translates to an
-accented character, so that the text is ``Fran\c{c}ois".
+In the first example, the sequence {\tt \&\#xE7;} is interpreted as
+a character entity reference for the Unicode code point U+00E7
+and translates to an accented character, so that the text is ``Fran\c{c}ois''.
 The second example uses the special {\tt CDATA} sequence so that the
 characters {\tt <}, {\tt >}, and {\tt\&} can be used without interpretation;
-in this case, any ASCII characters are allowed except the terminating
+in this case, any characters are allowed except the terminating
 sequence {\tt]]>}. For more information, see any book on
 XML.
 
@@ -362,35 +362,22 @@ and associated parameters (\elem{PARAM}).
 \subsection{Primitives}
 
 \begin{table}[hbt]
-\begin{center}\begin{tabular}{|r|l|c|r|}
+\begin{center}\begin{tabular}{|r|l|c|r|l|}
 \hline
-  {\attr{datatype}} & Meaning & \attr{FITS} &
-      { Bytes} \\
+  {\attr{datatype}} & Meaning & \attr{FITS} & { Bytes} & Notes \\
  \hline
- \literalvalue{boolean}      & Logical         &\literalvalue{L}& 1  \\
- \literalvalue{bit}          & Bit             &\literalvalue{X}& *  \\
- \literalvalue{unsignedByte} & Byte (0 to 255) &\literalvalue{B}& 1  \\
- \literalvalue{short}        & Short Integer   &\literalvalue{I}& 2  \\
- \literalvalue{int}          & Integer         &\literalvalue{J}& 4  \\
- \literalvalue{long}         & Long integer    &\literalvalue{K}& 8  \\
- \literalvalue{char}         & ASCII Character &\literalvalue{A}& 1  \\
- \literalvalue{unicodeChar}  & Unicode Character&        & 2 \\
- \literalvalue{float}        & Floating point  &\literalvalue{E}& 4  \\
- \literalvalue{double}       & Double          &\literalvalue{D}& 8  \\
- \literalvalue{floatComplex} & Float Complex   &\literalvalue{C}& 8  \\
- \literalvalue{doubleComplex}& Double Complex  &\literalvalue{M}& 16 \\
- %logical & 1 \\
- %bit & * \\
- %byte & 1\\
- %short & 2 \\
- %int & 4 \\
- %long & 8 \\
- %char & 1 \\
- %unicodeChar & 2 \\
- %float & 4 \\
- %double & 8 \\
- %floatComplex & 8 \\
- %doubleComplex & 16 \\
+ \literalvalue{boolean}      & Logical         &\literalvalue{L}& 1  & \\
+ \literalvalue{bit}          & Bit             &\literalvalue{X}& *  & \\
+ \literalvalue{unsignedByte} & Byte (0 to 255) &\literalvalue{B}& 1  & \\
+ \literalvalue{short}        & Short Integer   &\literalvalue{I}& 2  & \\
+ \literalvalue{int}          & Integer         &\literalvalue{J}& 4  & \\
+ \literalvalue{long}         & Long integer    &\literalvalue{K}& 8  & \\
+ \literalvalue{char}         & UTF-8 byte      &\literalvalue{A}& 1  & \\
+ \literalvalue{unicodeChar}  & UTF-16 code unit &        & 2 & deprecated \\
+ \literalvalue{float}        & Floating point  &\literalvalue{E}& 4  & \\
+ \literalvalue{double}       & Double          &\literalvalue{D}& 8  & \\
+ \literalvalue{floatComplex} & Float Complex   &\literalvalue{C}& 8  & \\
+ \literalvalue{doubleComplex}& Double Complex  &\literalvalue{M}& 16 & \\
 \hline\end{tabular}\end{center}
 \caption{\label{primitives}List of the Primitives
 {\em(details in \Aref{sec:datatypes})}}\end{table}
@@ -409,16 +396,30 @@ the minimum number of bytes feasible (so that $b$ bits take the integer
 part of $(b+7)/8$ bytes).  These primitives
 are described in more detail in \Aref{sec:datatypes}.
 
-VOTables support two kinds of characters: ASCII 1-byte characters
-and Unicode (UCS-2) 2-byte characters. Unicode is a way to represent
-characters that is an alternative to ASCII. It uses two bytes per
-character instead of one, it is strongly supported by XML tools, and
-it can handle a large variety of international alphabets. Therefore
-VOTable supports not only ASCII strings ({\attrval{datatype}{char}}),
-but also Unicode ({\attrval{datatype}{unicodeChar}}).
+Character and string data should be encoded using the \literalvalue{char}
+type, which from VOTable 1.6 supports Unicode.
+Note that the primitive size of one byte refers to a single
+UTF-8-encoded byte, not to a single character.
+Since UTF-8 is a variable-width encoding,
+a character may require multiple bytes, and for arrays the
+string length (length in characters) and primitive count (length in bytes)
+will in general differ.
+7-bit ASCII characters are however all encoded as a single byte in UTF-8,
+so in the case of ASCII characters, which were required for this
+datatype in earlier VOTable versions, the primitive and character count
+are equal.
+
+For historical reasons the \literalvalue{unicodeChar} type can also be used
+for character storage, but from VOTable 1.6 this type is deprecated.
+For this type the primitive size of two bytes corresponds to a 2-byte
+UTF-16 {\em code unit}.
+Only characters in the Unicode Basic Multilingual Plane,
+which all have 2-byte representations, are permitted for this datatype,
+so that the primitive count matches the character count.
 
 Note that strings are not a primitive type: strings are
-represented in VOTable as an array of characters. %in an characters are.
+represented in VOTable as an array of character storage units
+(usually UTF-8 bytes).
 
 
 \subsection{Columns as Arrays}\label{array}
@@ -456,17 +457,28 @@ each of 64x64 bytes:
 \elemdef{FIELD}{ \attrval{ID}{thumbs} \attrval{datatype}{unsignedByte}
   \attrval{arraysize}{64x64x10*}\slash}
 
-Strings, which are defined as a set of characters,
+Strings, which are defined as a sequence of characters,
 can therefore be represented in VOTable as a fixed- or variable-length
-array of characters:
+array of character elements:
 
 \elemdef{FIELD}{ \attrval{name}{unboundedString} \attrval{datatype}{char}
        \attrval{arraysize}{*}\slash}
 
+Note that the \attr{arraysize} for a \attrval{datatype}{char}
+array corresponds to the storage length,
+that is the number of UTF-8 bytes required to store string values,
+and not necessarily the number of characters in the string.
+So a \elem{FIELD} with \attrval{datatype}{char} and \attrval{arraysize}{4}
+could store the value \literalvalue{LCDM}
+but not \literalvalue{$\Lambda$CDM},
+since the character $\Lambda$ (Lambda)
+is encoded in two bytes (0xCE, 0x9B) by UTF-8
+while the ASCII characters L, C, D, M are encoded in one byte.
+
 A 1D array of strings can be represented as a 2D array of characters, but
 given the logic above, it is possible to define a variable-length array
-of fixed-length strings,
-but not a fixed-length array of variable-length strings.
+of fixed-storage-length strings,
+but not a fixed-length array of variable-storage-length strings.
 A convention to express an array of variable-length strings
 exists (see \Aref{sec:arraystring}) but is not
 part of this standard.
@@ -1520,7 +1532,7 @@ the cell is considered to contain no data, i.e.\ to be null.
 
 If a cell contains an array of numbers or a complex number,
 it should be encoded as multiple numbers separated by
-whitespace. However in the case of character and Unicode strings
+whitespace. However in the case of character strings
 (declared in the corresponding \elem{FIELD} as an array of {\em char}
 or {\em unicodeChar} datatype), no
 separator should exist. Here is an example of a two-row table
@@ -1542,8 +1554,8 @@ that  has arrays in the table cells:
 \end{verbatim}
 \endgroup
 
-The first entry is a fixed-length array of 10 characters; since
-the value being presented ({\tt Apple}) has 5 characters, this
+The first entry is a fixed-length array of 10 UTF-8 bytes; since
+the value being presented ({\tt Apple}) is encoded in 5 bytes, this
 is padded with trailing blanks. The second cell is a short integer
 but has a null value, as indicated by the empty \elem{TD} element.
 The third cell contains a variable-length array of integers.
@@ -1551,8 +1563,9 @@ The last cell contains a fixed-length array of three floats.
 
 A special notice should be mentioned about the significance of
 {\em white space} in a table cell (the term {\em white space}
-designates the characters {\em space} [{\tt{x20}}], {\em tab} [{\tt{x09}}],
-{\em newline} [{\tt{x0a}}], {\em carriage-return} [{\tt{x0d}}]):
+designates the characters {\em space} [{\tt{U+0020}}],
+{\em tab} [{\tt{U+0009}}],
+{\em newline} [{\tt{U+000A}}], {\em carriage-return} [{\tt{U+000D}}]):
 while for numeric data types
 the amount of white spaces does not matter (the elements
 of an array of numbers may for instance be written on several lines),
@@ -1953,44 +1966,38 @@ in the case of an array of bytes.
 
 \item {\bf Character}\quad If the value of the {\attr{datatype}}
 attribute specifies data type {\literalvalue{char}},
-the field shall contain in the \elem{BINARY}/\elem{BINARY2} serialization an ASCII
-(7-bit) character.
+the field shall contain in the \elem{BINARY}/\elem{BINARY2} serialization
+a UTF-8 encoded byte.
 The \attr{arraysize} attribute
-indicates a character string composed of ASCII text.
-The \elem{BINARY}/\elem{BINARY2} serialization follows the
-FITS rules for character strings,
-and a character string may therefore be terminated by an ASCII
-NULL [0x00]
+indicates a Unicode string composed of UTF-8 encoded text.
+A string may be terminated by a NULL code point
+(U+0000, encoded as the byte 0x00)
 before the length specified in the \attr{arraysize} attribute.
-In this case characters after the first ASCII NULL are not defined,
-and a string having the number of characters identical to
+In this case bytes after the first NULL are ignored,
+and a string having the number of bytes identical to
 the \attr{arraysize} value is not NULL terminated.
-Characters should be represented in the \elem{TABLEDATA} serialization
-using the normal rules for encoding XML text:
-the ampersand (\&) can be written \verb+&amp;+ (symbolic representation)
-or \verb+&#38;+ (decimal representation) or
-\verb+&#x26;+ (hexadecimal representation); the less-than ({\tt<}) and greater-than ({\tt>}) symbols should be coded \verb+&lt;+ and \verb+&gt;+
-or \verb+&#x3C;+ and \verb+&#x3E;+.
+The value MUST represent a legal UTF-8 encoded string,
+and therefore MUST NOT be truncated midway through a multi-byte sequence.
+Characters are represented in the \elem{TABLEDATA} serialization
+using the XML encoding of the VOTable document, which is typically UTF-8.
 Also note also the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
 (\Arefs{elem:TD})
 
 \item {\bf Unicode Character}\quad If the value of the {\attr{datatype}}
 attribute specifies data type {\literalvalue{unicodeChar}},
-the field shall contain a Unicode character.
+the field shall contain in the \elem{BINARY}/\elem{BINARY2} serialization
+the 2-byte big-endian UTF-16 encoding
+of a Unicode character from the Basic Multilingual Plane.
 The \attr{arraysize} attribute
-indicates a string composed of Unicode text,
-which enables representation of text in many non-Latin alphabets.
-Each Unicode character is represented in the \elem{BINARY}/\elem{BINARY2} serialization by
-two bytes, using the big-endian UCS-2 encoding (ISO-10646-UCS-2).
-The representation of a Unicode character in the  \elem{TABLEDATA} serialization
-follows the XML specifications,
-and e.g. the Cyrillic uppercase ``Ya'' can be written
-\verb+&#x042F;+ in UTF-8.
+indicates a string composed of Unicode BMP characters.
+Characters are represented in the \elem{TABLEDATA} serialization
+using the XML encoding of the VOTable document, which is typically UTF-8.
 Also note the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
 (\Arefs{elem:TD})
-
+Regardless of serialization, non-BMP characters are not permitted.
+Note this datatype is {\bf deprecated} from VOTable 1.6.
 
 \item {\bf 16-Bit Integer}\quad If the value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{short}},
@@ -2333,6 +2340,29 @@ from the refframe IVOA vocabulary.
     \item \attr{unit} attribute SHOULD conform to VOUnits,
           and correct examples accordingly.
   \end{itemize}
+\end{itemize}
+
+
+\subsection{Differences Between Versions 1.5 and 1.6}
+\label{diff1.5-1.6}
+The differences between version 1.6 of VOTable and the preceding
+version 1.5 are:
+
+\begin{itemize}
+\item Unicode characters and strings are properly supported.
+      Elements of the datatype \literalvalue{char} are now defined to
+      contain UTF-8-encoded bytes (not ASCII characters)
+      and elements of the datatype \literalvalue{unicodeChar} are
+      defined to contain UTF-16 2-byte code units for BMP code points
+      (not UCS-2 characters).
+      Both types are represented using document encoding in the 
+      \elem{TABLEDATA} serialization.
+      Furthermore the \literalvalue{unicodeChar} type is deprecated.
+      These changes are entirely compatible with earlier VOTable versions
+      (any legal VOTable document of an earlier version
+      will be correctly interpreted by a VOTable 1.6 parser)
+      but enables inclusion of arbitrary Unicode content
+      using the usual UTF-8 encoding.
 \end{itemize}
 
 % NOTE: IVOA recommendations must be cited from docrepo.bib
