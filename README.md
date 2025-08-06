@@ -6,9 +6,7 @@ The VOTable format is an XML standard for the interchange of data represented as
 ## Status
 
 The last stable version is
-**[REC-1.4](https://www.ivoa.net/documents/VOTable/20191021/)**.
-
-The next version will be 1.5.
+**[REC-1.5](https://www.ivoa.net/documents/VOTable/20250116/)**.
 
 ## License
 
