@@ -408,6 +408,8 @@ will in general differ.
 so in the case of ASCII characters, which were required for this
 datatype in earlier VOTable versions, the primitive and character count
 are equal.
+This means that a single (non-array) \literalvalue{char}
+is capable of storing a 7-bit ASCII character only.
 
 For historical reasons the \literalvalue{unicodeChar} type can also be used
 for character storage, but from VOTable 1.6 this type is deprecated.
