@@ -416,6 +416,8 @@ UTF-16 {\em code unit}.
 Only characters in the Unicode Basic Multilingual Plane,
 which all have 2-byte representations, are permitted for this datatype,
 so that the primitive count matches the character count.
+This is identical to the obsolete UCS-2 encoding,
+which was the description used in earlier VOTable versions.
 
 Note that strings are not a primitive type: strings are
 represented in VOTable as an array of character storage units
@@ -1988,15 +1990,19 @@ in the \elem{TABLEDATA} serialization
 attribute specifies data type {\literalvalue{unicodeChar}},
 the field shall contain in the \elem{BINARY}/\elem{BINARY2} serialization
 the 2-byte big-endian UTF-16 encoding
-of a Unicode character from the Basic Multilingual Plane.
+of a Unicode character from the Basic Multilingual Plane
+(equivalent to the obsolete UCS-2 encoding).
 The \attr{arraysize} attribute
 indicates a string composed of Unicode BMP characters.
 Characters are represented in the \elem{TABLEDATA} serialization
 using the XML encoding of the VOTable document, which is typically UTF-8.
 Also note the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
-(\Arefs{elem:TD})
-Regardless of serialization, non-BMP characters are not permitted.
+(\Arefs{elem:TD}).
+Regardless of serialization, non-BMP characters are not permitted
+by this standard, but readers MAY treat such characters normally
+if encountered, for instance by using a UTF-16 decoder on BINARY data,
+though note in this case the arraysize may no longer match the character count.
 Note this datatype is {\bf deprecated} from VOTable 1.6.
 
 \item {\bf 16-Bit Integer}\quad If the value of the {\attr{datatype}}
