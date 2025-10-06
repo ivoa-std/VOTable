@@ -410,7 +410,7 @@ datatype in earlier VOTable versions, the primitive and character count
 are equal.
 This means that a single (non-array) \literalvalue{char}
 is capable of storing a 7-bit ASCII character only.
-Strings must not be truncated mid-character
+Strings must not be truncated mid-character,
 so truncation of a string to fit a fixed-length char array may result in
 unused bytes at the end of the array.
 
@@ -486,9 +486,10 @@ A 1D array of strings can be represented as a 2D array of characters, but
 given the logic above, it is possible to define a variable-length array
 of fixed-storage-length strings,
 but not a fixed-length array of variable-storage-length strings.
-A convention to express an array of variable-length strings
-exists (see \Aref{sec:arraystring}) but is not
-part of this standard.
+To encode or decode a multi-dimensional {\tt char} array
+it is necessary first to represent it as a sequence of UTF-8 bytes
+in order to determine the byte sequence representing
+each fixed-storage-length string.
 
 \textbf{Note:} \attr{arraysize} should be present if, and only if, each table
 cell for the \elem{FIELD} is intended to be treated as an array.
