@@ -1515,7 +1515,7 @@ If the value is the same as the {\attr{null}} value for that field
 then the item is assumed to contain no data.
 Valid representations of values in a cell, depending on their
 \attr{datatype}, are detailed in \Aref{sec:datatypes}.
-If the {\elem{TD}} element is empty ({\verb|<TD/>| or \verb|<TD></TD>|)
+If the {\elem{TD}} element is empty ({\verb|<TD/>| or \verb|<TD></TD>|})
 the cell is considered to contain no data, i.e.\ to be null.
 
 If a cell contains an array of numbers or a complex number,
@@ -2164,13 +2164,14 @@ Associating a MIME type to a document enables the {\em data consumer}
 
 In the HTTP protocol (RFC 2616), the MIME type is the value specified by the
 {\textsf{Content-Type:}} header. The recommended MIME type describing
-a VOTable document is {\literalvalue{\textsf{application/x-votable+xml}}:
+a VOTable document is {\literalvalue{\textsf{application/x-votable+xml}}}:
+a VOTable document is {\literalvalue{\textsf{application/x-votable+xml}}}:
 the {\bf x-} prefix indicates an experimental type, and
 is required for non-registered media types; and the
 {\bf+xml} suffix (defined by RFC 3023 section 7)
 indicates that the type describes a specialization of XML.
 This type may be accompanied by an optional parameter
-{\literalvalue{\textsf{serialization}}
+{\literalvalue{\textsf{serialization}}}
 with a value specifying the serialization type used for table data within the
 document, one of TABLEDATA, FITS, BINARY or BINARY2,
 interpreted case-insensitively.
