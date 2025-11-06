@@ -1114,9 +1114,10 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
 
 In addition, in the \elem{PARAM} element only:
 \begin{itemize}
-\item   the \attr{value} attribute which explicits the \elem{PARAM}eter's
-        value; \attr{value} is a required attribute of the \elem{PARAM}
-        element.
+\item   The \attr{value} attribute provides the \elem{PARAM}eter's value,
+        encoded in the same way as for the \elem{TABLEDATA} serialization
+        (see \Aref{sec:datatypes}).
+        \attr{value} is a required attribute of the \elem{PARAM} element.
 \end{itemize}
 
 \subsection{Numerical Accuracy}
@@ -1978,21 +1979,25 @@ the field shall contain in the \elem{BINARY}/\elem{BINARY2} serialization
 a UTF-8 encoded byte.
 The \attr{arraysize} attribute
 indicates a Unicode string composed of UTF-8 encoded text.
-A string may be terminated by a NULL code point
+In the \elem{BINARY}/\elem{BINARY2} serialization
+a string may be terminated by a NULL code point
 (U+0000, encoded as the byte 0x00)
-before the length specified in the \attr{arraysize} attribute.
-In this case bytes after the first NULL are ignored,
-and a string having the number of bytes identical to
+before the length specified in the \attr{arraysize} attribute;
+in this case bytes after the first NULL are ignored,
+but a string having the number of bytes identical to
 the \attr{arraysize} value is not NULL terminated.
 The value MUST represent a legal UTF-8 encoded string,
-and therefore MUST NOT be truncated midway through a multi-byte sequence.
+and therefore MUST NOT be truncated midway through the multi-byte
+representation of a character.
 Characters are represented in the \elem{TABLEDATA} serialization
 using the XML encoding of the VOTable document, which is typically UTF-8.
 Also note also the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
 (\Arefs{elem:TD})
 
-\item {\bf Unicode Character}\quad If the value of the {\attr{datatype}}
+\item {\bf Unicode Character}
+\emph{(\textbf{deprecated} from VOTable 1.6)}\quad
+If the value of the {\attr{datatype}}
 attribute specifies data type {\literalvalue{unicodeChar}},
 the field shall contain in the \elem{BINARY}/\elem{BINARY2} serialization
 the 2-byte big-endian UTF-16 encoding
@@ -2008,8 +2013,8 @@ in the \elem{TABLEDATA} serialization
 Regardless of serialization, non-BMP characters are not permitted
 by this standard, but readers MAY treat such characters normally
 if encountered, for instance by using a UTF-16 decoder on BINARY data,
-though note in this case the arraysize may no longer match the character count.
-Note this datatype is {\bf deprecated} from VOTable 1.6.
+though note in this case the \attr{arraysize}
+may no longer match the character count.
 
 \item {\bf 16-Bit Integer}\quad If the value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{short}},
