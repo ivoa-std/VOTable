@@ -413,6 +413,9 @@ is capable of storing a 7-bit ASCII character only.
 Strings must not be truncated mid-character,
 so truncation of a string to fit a fixed-length char array may result in
 unused bytes at the end of the array.
+The character count as distinct from the primitive count
+may optionally be recorded by the \attr{width} attribute,
+see \Aref{sec:form}.
 
 For historical reasons the \literalvalue{unicodeChar} type can also be used
 for character storage, but from VOTable 1.6 this type is deprecated.
@@ -481,6 +484,8 @@ but not \literalvalue{$\Lambda$CDM},
 since the character $\Lambda$ (Lambda)
 is encoded in two bytes (0xCE, 0x9B) by UTF-8
 while the ASCII characters L, C, D, M are encoded in one byte.
+As explained in \Aref{sec:form} the number of characters MAY
+be reported by the \attr{width} attribute.
 
 A 1D array of strings can be represented as a 2D array of characters, but
 given the logic above, it is possible to define a variable-length array
@@ -1075,8 +1080,9 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
         table cell contents is intended to be understood as an array
         (see also \Aref{sec:dim}).
 
-\item   {\fg{black}}The \attr{width} and \attr{precision} attributes define the
-        numerical accuracy associated with the data
+\item   {\fg{black}}The \attr{precision} and \attr{width} attributes
+        characterise the numerical accuracy and display size
+        of the data
         (see \Aref{sec:form}).
 
 \item	The \attr{xtype} attribute, added in VOTable 1.2, specifies an
@@ -1120,7 +1126,7 @@ In addition, in the \elem{PARAM} element only:
         \attr{value} is a required attribute of the \elem{PARAM} element.
 \end{itemize}
 
-\subsection{Numerical Accuracy}
+\subsection{The \attr{precision} and \attr{width} Attributes}
 \label{sec:form}
 
 
@@ -1133,11 +1139,6 @@ either as actual tables,  or in forms or graphs, etc.
 Two attributes were retained for this purpose:
 
 \begin{itemize}
-\item   The {\attr{width}} attribute %of the {\elem{FIELD}},
-        is meant to indicate to the application
-        the number of characters to be used for input
-        or output of the quantity.
-
 \item   The \attr{precision} attribute is meant to express the
         number of significant digits, either as a number of
         decimal places (e.g. \attrval{precision}{F2} or equivalently
@@ -1145,12 +1146,25 @@ Two attributes were retained for this purpose:
         after the decimal point), or as a number of significant figures
         (e.g. \attrval{precision}{E5} indicates a relative precision
         of $10^{-5}$).
+
+\item   The {\attr{width}} attribute %of the {\elem{FIELD}},
+        is meant to indicate
+        the number of characters to be used for display of the quantity.
+        This has special significance when used with character data,
+        see below.
 \end{itemize}
 
-The existence and presentation of the special {\em null} value of
-a field (when the actual value of the field is unknown) is
-another aspect of the numerical accuracy, which is part of the
-\elem{VALUES} sub-element (see \Aref{sec:values}).
+When used with \attrval{datatype}{char} arrays the
+\attr{width} attribute is interpreted as (an upper bound for)
+the array length in characters, i.e.\ Unicode code points.
+This value is distinct from the \attr{arraysize} attribute
+which gives the array length in UTF-8-encoded bytes.
+VOTable producers are not required to supply the \attr{width} attribute
+for such columns,
+but if known the string length can be useful to clients
+for e.g.\ resource allocation.
+In the case of multi-dimensional \texttt{char} arrays the value refers
+to the number of characters in the whole array.
 
 \subsection{Extended Datatype \attr{xtype}}
 \label{sec:xtype}
@@ -2380,6 +2394,9 @@ version 1.5 are:
       will be correctly interpreted by a VOTable 1.6 parser)
       but enables inclusion of arbitrary Unicode content
       using the usual UTF-8 encoding.
+\item Related to the above, the \attr{width} attribute now has a meaning
+      for character data, namely field length in characters
+      (as opposed to code units).
 \end{itemize}
 
 % NOTE: IVOA recommendations must be cited from docrepo.bib
