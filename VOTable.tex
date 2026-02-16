@@ -8,6 +8,7 @@
 \let\A=\href
 \def\Aref#1{section~\ref{#1}}
 \def\Arefs#1{section~\ref{#1}}
+\def\ARef#1{Section~\ref{#1}}
 \def\Arefx#1{appendix~\ref{#1}}
 \def\Tref#1{Table~\ref{#1}}
 \def\Fref#1{Figure~\ref{#1}}
@@ -1856,7 +1857,7 @@ interpret at least the following values:
         \item {\attrval{encoding}{dynamic}}
         implies that the data is in a remote resource (see below), and the
         encoding will be delivered with the header of the data.
-        This occurs with the http protocol, where the MIME header indicates
+        This occurs with the http protocol, where the headers indicate
         the type of encoding that has been used.
 \end{itemize}
 
@@ -2193,26 +2194,26 @@ with the following conventions:
 \end{quote}
 
 \clearpage
-\section{MIME Type}
+\section{Media Type}
 \label{sec:mime}
 
-A VOTable document should be introduced by a
-Multipurpose Internet Mail Extensions media type, or MIME type.
-MIME type syntax is described in RFC 2045 section 5.1, and
+A VOTable document should be introduced by a Media Type
+(sometimes called MIME type).
+Media type syntax is described in RFC 2045 section 5.1, and
 its semantics in RFC 2046.
-Associating a MIME type to a document enables the {\em data consumer}
+Associating a media type to a document enables the {\em data consumer}
 (an application or a web browser) to launch the desired application
 ({\em e.g.} a visualisation tool).
 
-In the HTTP protocol (RFC 9110), the MIME type is the value specified by the
-{\textsf{Content-Type:}} header. The recommended MIME type describing
+In the HTTP protocol (RFC 9110), the media type is the value specified by the
+{\textsf{Content-Type:}} header. The recommended media type describing
 a VOTable document is {\literalvalue{\textsf{application/x-votable+xml}}}:
 the {\bf x-} prefix indicates an experimental type, and
 is required for non-registered media types; and the
 {\bf+xml} suffix (defined by RFC 7303 section 4.2)
 indicates that the type describes a specialization of XML.
 The following optional parameters are defined for use with
-this MIME type:
+this media type:
 \begin{description}
 \item[{\tt serialization}]
 If provided, this parameter must have one of the values
@@ -2234,12 +2235,13 @@ Unless otherwise specified, the value is assumed to be case-sensitive.
 This parameter is defined by RFC 7303 and MAY be used
 to specify a character encoding for the XML.
 However, in line with that document it is RECOMMENDED NOT to use
-this parameter, and that VOTables are encoded using UTF-8 without a BOM.
+this parameter, and that VOTables are encoded using UTF-8 without a
+Byte Order Mark (BOM).
 \end{description}
 
-Alternatively the {\literalvalue{\textsf{text/xml}}} MIME type is acceptable
+Alternatively the {\literalvalue{\textsf{text/xml}}} media type is acceptable
 for services delivering data which are expected to be
-visualized by humans in a browser; this MIME type
+visualized by humans in a browser; this media type
 would preferably be associated with an XSL style sheet,
 for a presentation of well-formatted tables.
 Note that use of the \literalvalue{\textsf{text}}
@@ -2247,7 +2249,7 @@ top-level media type means that
 line breaks must be represented as a CRLF sequence
 (RFC 2046, section 4.1.1).
 The optional \texttt{charset} parameter is also defined for this
-MIME type with the same comments as above.
+media type with the same comments as above.
 
 Any of the following Content-Type header values may therefore be used
 by a service producing VOTables with the TABLEDATA serialization
@@ -2415,10 +2417,11 @@ version 1.5 are:
 \item Related to the above, the \attr{width} attribute now has a meaning
       for character data, namely field length in characters
       (as opposed to code units).
+\item \ARef{sec:mime} is renamed from ``MIME Type'' to ``Media Type''.
 \item The {\tt content} parameter is defined for the
-      {\tt application/x-votable+xml} MIME type (\Aref{sec:mime}).
+      {\tt application/x-votable+xml} media type (\Aref{sec:mime}).
 \item Advice about character encoding is modernised: use UTF-8
-      without a {\tt charset} MIME parameter (\Aref{sec:mime}).
+      without a {\tt charset} media type parameter (\Aref{sec:mime}).
      
 \end{itemize}
 
