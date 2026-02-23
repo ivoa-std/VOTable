@@ -18,7 +18,7 @@ AUTHOR_EMAIL=tdonaldson@stsci.edu
 
 # Source files for the TeX document (but the main file must always
 # be called $(DOCNAME).tex
-SOURCES = $(DOCNAME).tex role_diagram.pdf \
+SOURCES = $(DOCNAME).tex role_diagram.pdf gitmeta.tex \
           VOTable.attr.tex VOTable.elem.tex \
           VOTable.xsd stc_example1.vot stc_example2.vot timesys_example.vot \
           binary.pdf binary2.pdf \
