@@ -684,7 +684,8 @@ While the {\attr{ID}} attribute has to be unique in a VOTable document,
 the {\attr{name}} attribute need not. It is however recommended,
 as a good practice, to assign unique names within a \elem{TABLE} element.
 This recommendation means that,
-between a \elem{TABLE} and its corresponding closing \elem{\slash TABLE} tag,
+between a \elemdef{TABLE}{} and its corresponding closing
+\elemdef{\slash TABLE}{} tag,
 {\attr{name}} attributes of \elem{FIELD}, \elem{PARAM} and
 optional \elem{GROUP} elements should be all different.
 
@@ -806,7 +807,7 @@ representations currently are Gregorian calendar years with
 \attrval{xtype}{timestamp}, or years in the Julian or Besselian calendar when a column
 has \verb|yr|, \verb|a| or \verb|Ba| as its unit and no time origin is
 given.
-When using calendar epochs written in julian or besselian years, note that
+When using calendar epochs written in Julian or Besselian years, note that
 conventionally Julian years are tied to the TDB timescale and Besselian years to
 the ET (equivalent to TT) timescale \citep{2015A+A...574A..36R}.
 
@@ -1554,7 +1555,8 @@ If the value is the same as the {\attr{null}} value for that field
 then the item is assumed to contain no data.
 Valid representations of values in a cell, depending on their
 \attr{datatype}, are detailed in \Aref{sec:datatypes}.
-If the {\elem{TD}} element is empty ({\verb|<TD/>| or \verb|<TD></TD>|})
+If the {\elem{TD}} element is empty
+(\elemdef{TD}{\slash} or \elemdef{TD}{}\elemdef{\slash TD}{})
 the cell is considered to contain no data, i.e.\ to be null.
 
 If a cell contains an array of numbers or a complex number,
