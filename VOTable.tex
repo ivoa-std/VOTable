@@ -1876,6 +1876,7 @@ since of the available options only base64 will ensure that
 binary data is encoded as legal XML content.
 
 \subsection{Remote Data}
+\label{sec:stream}
 
 If the encoding of the data produces text, or if the serialization
 is naturally text-based, then it can be directly embedded into the
@@ -1893,28 +1894,27 @@ XML document:
 
 However, if the data stream is very large, it may be preferable to keep the data
 separate from the metadata. The \attr{href} attribute of
-the {\elem{STREAM}} element, if present, provides the location of the data
-in a URL-type syntax, for example:
+the {\elem{STREAM}} element, if present, provides a URI
+giving the location of the data, for example:
 
 \begin{plain}
-\elemdef{STREAM}{ \attrval{href}{ftp://server.com/mydata.dat}\slash}
+\elemdef{STREAM}{ \attrval{href}{http://server.com/mydata.dat}\slash}
 
-\par\elemdef{STREAM}{ \attrval{href}{ftp://server.com/mydata.dat}
-        \attrval{expires}{2004-02-29T23:59:59}\slash}
+\par\elemdef{STREAM}{ \attrval{href}{https://server.com/mydata.dat}
+                      \attrval{expires}{2004-02-29T23:59:59}\slash}
 
-\par\elemdef{STREAM}{ \attrval{href}{httpg://server.com/mydata.dat}
-        \attrval{actuate}{onLoad}\slash}
+\par\elemdef{STREAM}{ \attrval{href}{https://server.com/mydata.dat}
+                      \attrval{actuate}{onLoad}\slash}
 
 \par\elemdef{STREAM}{ \attrval{href}{file:///usr/home/me/mydata.dat}\slash}
 \end{plain}
 
-
-The examples are the well-known anonymous FTP and HTTP protocols.
-\literalvalue{httpg} is an example of a Grid-based access to data through HTTPG;
-finally, \literalvalue{file} is a reference to a local file.
-VOTable parsers are not required to understand arbitrary protocols,
-but are required to understand the  three common protocols
-\literalvalue{file:}, \literalvalue{http:} and \literalvalue{ftp:}.
+Any dereferenceable URI may be used for the \attr{href} attribute,
+but access to remote streams may be limited
+by capabilities of the parser implementation.
+Parsers SHOULD be able to read from absolute and relative URIs
+using common schemes such as
+\literalvalue{http}, \literalvalue{https} and \literalvalue{file}.
 
 There are further attributes of the {\elem{STREAM}}
 element that may be useful. The {\attr{expires}}
@@ -2424,6 +2424,8 @@ version 1.5 are:
       {\tt application/x-votable+xml} media type (\Aref{sec:mime}).
 \item Advice about character encoding is modernised: use UTF-8
       without a {\tt charset} media type parameter (\Aref{sec:mime}).
+\item Update examples and expectations about \elem{STREAM} \attr{href}
+      URI schemes (\Aref{sec:stream}).
 \item Minor editorial corrections.
 \end{itemize}
 
