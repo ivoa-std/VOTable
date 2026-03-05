@@ -556,7 +556,7 @@ to formally express the semantic
 content of a parameter or field. It has the hierarchy and flexibility
 of XML: using \elem{GROUP} elements introduced in version 1.1,
 columns in a VOTable can be grouped in arbitrarily complex hierarchies;
-and the ID attribute can be used in XML
+and the \attr{ID} attribute can be used in XML
 to enable what are essentially pointers.
 FITS does not handle Unicode (extended alphabet) characters.
 
@@ -579,7 +579,7 @@ tables without loss of information.
 The overall VOTable document structure is described and controlled
 by its XML Schema \citep{std:XSD}.  The schema for VOTable version \ivoaDocversion{} is
 given in \Arefx{XML-schema} of this document.  It can also
-be retrieved from \url{http://www.ivoa.net/xml/VOTable/votable-1.5.xsd}.
+be retrieved from \url{http://www.ivoa.net/xml/VOTable/votable-1.6.xsd}.
 
 A VOTable document consists of a single all-containing element
 called {\elem{VOTABLE}}, which contains descriptive elements and global definitions
@@ -684,7 +684,8 @@ While the {\attr{ID}} attribute has to be unique in a VOTable document,
 the {\attr{name}} attribute need not. It is however recommended,
 as a good practice, to assign unique names within a \elem{TABLE} element.
 This recommendation means that,
-between a \elem{TABLE} and its corresponding closing \elem{\slash TABLE} tag,
+between a \elemdef{TABLE}{} and its corresponding closing
+\elemdef{\slash TABLE}{} tag,
 {\attr{name}} attributes of \elem{FIELD}, \elem{PARAM} and
 optional \elem{GROUP} elements should be all different.
 
@@ -806,7 +807,7 @@ representations currently are Gregorian calendar years with
 \attrval{xtype}{timestamp}, or years in the Julian or Besselian calendar when a column
 has \verb|yr|, \verb|a| or \verb|Ba| as its unit and no time origin is
 given.
-When using calendar epochs written in julian or besselian years, note that
+When using calendar epochs written in Julian or Besselian years, note that
 conventionally Julian years are tied to the TDB timescale and Besselian years to
 the ET (equivalent to TT) timescale \citep{2015A+A...574A..36R}.
 
@@ -1306,7 +1307,7 @@ whereas many \elem{OPTION} elements may be used to qualify the domain
 described by the \elem{VALUES} element.
 The domain may therefore be defined as a single interval, or as a set
 of individual values. Although the schema does not forbid all three
-\elem{MIN}, \elem{MAX} and \elem{OPTION} sub-elements simultanesouly,
+\elem{MIN}, \elem{MAX} and \elem{OPTION} sub-elements simultaneously,
 such usage is considered as bad practice and is discouraged.
 
 All three \elem{MIN}, \elem{MAX} and \elem{OPTION} sub-elements
@@ -1334,9 +1335,9 @@ the xtype.  For instance, with:
   <VALUES><MIN value="0"/><MAX value="1e-4"/></VALUES>
 </FIELD>
 
-<PARAM name="CIRCLE" datatype="float" arraysize="3" xtype="circle">
+<FIELD name="CIRCLE" datatype="float" arraysize="3" xtype="circle">
   <VALUES><MAX value="312.5 -41 2"/></VALUES>
-</PARAM>
+</FIELD>
 \end{verbatim}
 
 \noindent both the single value of \emph{flux} and all items in the \emph{fluxes}
@@ -1451,7 +1452,7 @@ the following declaration:
            datatype="float" width="6" precision="1" unit="mJy"/>
     <FIELD name="e_Flux" ID="col5" datatype="float" width="4" precision="1"
            ucd="stat.error;phot.flux;em.radio.200-400MHz" unit="mJy"/>
-    <GROUP name="Flux" ucd="phot.flux;em.radio.200-400MHz">
+    <GROUP name="FluxGroup" ucd="phot.flux;em.radio.200-400MHz">
       <DESCRIPTION>Flux measured at 352MHz</DESCRIPTION>
       <PARAM name="Freq" ucd="em.freq" unit="MHz" datatype="float"
              value="352"/>
@@ -1554,7 +1555,8 @@ If the value is the same as the {\attr{null}} value for that field
 then the item is assumed to contain no data.
 Valid representations of values in a cell, depending on their
 \attr{datatype}, are detailed in \Aref{sec:datatypes}.
-If the {\elem{TD}} element is empty ({\verb|<TD/>| or \verb|<TD></TD>|})
+If the {\elem{TD}} element is empty
+(\elemdef{TD}{\slash} or \elemdef{TD}{}\elemdef{\slash TD}{})
 the cell is considered to contain no data, i.e.\ to be null.
 
 If a cell contains an array of numbers or a complex number,
@@ -1569,10 +1571,10 @@ that  has arrays in the table cells:
 \label{example2}
 \begin{verbatim}
 <TABLE>
-  <FIELD name="aString" datatype="char" arraysize="10"/>
+  <FIELD name="aString" datatype="char"  arraysize="10"/>
   <FIELD name="aShort"  datatype="short"/>
-  <FIELD name="varInts" datatype="int"  arraysize="*"/>
-  <FIELD name="Floats"  datatype="float"arraysize="3"/>
+  <FIELD name="varInts" datatype="int"   arraysize="*"/>
+  <FIELD name="Floats"  datatype="float" arraysize="3"/>
   <DATA><TABLEDATA>
     <TR> <TD>Apple</TD>  <TD/>       <TD>1 2 4 8 16</TD> <TD>1.62 4.56 3.44</TD> </TR>
     <TR> <TD>Orange</TD> <TD>15</TD> <TD>23 -11 9</TD>   <TD>2.33 4.66 9.53</TD> </TR>
@@ -1727,7 +1729,7 @@ be the integer part of  $(N+7)/8$.
 The most significant bit of the first flag byte corresponds to the
 first column,
 the second most significant bit of the first flag byte to the second column,
-the most significant bit of the second flag byte to the eighth column,
+the most significant bit of the second flag byte to the ninth column,
 and so on.  A set (1) bit indicates that the corresponding cell is null,
 and an unset (0) bit indicates that its value is not null.
 Unused bits will be at the less-significant end of the final flag byte,
@@ -2140,7 +2142,7 @@ whitespace, representing the real and imaginary part respectively.
 
 The XML Schema defining a VOTable \ivoaDocversion{} document
 is available from
-\url{http://www.ivoa.net/xml/VOTable/votable-1.5.xsd}
+\url{http://www.ivoa.net/xml/VOTable/votable-1.6.xsd}
 as well as in \Arefx{XML-schema} of this document.
 In this section we illustrate this XML Schema
 by a set of boxes describing the structure of a VOTable,
@@ -2406,7 +2408,7 @@ version 1.5 are:
       and elements of the datatype \literalvalue{unicodeChar} are
       defined to contain UTF-16 2-byte code units for BMP code points
       (not UCS-2 characters).
-      Both types are represented using document encoding in the 
+      Both types are represented using document encoding in the
       \elem{TABLEDATA} serialization.
       Furthermore the \literalvalue{unicodeChar} type is deprecated.
       These changes are entirely compatible with earlier VOTable versions
@@ -2422,7 +2424,7 @@ version 1.5 are:
       {\tt application/x-votable+xml} media type (\Aref{sec:mime}).
 \item Advice about character encoding is modernised: use UTF-8
       without a {\tt charset} media type parameter (\Aref{sec:mime}).
-     
+\item Minor editorial corrections.
 \end{itemize}
 
 % NOTE: IVOA recommendations must be cited from docrepo.bib
