@@ -155,24 +155,10 @@
     </xs:attribute>
     <xs:attribute name="null" type="xs:token"/>
     <xs:attribute name="ref"  type="xs:IDREF"/>
-    <!-- xs:attribute name="invalid" type="yesno" default="no"/ -->
   </xs:complexType>
 
   <!-- The LINK is a URL (href) or some other kind of reference (gref) -->
   <xs:complexType name="Link">
-    <xs:annotation><xs:documentation>
-    content-role was previsouly restricted as: <![CDATA[
-    <xs:attribute name="content-role">
-      <xs:simpleType>
-        <xs:restriction base="xs:NMTOKEN">
-          <xs:enumeration value="query"/>
-          <xs:enumeration value="hints"/>
-          <xs:enumeration value="doc"/>
-          <xs:enumeration value="location"/>
-        </xs:restriction>
-      </xs:simpleType>
-    </xs:attribute>]]>; is now a token.
-    </xs:documentation></xs:annotation>
     <xs:attribute name="ID" type="xs:ID"/>
     <xs:attribute name="content-role" type="xs:token"/>
     <xs:attribute name="content-type" type="xs:token"/>
@@ -183,33 +169,6 @@
     <xs:attribute name="action" type="xs:anyURI"/>
   </xs:complexType>
 
-<!-- INFO is defined in Version 1.2 as a PARAM of String type
-<xs:complexType name="Info">
-  <xs:complexContent>
-    <xs:restriction base="Param">
-      <xs:attribute name="unit" fixed=""/>
-      <xs:attribute name="datatype" fixed="char"/>
-      <xs:attribute name="arraysize" fixed="*"/>
-    </xs:restriction>
-  </xs:complexContent>
-</xs:complexType>
- -or- as a full definition:
-<xs:complexType name="Info">
-  <xs:sequence>
-  <xs:element name="DESCRIPTION" type="anyTEXT" minOccurs="0"/>
-    <xs:element name="VALUES" type="Values" minOccurs="0"/>
-    <xs:element name="LINK" type="Link" minOccurs="0" maxOccurs="unbounded"/>
-  </xs:sequence>
-  <xs:attribute name="name" type="xs:token" use="required"/>
-  <xs:attribute name="value" type="xs:string" use="required"/>
-  <xs:attribute name="ID" type="xs:ID"/>
-  <xs:attribute name="unit" type="xs:token"/>
-  <xs:attribute name="xtype" type="xs:token"/>
-  <xs:attribute name="ref" type="xs:IDREF"/>
-  <xs:attribute name="ucd" type="ucdType"/>
-  <xs:attribute name="utype" type="xs:string"/>
-</xs:complexType>
--->
 <!-- No sub-element is accepted in INFO for backward compatibility -->
 <xs:complexType name="Info">
   <xs:simpleContent>
@@ -317,9 +276,9 @@
 
 <!-- FIELD is the definition of what is in a column of the table -->
 <xs:complexType name="Field">
-  <xs:sequence> <!-- minOccurs="0" maxOccurs="unbounded" -->
+  <xs:sequence>
     <xs:element name="DESCRIPTION" type="anyTEXT" minOccurs="0"/>
-    <xs:element name="VALUES" type="Values" minOccurs="0"/> <!-- maxOccurs="2" -->
+    <xs:element name="VALUES" type="Values" minOccurs="0"/>
     <xs:element name="LINK" type="Link" minOccurs="0" maxOccurs="unbounded"/>
   </xs:sequence>
   <xs:attribute name="ID" type="xs:ID"/>
@@ -333,9 +292,6 @@
   <xs:attribute name="ucd" type="ucdType"/>
   <xs:attribute name="utype" type="xs:string"/>
   <xs:attribute name="arraysize" type="xs:string"/>
-    <!-- GL: is the next deprecated element remaining
-        (is not in PARAM, but will in new model be inherited)
-    -->
   <xs:attribute name="type">
     <!-- type is not in the Version 1.1, but is kept for
          backward compatibility purposes
@@ -353,7 +309,6 @@
 
 
 <!-- A PARAM is similar to a FIELD, but it also has a "value" attribute -->
-<!--  GL: implemented here as a subtype as suggested we do in Kyoto. -->
 <xs:complexType name="Param">
   <xs:complexContent>
     <xs:extension base="Field">
@@ -367,15 +322,11 @@
 <xs:complexType name="Group">
   <xs:sequence>
     <xs:element name="DESCRIPTION" type="anyTEXT" minOccurs="0"/>
-<!--  GL I guess I can understand the next choice element as one may (?)
-      really want to group fields and params and groups in a particular order.
--->
     <xs:choice minOccurs="0" maxOccurs="unbounded">
       <xs:element name="FIELDref" type="FieldRef"/>
       <xs:element name="PARAMref" type="ParamRef"/>
       <xs:element name="PARAM" type="Param"/>
       <xs:element name="GROUP" type="Group"/>
-      <!-- GL a GroupRef could remove recursion -->
     </xs:choice>
   </xs:sequence>
   <xs:attribute name="ID"   type="xs:ID"/>
@@ -387,8 +338,6 @@
 
 <!-- FIELDref and PARAMref are references to FIELD or PARAM defined
      in the parent TABLE or RESOURCE -->
-<!-- GL This can not be enforced in XML Schema, so why not IDREF in <Group> ?
-     In particular if the UCD and utype attributes will NOT be added -->
 <xs:complexType name="FieldRef">
   <xs:attribute name="ref" type="xs:IDREF" use="required"/>
   <xs:attribute name="ucd"  type="ucdType"/>
@@ -402,21 +351,6 @@
 </xs:complexType>
 
 <!-- DATA is the actual table data, in one of three formats -->
-<!--
-  GL in Kyoto we discussed the option of having the specific Data items
-  be subtypes of Data:
--->
-<!--
-<xs:complexType name="Data" abstract="true"/>
-
-<xs:complexType name="TableData">
-  <xs:complexContent>
-    <xs:extension base="Data">
-     ... etc
-    </xs:extension>
-  </xs:complexContent>
-</xs:complexType>
- -->
 <xs:complexType name="Data">
   <xs:annotation><xs:documentation>
     Added in Version 1.2: INFO for diagnostics
@@ -442,7 +376,6 @@
 <xs:complexType name="Td">
   <xs:simpleContent>
     <xs:extension base="xs:string">
-      <!-- xs:attribute name="ref" type="xs:IDREF"/ -->
       <xs:annotation><xs:documentation>
           The 'encoding' attribute is added here to avoid
           problems of code generators which do not properly
@@ -528,16 +461,6 @@
   </xs:documentation></xs:annotation>
   <xs:sequence>
     <xs:element name="DESCRIPTION" type="anyTEXT" minOccurs="0"/>
-<!-- GL: why a choice iso for example -->
-<!--
-      <xs:element name="PARAM" type="Param" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="FIELD" type="Field" minOccurs="0" maxOccurs="unbounded"/>
-      <xs:element name="GROUP" type="Group" minOccurs="0" maxOccurs="unbounded"/>
--->
-<!--
-  This could also enforce groups to be defined after the fields and params
-  to which they must have a reference, which is somewhat more logical
--->
     <!-- Added Version 1.2: -->
     <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/>
     <!-- An empty table without any FIELD/PARAM should not be acceptable -->
@@ -547,12 +470,6 @@
       <xs:element name="GROUP" type="Group"/>
     </xs:choice>
     <xs:element name="LINK" type="Link" minOccurs="0" maxOccurs="unbounded"/>
-    <!-- This would allow several DATA parts in a table (future extension?)
-    <xs:sequence minOccurs="0" maxOccurs="unbounded">
-      <xs:element name="DATA" type="Data"/>
-      <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-    -->
     <xs:element name="DATA" type="Data" minOccurs="0"/>
     <xs:element name="INFO" type="Info" minOccurs="0" maxOccurs="unbounded"/>
   </xs:sequence>
