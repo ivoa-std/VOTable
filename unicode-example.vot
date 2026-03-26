@@ -15,11 +15,11 @@
 <PARAM datatype="char" arraysize="8" name="soup2" value="Борщ" width="4"/>
 <PARAM datatype="char" arraysize="16x*" name="philosophers"
        value="孔子          ΣωκρατηςWittgenstein    "/>
-<FIELD datatype="char" arraysize="1" name="chr1"/>
+<FIELD datatype="char" name="chr1"/>
 <FIELD datatype="char" arraysize="*" name="txt"/>
 <FIELD datatype="char" arraysize="10" name="word10"/>
 <FIELD datatype="char" arraysize="10x2" name="words"/>
-<FIELD datatype="unicodeChar" arraysize="1" name="uchr1"/>
+<FIELD datatype="unicodeChar" name="uchr1"/>
 <FIELD datatype="unicodeChar" arraysize="*" name="utxt"/>
 <FIELD datatype="unicodeChar" arraysize="5" name="uword10"/>
 <FIELD datatype="unicodeChar" arraysize="5x2" name="uwords"/>
