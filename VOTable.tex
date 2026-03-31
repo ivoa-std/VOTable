@@ -86,12 +86,9 @@
 
 \begin{document}
 \begin{abstract}
-This document describes the structures making up
-the VOTable standard.
-The main part of this document describes the adopted part of the
-VOTable standard; it is followed by appendices presenting extensions
-which have been proposed and/or discussed, but which are not part of
-the standard.
+VOTable defines an XML-based transport and storage format for
+tabular data and associated metadata in the Virtual Observatory.
+It is used as the main medium for data exchange by many VO protocols.
 \end{abstract}
 
 
@@ -965,13 +962,6 @@ Although this might be overridden by metadata received during the
 retrieval operation (e.g.\ the HTTP Content-Type header)
 it can serve as a hint to the application about what to expect.
 
-In the Astrores format, from which VOTable is derived,
-there are additional semantics for the {\elem{LINK}}
-element; the \elem{href} attribute is used as a template for creating
-URLs. This behavior is explained in \Arefx{LINK},
-and it represents
-a possible extension of VOTable.
-
 \subsection{\elem{TABLE} Element}
 \label{elem:TABLE}
 
@@ -1042,8 +1032,7 @@ columns in \Aref{sec:data}.
 
 A {\elem{FIELD}} or \elem{PARAM} element may have several sub-elements,
 including the informational {\elem{DESCRIPTION}}
-and {\elem{LINK}} elements (several descriptions and titles
-are possible, see \Arefx{sec:addesc});
+and {\elem{LINK}} elements;
 it may also include a {\elem{VALUES}} element
 that can express limits and ranges of the values that the
 corresponding cell can contain, such as minimum (\elem{MIN}),
@@ -1117,10 +1106,7 @@ The valid attributes of a \elem{FIELD} or \elem{PARAM} are:
         coordinate frame).
 
 \item   The \attr{type} attribute is {\em not} part of this standard,
-        but is reserved for future extensions (see
-        \Arefx{LINK},
-        \Arefx{query} and
-        \Arefx{location}).
+        but is reserved for future extensions.
 
 \end{itemize}
 
@@ -1424,8 +1410,8 @@ can be the following:
       <FIELDref ref="col4"/>
       <FIELDref ref="col5"/>
     </GROUP>
-\end{verbatim}\endgroup
-
+\end{verbatim}
+\endgroup
 
 The \elem{GROUP} element can have the \attr{name}, \attr{ID}, \attr{ucd},
 \attr{utype} and \attr{ref} attributes.
@@ -1837,12 +1823,6 @@ decoded by the VOTable reader. We might also use the encoding facilities to
 convert a binary file to text (through base64 encoding), so that binary
 data can be used in the XML document.
 
-In this version of VOTable, it is not possible to encode
-individual columns of the table: the whole table must be encoded in
-the same way. However, the possibility of encoding selected table cells
-is  being examined for future versions of VOTable
-(see \Arefx{sec:b64}).
-
 In order to use an encoding of the data, it must be enclosed in a
 {\elem{STREAM}}
 element, whose attributes define the nature of the encoding. The
@@ -2186,9 +2166,6 @@ with the following conventions:
 \begin{itemize}
 \item   Attributes written in bold are \requiredattr{required attributes}
 \item   Attributes written in a {fixed font} are \attr{optional}.
-\item   Attributes written in {\it italics}
-        are not part of VOTable \ivoaDocversion{}, but are {\it reserved}
-        for possible extensions (mentioned in an Appendix).
 \end{itemize}
 
 \bigskip
@@ -2308,7 +2285,7 @@ version 1.1 are:
 	\attr{name}, \attr{ID} and \attr{ref} attributes
 \item	Appendix A7 was a proposition for additional \attr{utype}
         attributes in groups and tables; it is now included in VOTable 1.2.
-	\Arefx{sec:addesc} now contains a new proposal
+	Appendix A7 now contains a new proposal
 	(May/June 2009) for multiple descriptions and titles.
 \end{itemize}
 
@@ -2347,7 +2324,7 @@ version 1.2 are:
       the new {\tt serialization} parameter that can be used to specify
       serialization type.
 \item The representation of STC information in \Aref{example1}
-      and \Aref{query}
+      and Appendix A.2
       has been modified to reflect the recommended usage from the
       {\em STC in VOTable} Note.  This usage is recommended even for
       VOTable 1.2, so this change to the VOTable document represents
@@ -2427,6 +2404,7 @@ version 1.5 are:
       without a {\tt charset} media type parameter (\Aref{sec:mime}).
 \item Update examples and expectations about \elem{STREAM} \attr{href}
       URI schemes (\Aref{sec:stream}).
+\item Remove Appendix A ``Possible VOTable Extensions''.
 \item Minor editorial corrections.
 \end{itemize}
 
@@ -2443,414 +2421,6 @@ version 1.5 are:
 \noindent {\bf\LARGE Appendices}
 
 \bigskip
-
-%\begin{quote}
-%\em\fg{DarkBlue}
-\section{Possible VOTable extensions}
-The definitions enclosed in this appendix
-are {\bf not} part of the VOTable standard, but are considered as candidates
-for VOTable improvements.
-%This section is a short explanation on how Astrores defines
-%the set of parameters and fields which can be qualified for a query --
-%what could be defined as the contents of a {\bf form}.
-%VOTable currently does not define the parameters available for a query;
-%such definitions are delayed to the next version of VOTable, and could
-%make use of the Web Services Description Language (WSDL)
-%\end{quote}
-
-
-\subsection{VOTable LINK substitutions}
-\label{LINK}
-
-\begin{quote}\em \fg{DarkBlue}
-  The \elem{LINK} element in Astrores \citep{astrores}
-  contains a mechanism for string substitution,
-  which is a powerful way of defining a link to external data
-  which adapts to each record contained in the table \elem{DATA}.
-\end{quote}
-
-When a {\elem{LINK}} element appears within a \elem{RESOURCE} or a
-{\elem{TABLE}} element,
-extra functionality is implied: the {\attr{href}}
-attribute may not be a simple link, but instead
-a template for a link. If, in the  example of
-\Aref{example1}, we add the link
-
-\begin{verbatim}
-  <LINK href="http://ivoa.net/lookup?Galaxy=${Name}&amp;RA=${RA}&amp;DE=${DE}"/>
-\end{verbatim}
-
-\noindent a substitution filter is applied in the context of a particular row.
-For the first row of the table, the substitution would result in the URL
-
-\begin{verbatim}
-   http://ivoa.net/lookup?Galaxy=N%20224&RA=010.68&DE=%2b41.27
-\end{verbatim}
-
-Whenever the pattern {\tt{\$\{...\}}}
-is found in the original link, the part in the braces is compared
-with the set of {\attr{ID}} (preferably) or \attr{name}
-attributes of the fields of the table. If a match is found, then the
-value from that field of the selected row is used in place of the
-{\tt{\$\{...\}}}. If no match is found, no substitution is made. Thus the
-parser makes available to the calling application a value of the {\attr{href}}
-attribute that depends on which row of the table has been selected.
-Another way to think of it is that there is not a single link
-associated with the table, but rather an implicitly defined new
-column of the table. This mechanism can be used to connect each row
-of the table to further information resources.
-
-%The {\attr{action}} attribute is related to the Query mechanism described in
-%the \Aref{query}.
-
-
-The purpose of the link is defined by the {\attr{content-role}}
-attribute. The allowed values are {\literalvalue{query}}
-(see \Aref{query}),
-{\literalvalue{hints}} for information for use by the application,
-and {\literalvalue{doc}} for  human-readable documentation.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Question: laisser un simple string dans l'attribut content-role ???
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%The first implies that string substitution should be used as defined
-%above, and the latter two imply first that no substitution is needed,
-%and that the link points to either information for use by the
-%application ({\literalvalue{hints}})
-%or human-readable documentation ({\literalvalue{doc}}).
-
-The column names invoked in the pattern of the \attr{href} attribute
-of the \elem{LINK} element should exist in the document to
-generate meaningful links.
-In the common case where the VOTable was generated from a query
-of a database and contains only some of the columns in that
-database, it might be necessary to include columns additional to
-those requested in order to ensure that the LINKS in the VOTable
-are operational.
-Such a \elem{FIELD} included ``by necessity'' is marked with
-the attribute \attrval{type}{hidden}. The primary key of
-a relational table is a typical example of a \elem{FIELD}
-which would carry the \attrval{type}{hidden} attribute.
-
-\subsection{VOTable Query Extension}
-\label{query}
-
-\begin{quote}\em\fg{DarkBlue}
-  The metadata part included in  a \elem{RESOURCE} contains
-  all the details necessary to create a {\em form} for querying
-  the resource. The addition of a link having the \attr{action}
-  attribute can turn VOTable into a powerful query interface.
-\end{quote}
-
-\noindent In Astrores \citep{astrores},
-the details on the input parameters available in
-queries are described by the
-{\elem{PARAM}} and {\elem{FIELD}} elements, and the syntax used
-to generate the actual query is described in the ASU procotol \citep{asu}:
-the {\elem{FIELD}} or \elem{PARAM} elements are
-paired in the form {\it name}{\tt{=}}{\it value},
-where {\it name} is the contents of the
-\attr{name} attribute of a \elem{FIELD} or \elem{PARAM},
-and  {\it value} represents a constraint
-written with the ASU conventions (e.g. \literalvalue{<8}
- or {\literalvalue{12.0..12.5}}
-which denotes a range of values).
-Such pairs are  appended to the
-{\attr{action}} specified in the {\elem{LINK}}
-element contained in the {{\elem{RESOURCE}}},
-separated by the ampersand (\&) symbol --
-in a way quite similar to the HTML syntax used to
-describe a {\elem{FORM}}.
-
-A special \attrval{type}{no\_query} attribute of the
-\elem{PARAM} or \elem{FIELD} elements marks the fields
-which are {\em not} part of the form, i.e. are ignored
-in the collection of {\it name}{\tt{=}}{\it value} pairs.
-
-The following is an example of a transformation of the VOTable
-in \Aref{example1} into a form interface:
-\label{form1}
-\begingroup\small
-\verbatiminput{stc_example2.vot}
-%\caption{\label{example1}A simple VOTable example}
-\endgroup
-
-\noindent Note that the {\elem{RESOURCE}} displaying the parameters accessible
-for a query has the {\attrval{type}{meta}}
-attribute; it is also assumed that only one {\elem{LINK}}
-having the {\attrval{content-role}{query}}
-attribute together with an {\attr{action}}
-attribute exists within the current {\elem{RESOURCE}}.
-The \elem{PARAM} with \attrval{name}{-out.max} has been added in this
-example to control the size of the result.
-
-A valid query generated by this VOTable could be:
-
-\begin{verbatim}
-  myQuery?-source=myGalaxies&-out.max=50&R=10..100
-\end{verbatim}
-
-%\subsection{Additional Propositions}
-
-\subsection{Arrays of Variable-Length Strings}
-\label{sec:arraystring}
-Following the FITS conventions, strings are defined as arrays of
-characters. This definition raises problems for the definition
-of arrays of strings, which have then to be defined as 2D-arrays
-of characters -- but in this case only the slowest-varying dimension
-(i.e. the number of strings) can be variable. %According to this
-%limitation, the list of references given in the example above
-%(\elemdef{FIELD}{\attrval{name}{ references}}) was assigned an arraysize
-%of 20 to take into account the blank which separates two references
-%made of 19 characters each.
-This limitation becomes severe when a table column contains a set
-of remarks, each being made of a variable number of characters as
-occurs in practice.
-
-FITS invented the {\em Substring Array} convention (defined in an appendix,
-i.e. not officially approved) which defines a {\em separator} character
-used to denote the end of a string and the beginning of the next one.
-In this convention ($r${\tt A:SSTR}$w$/$ccc$) the total size of the character
-array is specified by $r$, $w$ defines the maximum length of one string,
-and $ccc$ defines the separator character as its ASCII equivalent value.
-The possible values for the separator includes the space and any printable
-character, but excludes the control characters.
-
-Such arrays of variable-length strings are frequently useful e.g.
-to enumerate a list of properties of an observed source, each property being
-represented by a variable-length string.
-A convention similar to the FITS one could be introduced in
-VOTable in the \attr{arraysize}
-attribute, using the {\bf s} followed by the separator character;
-an example can be \attrval{arraysize}{100s,}
-indicating a string made of up to 100 characters, where the comma
-is used to separate the elements of the array.
-
-\subsection{FIELDs as Data Pointers}
-\label{location}
-
-Rather than requiring that all data described in the set of \elem{FIELD}s
-are contained in a single stream which follows the metadata part,
-it would be possible to let the \elem{FIELD} act as
-a {\em pointer} to the actual data, either in the form of a URI or of
-a reference to a component of a multipart document.
-
-Each component of the data described by a \elem{FIELD} may effectively
-have different requirements: while text data or small lists of numbers
-are quite efficiently represented in pure XML, long lists like spectra
-or images generate poor performances if these are converted to XML.
-The method available to gain efficiency is to use a
-binary representation of the {\em whole data stream} by means of the
-\elem{STREAM} element -- at the price of delivering data in a totally non-human
-readable format.
-
-%\subsection{The \attrval{type}{location} attribute}
-The following options would allow more flexibility in the way the
-various \elem{FIELD}s can be accessed:
-
-\begin{itemize}
-\item   a \elem{FIELD} can be declared as being a {\em pointer}
-        with the addition of a \attrval{type}{location} value,
-        meaning that the field contains a way to access the data,
-        and not the actual data;
-\item   a \elem{FIELD} can contain a \elem{LINK} element marked
-        \attrval{type}{location} which contains in its
-        \attr{href} attribute the partial URI to which the contents
-        of the column cell is appended in order to generate a
-        fully qualified URI.
-\end{itemize}
-Note that the \elem{LINK} is not required -- a \elem{FIELD} declared
-with \attrval{type}{location} and containing no \elem{LINK} element
-is assumed to contain URIs.
-
-An example of a table describing a set of spectra could look like the following:
-
-\small
-\begin{verbatim}
-<TABLE name="SpectroLog">
-  <FIELD name="Target" ucd="meta.id" datatype="char" arraysize="30*"/>
-  <FIELD name="Instr" ucd="instr.setup" datatype="char" arraysize="5*"/>
-  <FIELD name="Dur" ucd="time.expo" datatype="int" width="5" unit="s"/>
-  <FIELD name="Spectrum" ucd="meta.ref.url" datatype="float" arraysize="*"
-         unit="mW/m2/nm" type="location">
-    <DESCRIPTION>Spectrum absolutely calibrated</DESCRIPTION>
-    <LINK  content-role="location"
-        href="http://ivoa.spectr/server?obsno="/>
-  </FIELD>
-  <DATA><TABLEDATA>
-    <TR><TD>NGC6543</TD><TD>SWS06</TD><TD>2028</TD><TD>01301903</TD></TR>
-    <TR><TD>NGC6543</TD><TD>SWS07</TD><TD>2544</TD><TD>01302004</TD></TR>
-  </TABLEDATA></DATA>
-</TABLE>
-\end{verbatim}\normalsize
-
-\noindent
-The reading program has therefore to retrieve the data
-for this first row by resolving the URI
-\begin{plain}
-{\tt http://ivoa.spectr/server?obsno=01301903}
-\end{plain}
-
-\noindent
-The same method could also be immediately applicable to  {\em Content-ID}s
-which designate elements of a multipart message, using the protocol
-prefix {\tt cid:} [RFC2111]
-
-Note that the {\em VOTable LINK substitution} proposed in
-\Aref{LINK} fills a similar functionality:
-generate a pointer which can incorporate in its address components
-from the \elem{DATA} part for the VOTable.
-
-\subsection{Encoding Individual Table Cells}
-\label{sec:b64}
-Accessing binary data improves quite significantly the efficiency
-both in storage and CPU usage, especially when one compares with the
-XML-encoded data stream. But binary data cannot be included in the
-same stream as the metadata description, unless a dedicated coding
-filter is applied which converts the binary data into an ASCII representation.
-The base64 is the most commonly used filter for this conversion, where
-3 bytes of data are coded as 4 ASCII characters, which implies an overhead of
-33\% in storage, and some (small) computing time necessary for the reverse
-transformation.
-
-In order to keep the full VOTable document in a unique stream,
-VOTable 1.0 introduced the \attr{encoding} attribute in the
-\elem{STREAM} element, meaning that the data, stored as binary records,
-are converted into some ASCII representation compatible with the
-XML definitions. One drawback of this method is that the entire data
-contents become non human-readable.
-%it should also be noted that the
-%binary encoding of the full records can result in a waste of storage
-%when the data contains arrays which size can vary widely from record
-%to record.
-
-The addition of the \attr{encoding} attribute in the \elem{TD} element
-allows the data server to decide, at the cell level, whether it is more
-efficient to distribute the data as binary-encoded or as edited
-values. The result may look like the following:
-
-\begin{verbatim}
-<TABLE name="SpectroLog">
-  <FIELD name="Target" ucd="meta.id" datatype="char" arraysize="30*"/>
-  <FIELD name="Instr" ucd="instr.setup" datatype="char" arraysize="5*"/>
-  <FIELD name="Dur" ucd="time.expo" datatype="int" width="5" unit="s"/>
-  <FIELD name="Spectrum" ucd="phot.flux;em.opt" datatype="float" arraysize="*"
-         unit="mW/m2/nm" precision="E3"/>
-  <DATA><TABLEDATA>
-    <TR><TD>NGC6543</TD><TD>SWS06</TD><TD>2028</TD><TD encoding="base64">
-    QJKPXECHvndAgMScQHul40CSLQ5ArocrQLxiTkC3XClAq0OWQKQIMUCblYFAh753QGij10BT
-    Em9ARKwIQExqf0BqbphAieuFQJS0OUCJWBBAhcrBQJMzM0CmRaJAuRaHQLWZmkCyhytAunbJ
-    QLN87kC26XlA1KwIQOu+d0DsWh1A5an8QN0m6UDOVgRAxO2RQM9Lx0Din75A3o9cQMPfO0C/
-    dLxAvUeuQKN87kCXQ5ZAjFodQH0vG0B/jVBAgaHLQI7Ag0CiyLRAqBBiQLaXjUDYcrBA8p++
-    QPcKPUDg7ZFAwcKPQLafvkDDlYFA1T99QM2BBkCs3S9AjLxqQISDEkCO6XlAmlYEQKibpkC5
-    wo9AvKPXQLGBBkCs9cNAuGp/QL0euEC4crBAuR64QL6PXEDOTdNA2987QN9T+EDoMSdA8mZm
-    QOZumEDDZFpAmmZmQGlYEEBa4UhAivGqQLel40Dgan9A4WBCQLNcKUCIKPZAk1P4QNWRaEEP
-    kWhBKaHLQTkOVkFEan9BUWBCQVyfvg==
-    </TD></TR>
-  </TABLEDATA></DATA>
-</TABLE>
-\end{verbatim}
-\par
-
-\noindent
-When decoded, the contents of the last column is the binary representation
-of the spectrum, as defined in \Aref{sec:BIN};
-no length prefix is required here, the total length of the array being
-implicitly defined by the length of the encoded text.
-
-\subsection{Very Large Arrays}
-% Feb. 2004, Mails 1054, 1123
-The \elem{BINARY} and \elem{BINARY2} serializations of variable-length arrays
-(\Aref{sec:BIN}, \Aref{sec:BIN2}) uses a 4-byte prefix containg the number of
-items of the array. This convention imposes an absolute maximal
-number of $2^{31}-1$ elements. This limit could be releaved
-with a new \attr{arrayprefix} attribute.
-
-\subsection{Additional Descriptions and Titles}
-\label{sec:addesc}
-% Suggested  Carlos Rodrigo Blanco, 4 June 2009
-The same table may be used in several contexts, and it was for
-instance expressed a wish to include in \elem{TABLE}  and
-\elem{FIELD} descriptions and titles (captions) in a form
-suitable for a publication (latex)
-in addition to the ascii-only descriptions currently acceptable.
-The following example is an illustration of this extension:
-\begin{verbatim}
-<TABLE name="Model_A">
-  <DESCRIPTION>Star luminosities in Model A</DESCRIPTION>
-  <DESCRIPTION context="latex">$L(T_{eff})$ in Model {\bf A}</DESCRIPTION>
-  <FIELD name="Teff" datatype="float" unit="K" ucd="phys.temperature.effective">
-     <DESCRIPTION>Effective temperature</DESCRIPTION>
-     <TITLE context="latex">$T_{eff}$</TITLE>
-  </FIELD>
-  <FIELD name="Lum" datatype="float" unit="Lsun" ucd="phys.luminosity">
-     <DESCRIPTION>Corresponding luminosity in Model A</DESCRIPTION>
-     <DESCRIPTION context="latex">$L(T_{eff})$</DESCRIPTION>
-     <TITLE context="latex">$L/L_\odot$</TITLE>
-  </FIELD>
-</TABLE>
-\end{verbatim}
-
-In practice this extension would mean that, wherever a \elem{DESCRIPTION}
-element is currently acceptable, a set of \elem{DESCRIPTION} and
-\elem{TITLE} elements would become acceptable, each with an optional
-\attr{context} additional attribute. The new \elem{TITLE} element
-would have the role of expliciting the {\em column header} in a
-field or parameter, or to supply a {\em caption} of a table or
-a set of tables (resource) in addition to its description.
-
-Providing descriptions in several languages would be another
-obvious advantage of this extension.
-
-\subsection{A New {\tt XMLDATA} Serialization}
-% Following discussions Tony Linde / Roy Williams
-% in January 2004 on the VOTable group
-In order to facilitate the  use of standard XML query tools
-which usually require each parameter to have its own individual tag,
-the \elem{XMLDATA} serialization introduces the designation of
-each  \elem{FIELD} by a dedicated tag. An example could look like
-the following:
-
-\begin{verbatim}
-<TABLE name="Messier">
-  <FIELD name="Number" ID="M" ucd="meta.record" datatype="int" >
-    <DESCRIPTION>Messier Number</DESCRIPTION>
-  </FIELD>
-  <FIELD name="R.A.2000" ID="RA" ucd="pos.eq.ra;meta.main"
-         unit="deg" datatype="float" width="5" precision="1" />
-  <FIELD name="Dec.2000" ID="DE" ucd="pos.eq.dec;meta.main"
-         unit="deg" datatype="float" width="5" precision="1" />
-  <FIELD name="Name" ID="N" ucd="meta.id" datatype="char" arraysize="*">
-    <DESCRIPTION>Common name used to designate the Messier object</DESCRIPTION>
-  </FIELD>
-  <FIELD ID="T" name="Classification" datatype="char" arraysize="10*"
-         ucd="src.class">
-     <DESCRIPTION>Classification (galaxy, glubular cluster, etc)</DESCRIPTION>
-  </FIELD>
-  <DATA><XMLDATA>
-    <TR>
-      <M>3</M>
-      <RA>205.5</RA>
-      <DE>+28.4</DE>
-      <N/>
-      <T>Globular Cluster</T>
-    </TR>
-    <TR>
-      <M>31</M>
-      <RA>010.7</RA>
-      <DE>+41.3</DE>
-      <N>Andromeda Galaxy</N>
-      <T>Galaxy</T>
-    </TR>
-  </XMLDATA></DATA>
-</TABLE>
-\end{verbatim}
-\par
-
-\noindent The full document would need an XML-Schema definition of the tags
-\elem{M}, \elem{RA}, \elem{DE}, \elem{N} and \elem{T}; these being
-derived directly from the \attr{ID} attribute of the \elem{FIELD}
-element, their definition can be generated automatically from the set of
-\elem{FIELD} definitions.
 
 \section{The VOTable version \ivoaDocversion{}  XML Schema}
 \label{XML-schema}
