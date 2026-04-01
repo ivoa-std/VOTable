@@ -79,3 +79,6 @@ test:
 	@$(STILTS) xsdvalidate \
 		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=VOTable.xsd" \
 		stc_example2.vot
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=VOTable.xsd" \
+		unicode-example.vot
