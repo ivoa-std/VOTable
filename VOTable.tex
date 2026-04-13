@@ -732,6 +732,7 @@ vocabulary includes the terms:
 \textsl{GALACTIC},
 \textsl{GALACTIC\_I},
 \textsl{GENERIC\_GALACTIC},
+\textsl{geo\_app},
 \textsl{ICRS},
 \textsl{SUPER\_GALACTIC},
 \textsl{UNKNOWN}
@@ -1424,7 +1425,8 @@ can be the following:
       <FIELDref ref="col4"/>
       <FIELDref ref="col5"/>
     </GROUP>
-\end{verbatim}\endgroup
+\end{verbatim}
+\endgroup
 
 
 The \elem{GROUP} element can have the \attr{name}, \attr{ID}, \attr{ucd},
@@ -2157,6 +2159,7 @@ these diagrams, the schema is definitive.
 The hierarchy of the elements existing in VOTable \ivoaDocversion{} is illustrated below;
 it uses the following conventions:
 \begin{itemize}
+\setlength\itemsep{0ex}
 \item   {\em italicized} text represents {\em optional} elements;
 \item   \order{} indicates that the order of the elements is mandatory, while
 \item   \unorder{} {\em(open bullet)} indicates that the corresponding
@@ -2169,7 +2172,6 @@ it uses the following conventions:
         and are therefore explained in a dedicated box of the figure.
 \end{itemize}
 
-\bigskip
 \begin{quote}\small
 %\begin{table}[htbp]\caption{\label{tab:elem}View of the relations between
 %  VOTable {\bf elements}}.
@@ -2184,6 +2186,7 @@ it uses the following conventions:
 The list of the attributes is summarized in the table below,
 with the following conventions:
 \begin{itemize}
+\setlength\itemsep{0ex}
 \item   Attributes written in bold are \requiredattr{required attributes}
 \item   Attributes written in a {fixed font} are \attr{optional}.
 \item   Attributes written in {\it italics}
@@ -2191,7 +2194,6 @@ with the following conventions:
         for possible extensions (mentioned in an Appendix).
 \end{itemize}
 
-\bigskip
 \begin{quote}\small
 \input{VOTable.attr.tex}
 \end{quote}
