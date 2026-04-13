@@ -27,7 +27,7 @@ SOURCES = $(DOCNAME).tex role_diagram.pdf gitmeta.tex \
 # List of image files to be included in submitted package (anything that
 # can be rendered directly by common web browsers)
 FIGURES = role_diagram.svg \
-          serial.png binary.png binary2.png circ2.gif leadsto2.gif oplus.gif
+          serial.png binary.png binary2.png
 
 # List of PDF figures (figures that must be converted to pixel images to
 # work in web browsers).
