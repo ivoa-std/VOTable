@@ -34,7 +34,7 @@ FIGURES = role_diagram.svg \
 VECTORFIGURES =
 
 # Additional files to distribute (e.g., CSS, schema files, examples...)
-AUX_FILES = VOTable.xsd
+AUX_FILES = VOTable.xsd tablefix.css
 
 # Include Makefile from ivoatex
 include ivoatex/Makefile
