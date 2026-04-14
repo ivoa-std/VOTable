@@ -279,7 +279,16 @@ of the Data Access protocols (e.g.\ SCS, SIA, SSA, TAP),
 and hence for exchange of data and metadata
 between user layer applications and data-providing services.
 VOTable is also used as a serialization format for
-some of the IVOA Data Models.
+some of the IVOA Data Models. 
+
+This can be achieved by using metadata required by DAL standards,
+or in a more flexible way by using MIVOT (Model Instances in VOTables) annotations \citep{2023ivoa.spec.0620M}.
+MIVOT defines a syntax that maps VOTable contents to any model serialized in VO-DML \citep{2018ivoa.spec.0910L}.
+MIVOT annotations operate as a bridge between models and data, associating VOTable metadata
+with data model entities and potentially adding advanced metadata that cannot be represented in plain VOTable.
+MIVOT annotations have their own XML namespace and abide by a specific XML schema,
+which has no connection with the VOTable schema ; they are not part of the VOTable standard,
+and their use is optional.
 
 In order to represent semantically rich metadata, VOTable relies on
 the other IVOA standards UCD, Utype, VOUnits, and DALI.
@@ -774,6 +783,10 @@ At the time of writing, this vocabulary includes the terms
 Also note that \elem{COOSYS} may be deprecated in the
 future in favor of a more generic way of describing the conventions used
 to define the positions of the objects studied in the enclosed tables.
+This generic approach could involve mapping VOTable data to the MANGO data model (REFERENCE TO MANGO),
+which provides a consistent description of complete sky positions, including position, radial velocity,
+proper motion, parallax and observation time. All of these are provided with errors,
+correlations and coordinate systems (space and time). 
 
 A \elem{COOSYS} element referenced via a \attr{ref} attribute
 SHOULD appear before the element that references it.
@@ -902,14 +915,8 @@ this attribute {\em may} however have no \elem{DATA} sub-element.
 
 For example, a \elem{RESOURCE} qualified by
 \attrval{type}{meta} can be used to transmit
-MIVOT (Model Instances in VOTables) annotations \citep{2023ivoa.spec.0620M}.
-MIVOT defines a syntax to map VOTable
-contents to any model serizalized in VO-DML \citep{2018ivoa.spec.0910L}.
-It operates as a bridge between models and data that associates VOTable
-metadata to data model entities, possibly adding advanced metadata not
-representable in plain VOTable.
-MIVOT annotations have their own XMLnamespace.  The VOTable schema allows MIVOT,
-and any elements from a foreign namespace, in a \elem{RESOURCE}.
+MIVOT annotations (see \ref{sec:voarch}).  The VOTable schema allows MIVOT annotations as 
+any elements from a foreign namespace, in a \elem{RESOURCE}.
 
 Finally, the \elem{RESOURCE} element may have a \attr{utype} attribute
 to link the element to some external data model
