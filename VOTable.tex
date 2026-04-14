@@ -279,7 +279,16 @@ of the Data Access protocols (e.g.\ SCS, SIA, SSA, TAP),
 and hence for exchange of data and metadata
 between user layer applications and data-providing services.
 VOTable is also used as a serialization format for
-some of the IVOA Data Models.
+some of the IVOA Data Models. 
+
+This can be achieved by using metadata required by DAL standards,
+or in a more flexible way by using MIVOT (Model Instances in VOTables) annotations \citep{2023ivoa.spec.0620M}.
+MIVOT defines a syntax that maps VOTable contents to any model serialized in VO-DML \citep{2018ivoa.spec.0910L}.
+MIVOT annotations operate as a bridge between models and data, associating VOTable metadata
+with data model entities and potentially adding advanced metadata that cannot be represented in plain VOTable.
+MIVOT annotations have their own XML namespace and abide by a specific XML schema,
+which has no connection with the VOTable schema ; they are not part of the VOTable standard,
+and their use is optional.
 
 In order to represent semantically rich metadata, VOTable relies on
 the other IVOA standards UCD, Utype, VOUnits, and DALI.
