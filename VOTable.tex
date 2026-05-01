@@ -407,7 +407,8 @@ Note that the primitive size of one byte refers to a single
 UTF-8-encoded byte, not to a single character.
 Since UTF-8 is a variable-width encoding,
 a character may require multiple bytes, and for arrays the
-string length (length in characters) and primitive count (length in bytes)
+string length (defined e.g.\ as the length in Unicode code points)
+and primitive count (length in bytes)
 will in general differ.
 7-bit ASCII characters are however all encoded as a single byte in UTF-8,
 so in the case of ASCII characters, which were required for this
@@ -415,10 +416,10 @@ datatype in earlier VOTable versions, the primitive and character count
 are equal.
 This means that a single (non-array) \literalvalue{char}
 is capable of storing a 7-bit ASCII character only.
-Strings must not be truncated mid-character,
-so truncation of a string to fit a fixed-length char array may result in
-unused bytes at the end of the array.
-The character count as distinct from the primitive count
+Strings must not be truncated midway through a code point,
+so truncation of a string to fit a fixed-length \literalvalue{char} array
+may result in unused bytes at the end of the array.
+The code point count as distinct from the primitive count
 may optionally be recorded by the \attr{width} attribute,
 see \Aref{sec:form}.
 
@@ -426,9 +427,10 @@ For historical reasons the \literalvalue{unicodeChar} type can also be used
 for character storage, but from VOTable 1.6 this type is deprecated.
 For this type the primitive size of two bytes corresponds to a 2-byte
 UTF-16 {\em code unit}.
-Only characters in the Unicode Basic Multilingual Plane,
-which all have 2-byte representations, are permitted for this datatype,
-so that the primitive count matches the character count.
+Only code points in the Unicode Basic Multilingual Plane,
+which all have single code unit representations in UTF-16,
+are permitted for this datatype,
+so that the primitive count matches the code point count.
 This is identical to the obsolete UCS-2 encoding,
 which was the description used in earlier VOTable versions.
 
@@ -489,7 +491,7 @@ but not \literalvalue{$\Lambda$CDM},
 since the character $\Lambda$ (Lambda)
 is encoded in two bytes (0xCE, 0x9B) by UTF-8
 while the ASCII characters L, C, D, M are encoded in one byte.
-As explained in \Aref{sec:form} the number of characters MAY
+As explained in \Aref{sec:form} the number of code points MAY
 be reported by the \attr{width} attribute.
 
 A 1D array of strings can be represented as a 2D array of characters, but
@@ -1163,15 +1165,18 @@ Two attributes were retained for this purpose:
 
 When used with \attrval{datatype}{char} arrays the
 \attr{width} attribute is interpreted as an upper bound for
-the array length in characters, i.e.\ Unicode code points.
+the string length in Unicode code points.
 This value is distinct from the \attr{arraysize} attribute
 which gives the array length in UTF-8-encoded bytes.
 VOTable producers are not required to supply the \attr{width} attribute
 for such columns,
 but if known the string length can be useful to clients
 for e.g.\ resource allocation.
-In the case of multi-dimensional \texttt{char} arrays the value refers
-to the number of characters in each string element.
+A \attrval{datatype}{char} \elem{FIELD}
+for which \attr{width} is equal to \attr{arraysize}
+may be assumed to contain only ASCII data.
+In the case of multi-dimensional \texttt{char} arrays the \attr{width} refers
+to the number of code points in \emph{each} string element.
 
 \subsection{Extended Datatype \attr{xtype}}
 \label{sec:xtype}
@@ -2011,8 +2016,8 @@ but a string having the number of bytes identical to
 the \attr{arraysize} value is not NULL terminated.
 The value MUST represent a legal UTF-8 encoded string,
 and therefore MUST NOT be truncated midway through the multi-byte
-representation of a character.
-Characters are represented in the \elem{TABLEDATA} serialization
+representation of a code point.
+Character data is represented in the \elem{TABLEDATA} serialization
 using the XML encoding of the VOTable document, which is typically UTF-8.
 Also note also the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
@@ -2024,20 +2029,22 @@ If the value of the {\attr{datatype}}
 attribute specifies data type {\literalvalue{unicodeChar}},
 the field shall contain in the \elem{BINARY}/\elem{BINARY2} serialization
 the 2-byte big-endian UTF-16 encoding
-of a Unicode character from the Basic Multilingual Plane
-(equivalent to the obsolete UCS-2 encoding).
+of a Unicode code point from the Basic Multilingual Plane,
+i.e.\ a non-surrogate UTF-16 code unit;
+this is equivalent to the obsolete UCS-2 encoding.
 The \attr{arraysize} attribute
-indicates a string composed of Unicode BMP characters.
-Characters are represented in the \elem{TABLEDATA} serialization
+indicates a string composed of Unicode BMP code points.
+Character data is represented in the \elem{TABLEDATA} serialization
 using the XML encoding of the VOTable document, which is typically UTF-8.
 Also note the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
 (\Arefs{elem:TD}).
-Regardless of serialization, non-BMP characters are not permitted
-by this standard, but readers MAY treat such characters normally
+Regardless of serialization, non-BMP code points
+are not permitted in \literalvalue{unicodeChar} data,
+but readers MAY treat such characters normally
 if encountered, for instance by using a UTF-16 decoder on BINARY data,
 though note in this case the \attr{arraysize}
-may no longer match the character count.
+may no longer match the code point count.
 
 \item {\bf 16-Bit Integer}\quad If the value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{short}},
@@ -2420,7 +2427,7 @@ version 1.5 are:
       but enables inclusion of arbitrary Unicode content
       using the usual UTF-8 encoding.
 \item Related to the above, the \attr{width} attribute now has a meaning
-      for character data, namely field length in characters
+      for character data, namely string length in code points
       (as opposed to code units).
 \item \ARef{sec:mime} is renamed from ``MIME Type'' to ``Media Type''.
 \item The {\tt content} parameter is defined for the
