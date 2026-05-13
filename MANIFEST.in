@@ -10,3 +10,4 @@ html;document;{html-doc}
 pdf;document;{pdf-doc}
 schema;schema;VOTable.xsd
 Example: TIMESYS;example;timesys_example.vot
+Example: Unicode;example;unicode-example.vot
