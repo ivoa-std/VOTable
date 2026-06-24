@@ -931,17 +931,20 @@ to link the element to some external data model
 \label{elem:LINK}
 
 The role of the {\elem{LINK}} element is to provide pointers
-to external resources
-through a URI. In VOTable, the {\elem{LINK}}
-element may be part of a {\elem{RESOURCE}},
-{\elem{TABLE}}, \elem{GROUP}, {\elem{FIELD}} or \elem{PARAM} element.
+to resources outside of the VOTable 
+through a URI. {\elem{LINK}}
+element may be child of {\elem{RESOURCE}},
+{\elem{TABLE}}, \elem{GROUP}, {\elem{FIELD}} or \elem{PARAM}.
 
-The linked URI is given by the \attr{href} attribute,
-and the nature of the link is indicated by the \attr{content-role} attribute.
+% @@@@@ how is contet role  populated
+
+\subsubsection{\elem{LINK} \attr{content-role}  attribute}
+
+The role and the nature of the link is indicated by the \attr{content-role} attribute.
 The URI should ideally be dereferenceable,
 but this is not an absolute requirement,
-and appropriate use of the URI depends on the content-role.
-This document defines two values for the \attr{content-role} attribute:
+and appropriate use of the URI depends on the \attr{content-role}.
+This document defines four values for the \attr{content-role} attribute:
 
 \begin{itemize}
 \item \attrval{content-role}{doc} indicates documentation.
@@ -961,6 +964,14 @@ This document defines two values for the \attr{content-role} attribute:
       \begin{verbatim}
    <LINK content-role="type" href="https://www.ivoa.net/rdf/uat#parallax"/>
       \end{verbatim}
+	  
+\item \attrval{content-role}{hints}	indicates a pointer to information to be 
+      used by use by the application.
+
+\item \attrval{content-role}{query}	indicates a query URL in the context of a 
+      query extension. In this case, \attr{content-role}
+	  must be used together with an {\attr{action}} attribute (see \ref{query}).
+
 \end{itemize}
 
 A \attr{content-role} should be provided for all \elem{LINK} elements,
@@ -970,6 +981,8 @@ as appropriate outside of this VOTable specification,
 for instance by the Semantics Working Group or as part of other
 standards that make use of VOTable.
 
+\subsubsection{\elem{LINK} \attr{content-type}  attribute}
+
 In addition the \elem{LINK} element
 may announce the RFC 2046 media type of the data it references
 with a \attr{content-type} attribute (e.g.\ \attrval{content-type}{image/fits}).
@@ -977,12 +990,40 @@ Although this might be overridden by metadata received during the
 retrieval operation (e.g.\ the HTTP Content-Type header)
 it can serve as a hint to the application about what to expect.
 
-In the Astrores format, from which VOTable is derived,
-there are additional semantics for the {\elem{LINK}}
-element; the \elem{href} attribute is used as a template for creating
-URLs. This behavior is explained in \Arefx{LINK},
-and it represents
-a possible extension of VOTable.
+\subsubsection{\elem{LINK} \attr{href}  attribute}
+
+The linked URI is given by the \attr{href} attribute.
+The URI can be either plain, or templated with parameters enclosed in braces {\tt{\$\{...\}}}.
+
+\begin{itemize}
+	
+	\item \textbf{Plain URI}: Plain URI is dereferenced as is, and the content
+		retrieved is used as appropriate for the  \attr{content-role}.
+       	For instance, if \attrval{content-role}{doc}, the content can be
+       	presented to the user as documentation about the parent element of the \elem{LINK}.
+	   
+	 \item \textbf{Templated URI}: Templated URI parameters are enclosed in braces, e.g.:
+      	\begin{verbatim}
+   		<LINK href="http://ivoa.net/lookup?Galaxy=${Name}&amp;RA=${RA}&amp;DE=${DE}"/>
+      	\end{verbatim}
+		In this case, the URL parameters behave as an XML reference \attr{ref}.
+		It is the client's responsibility to replace the URI parameters with values
+		extracted from the referenced elements.
+		If the referenced element is a FIELD, the URI must be resolved using the data
+		from the current row in the columns identified by that FIELD.
+		This mechanism can connect individual table rows to specific information resources.
+		The standard does not specify how clients should behave when the URI cannot be resolved or when 
+		the targeted element makes non sense in the \elem{LINK} context (e.g. \elem{TABLE}).
+		
+\end{itemize}
+
+
+%In the Astrores format, from which VOTable is derived,
+%there are additional semantics for the {\elem{LINK}}
+%element; the \elem{href} attribute is used as a template for creating
+%URLs. This behavior is explained in \Arefx{LINK},
+%and it represents
+%a possible extension of VOTable.
 
 \subsection{\elem{TABLE} Element}
 \label{elem:TABLE}
@@ -2447,6 +2488,9 @@ version 1.5 are:
       URI schemes (\Aref{sec:stream}).
 \item Remove outdated comments from XSD file.
 \item Minor editorial corrections.
+\item Appendix A.1 (VOTable LINK substitutions) has been removed
+      and the way to process templated URLs has been moved to \Aref{sec:link} 
+	  (\elem{LINK} element).
 \end{itemize}
 
 % NOTE: IVOA recommendations must be cited from docrepo.bib
@@ -2476,79 +2520,6 @@ for VOTable improvements.
 %such definitions are delayed to the next version of VOTable, and could
 %make use of the Web Services Description Language (WSDL)
 %\end{quote}
-
-
-\subsection{VOTable LINK substitutions}
-\label{LINK}
-
-\begin{quote}\em \fg{DarkBlue}
-  The \elem{LINK} element in Astrores \citep{astrores}
-  contains a mechanism for string substitution,
-  which is a powerful way of defining a link to external data
-  which adapts to each record contained in the table \elem{DATA}.
-\end{quote}
-
-When a {\elem{LINK}} element appears within a \elem{RESOURCE} or a
-{\elem{TABLE}} element,
-extra functionality is implied: the {\attr{href}}
-attribute may not be a simple link, but instead
-a template for a link. If, in the  example of
-\Aref{example1}, we add the link
-
-\begin{verbatim}
-  <LINK href="http://ivoa.net/lookup?Galaxy=${Name}&amp;RA=${RA}&amp;DE=${DE}"/>
-\end{verbatim}
-
-\noindent a substitution filter is applied in the context of a particular row.
-For the first row of the table, the substitution would result in the URL
-
-\begin{verbatim}
-   http://ivoa.net/lookup?Galaxy=N%20224&RA=010.68&DE=%2b41.27
-\end{verbatim}
-
-Whenever the pattern {\tt{\$\{...\}}}
-is found in the original link, the part in the braces is compared
-with the set of {\attr{ID}} (preferably) or \attr{name}
-attributes of the fields of the table. If a match is found, then the
-value from that field of the selected row is used in place of the
-{\tt{\$\{...\}}}. If no match is found, no substitution is made. Thus the
-parser makes available to the calling application a value of the {\attr{href}}
-attribute that depends on which row of the table has been selected.
-Another way to think of it is that there is not a single link
-associated with the table, but rather an implicitly defined new
-column of the table. This mechanism can be used to connect each row
-of the table to further information resources.
-
-%The {\attr{action}} attribute is related to the Query mechanism described in
-%the \Aref{query}.
-
-
-The purpose of the link is defined by the {\attr{content-role}}
-attribute. The allowed values are {\literalvalue{query}}
-(see \Aref{query}),
-{\literalvalue{hints}} for information for use by the application,
-and {\literalvalue{doc}} for  human-readable documentation.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Question: laisser un simple string dans l'attribut content-role ???
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%The first implies that string substitution should be used as defined
-%above, and the latter two imply first that no substitution is needed,
-%and that the link points to either information for use by the
-%application ({\literalvalue{hints}})
-%or human-readable documentation ({\literalvalue{doc}}).
-
-The column names invoked in the pattern of the \attr{href} attribute
-of the \elem{LINK} element should exist in the document to
-generate meaningful links.
-In the common case where the VOTable was generated from a query
-of a database and contains only some of the columns in that
-database, it might be necessary to include columns additional to
-those requested in order to ensure that the LINKS in the VOTable
-are operational.
-Such a \elem{FIELD} included ``by necessity'' is marked with
-the attribute \attrval{type}{hidden}. The primary key of
-a relational table is a typical example of a \elem{FIELD}
-which would carry the \attrval{type}{hidden} attribute.
 
 \subsection{VOTable Query Extension}
 \label{query}
@@ -2715,7 +2686,7 @@ which designate elements of a multipart message, using the protocol
 prefix {\tt cid:} [RFC2111]
 
 Note that the {\em VOTable LINK substitution} proposed in
-\Aref{LINK} fills a similar functionality:
+\Aref{sec:LINK} fills a similar functionality:
 generate a pointer which can incorporate in its address components
 from the \elem{DATA} part for the VOTable.
 
