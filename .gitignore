@@ -19,3 +19,4 @@ VOTable.html
 *.fdb_latexmk
 *.fls
 *.swp
+.project
