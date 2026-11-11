@@ -371,6 +371,7 @@ contains column references (\elem{FIELDref})
 and associated parameters (\elem{PARAM}).
 
 \subsection{Primitives}
+\label{sec:primitives}
 
 \begin{table}[hbt]
 \begin{center}\begin{tabular}{|r|l|c|r|l|}
@@ -2398,7 +2399,7 @@ The differences between version 1.6 of VOTable and the preceding
 version 1.5 are:
 
 \begin{itemize}
-\item Unicode characters and strings are properly supported.
+\item Unicode characters and strings are now properly supported.
       Elements of the datatype \literalvalue{char} are now defined to
       contain UTF-8-encoded bytes (not ASCII characters)
       and elements of the datatype \literalvalue{unicodeChar} are
@@ -2407,14 +2408,16 @@ version 1.5 are:
       Both types are represented using document encoding in the
       \elem{TABLEDATA} serialization.
       Furthermore the \literalvalue{unicodeChar} type is deprecated.
+      See sections \ref{sec:primitives}, \ref{sec:dim} and
+      \ref{sec:datatypes} for details.
       These changes are entirely compatible with earlier VOTable versions
       (any legal VOTable document of an earlier version
       will be correctly interpreted by a VOTable 1.6 parser)
-      but enables inclusion of arbitrary Unicode content
+      but enable inclusion of arbitrary Unicode content
       using the usual UTF-8 encoding.
 \item Related to the above, the \attr{width} attribute now has a meaning
       for character data, namely string length in code points
-      (as opposed to code units).
+      as opposed to code units (\Aref{sec:form}).
 \item \ARef{sec:mime} is renamed from ``MIME Type'' to ``Media Type''.
 \item The {\tt content} parameter is defined for the
       {\tt application/x-votable+xml} media type (\Aref{sec:mime}).
