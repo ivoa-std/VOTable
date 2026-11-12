@@ -7,10 +7,10 @@ DOCNAME = VOTable
 DOCVERSION = 1.6
 
 # Publication date, ISO format; update manually for "releases"
-DOCDATE = 2026-04-13
+DOCDATE = 2026-11-12
 
 # What is it you're writing: NOTE, WD, PR, REC, PEN, or EN
-DOCTYPE = WD
+DOCTYPE = PR
 
 # An e-mail address of the person doing the submission to the document
 # repository (can be empty until a make upload is being made)
@@ -81,4 +81,10 @@ test:
 		stc_example2.vot
 	@$(STILTS) xsdvalidate \
 		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=VOTable.xsd" \
+		unicode-example-binary.vot
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=VOTable.xsd" \
 		unicode-example.vot
+	@$(STILTS) xsdvalidate \
+		schemaloc="http://www.ivoa.net/xml/VOTable/v1.3=VOTable.xsd" \
+		unicode-example-binary2.vot
