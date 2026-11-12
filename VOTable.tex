@@ -66,23 +66,17 @@
 \editor[http://www.ivoa.net/twiki/bin/view/IVOA/TomDonaldson]{Tom Donaldson}
 
 \previousversion[https://www.ivoa.net/documents/VOTable/20250116/]
-                {https://www.ivoa.net/documents/VOTable/20250116/
-                 (V1.5 2025-01-16)}
+                {REC-VOTable-1.5 2025-01-16}
 \previousversion[http://www.ivoa.net/documents/VOTable/20191021/]
-                {http://www.ivoa.net/documents/VOTable/20191021/
-                 (V1.4 2019-10-21)}
+                {REC-VOTable-1.4 2019-10-21}
 \previousversion[http://www.ivoa.net/documents/VOTable/20130920/]
-                {http://www.ivoa.net/documents/VOTable/20130920/
-                 (V1.3 2013-09-20)}
+                {REC-VOTable-1.3 2013-09-20}
 \previousversion[http://www.ivoa.net/documents/VOTable/20091130/]
-                {http://www.ivoa.net/documents/VOTable/20091130/
-                 (V1.2 2009-11-30)}
+                {REC-VOTable-1.2 2009-11-30}
 \previousversion[http://www.ivoa.net/documents/VOTable/20040811/]
-                {http://www.ivoa.net/documents/VOTable/20040811/
-                 (V1.1 2004-08-11)}
+                {REC-VOTable-1.1 2004-08-11}
 \previousversion[http://www.ivoa.net/documents/PR/VOTable/VOTable-20031017.html]
-                {http://www.ivoa.net/documents/PR/VOTable/VOTable-20031017.html
-                 (V1.0 2003-10-17)}
+                {REC-VOTable-1.0 2003-10-17}
 
 \begin{document}
 \begin{abstract}
@@ -371,6 +365,7 @@ contains column references (\elem{FIELDref})
 and associated parameters (\elem{PARAM}).
 
 \subsection{Primitives}
+\label{sec:primitives}
 
 \begin{table}[hbt]
 \begin{center}\begin{tabular}{|r|l|c|r|l|}
@@ -746,6 +741,7 @@ vocabulary includes the terms:
 \textsl{SUPER\_GALACTIC},
 \textsl{UNKNOWN}
 % /GENERATED
+.
 
 As that vocabulary can be extended at any time, clients should fail
 gracefully when they encounter unknown reference frames.  Up through
@@ -840,6 +836,7 @@ At the time of writing, this vocabulary includes the terms:
 \textsl{UT},
 \textsl{UTC}
 % /GENERATED
+.
 
 This attribute is mandatory.
 \item[\attr{refposition}] The reference position again is a simple string.
@@ -854,7 +851,8 @@ includes the terms
 \textsl{HELIOCENTER},
 \textsl{TOPOCENTER},
 \textsl{UNKNOWN}
-% /GENERATED.
+% /GENERATED
+.
 
 This attribute is mandatory.
 \end{description}
@@ -1194,7 +1192,7 @@ UTC date/time string following the ISO-8601 standard
 ({\tt YYYY-MM-DDThh:mm:ss} eventually followed by a decimal point
 and fractions of seconds).  Supporting parsers might then expose the
 corresponding values in whatever way appropriate for such timestamps in
-the host language.  VOTables software does not need to interpret xtypes,
+the host language.  VOTable software does not need to interpret xtypes,
 but it should preserve them when doing round-trips.
 
 The IVOA recommendation Data Access Layer Interface DALI
@@ -1707,7 +1705,7 @@ empty \elem{TD} element is available for the BINARY serialization
 \end{figure}\end{center}
 
 The BINARY serialization has been available in all versions of VOTable.
-From VOTable 1.3 however, the alternative BINARY2 serialization is
+From VOTable 1.3 however, the BINARY2 serialization is
 an alternative, providing more straightforward null-flagging capabilities.
 In VOTable 1.3 and above BINARY remains a legal serialization, but for most
 purposes VOTable producers are advised to use BINARY2 instead.
@@ -2008,9 +2006,9 @@ and therefore MUST NOT be truncated midway through the multi-byte
 representation of a code point.
 Character data is represented in the \elem{TABLEDATA} serialization
 using the XML encoding of the VOTable document, which is typically UTF-8.
-Also note also the significance of the {\em white space} characters
+Also note the significance of the {\em white space} characters
 in the \elem{TABLEDATA} serialization
-(\Arefs{elem:TD})
+(\Arefs{elem:TD}).
 
 \item {\bf Unicode Character}
 \emph{(\textbf{deprecated} from VOTable 1.6)}\quad
@@ -2042,9 +2040,9 @@ big-endian twos-complement signed 16-bit integers
 (the most significant byte first).
 The representation of a Short Integer in the \elem{TABLEDATA} serialization
 is either its decimal representation between -32768 and 32767
-   made of an optional {\tt-} or {\tt+} sign followed by digits,
-   or its hexadecimal representation when starting with {\tt0x}
-   and followed by 1 to 4 hexadigits.
+made of an optional {\tt-} or {\tt+} sign followed by digits,
+or its hexadecimal representation when starting with {\tt0x}
+and followed by 1 to 4 hexadigits.
 
 \item {\bf 32-Bit Integer }\quad If the value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{int}},
@@ -2052,11 +2050,11 @@ the data in the \elem{BINARY}/\elem{BINARY2} serialization shall consist of
 big-endian twos-complement signed 32-bit
 integer contained in four bytes, with the most significant first,
 and subsequent bytes in order of decreasing significance.
-  The representation of an Integer in the \elem{TABLEDATA} serialization
-  is either its decimal representation between -2147483648 and 2147483647
-  made of an optional {\tt-} or {\tt+} sign followed by digits,
-  or its hexadecimal representation when starting with {\tt0x}
-  and followed by 1 to 8 hexadigits;
+The representation of an Integer in the \elem{TABLEDATA} serialization
+is either its decimal representation between -2147483648 and 2147483647
+made of an optional {\tt-} or {\tt+} sign followed by digits,
+or its hexadecimal representation when starting with {\tt0x}
+and followed by 1 to 8 hexadigits.
 
 \item {\bf 64-Bit Integer}\quad If the value of the {\attr{datatype}}
 attribute specifies datatype {\literalvalue{long}},
@@ -2065,12 +2063,11 @@ big-endian twos-complement signed 64-bit integers
 contained in eight bytes, with the most significant byte first,
 and subsequent bytes in order of decreasing significance.
 The representation of a Long Integer in the \elem{TABLEDATA} serialization
-  is either its decimal representation between -9223372036854775808
-  and 9223372036854775807
-  made of an optional {\tt-} or {\tt+} sign followed by digits,
-  or its hexadecimal representation when starting with {\tt0x}
-  and followed by 1 to 16 hexadigits;
-
+is either its decimal representation between -9223372036854775808
+and 9223372036854775807
+made of an optional {\tt-} or {\tt+} sign followed by digits,
+or its hexadecimal representation when starting with {\tt0x}
+and followed by 1 to 16 hexadigits.
 
 \item {\bf Single Precision Floating Point}\quad If
 the value of the {\attr{datatype}} attribute specifies datatype {\literalvalue{float}},
@@ -2080,7 +2077,7 @@ All IEEE special values including NaN are recognized.
 The representation of a Floating Point number in the
 \elem{TABLEDATA} serialization is made of an optional {\tt-} or {\tt+},
 followed by the ASCII representation of a positive decimal number,
-and followed eventually by the ASCII letter \literalvalue{E} or  \literalvalue{e}
+and followed optionally by the ASCII letter \literalvalue{E} or  \literalvalue{e}
 introducing the base-10 exponent made of an optional {\tt-} or {\tt+}
 followed by 1 or 2 digits. The number must be within the limits of the
 IEEE floating-point definition (around $\pm3.4\cdot10^{38}$; numbers with
@@ -2098,7 +2095,7 @@ All IEEE special values including NaN are recognized.
 The representation of a Double number in the
 \elem{TABLEDATA} serialization is made of an optional {\tt-} or {\tt+},
 followed by the ASCII representation of a positive decimal number,
-and followed eventually by the ASCII letter \literalvalue{E} or  \literalvalue{e}
+and followed optionally by the ASCII letter \literalvalue{E} or  \literalvalue{e}
 introducing the base-10 exponent made of an optional {\tt-} or {\tt+}
 followed by 1 to 3 digits. The number must be within the limits of the
 IEEE floating-point definition (around $\pm1.7\cdot10^{308}$; numbers with
@@ -2398,7 +2395,7 @@ The differences between version 1.6 of VOTable and the preceding
 version 1.5 are:
 
 \begin{itemize}
-\item Unicode characters and strings are properly supported.
+\item Unicode characters and strings are now properly supported.
       Elements of the datatype \literalvalue{char} are now defined to
       contain UTF-8-encoded bytes (not ASCII characters)
       and elements of the datatype \literalvalue{unicodeChar} are
@@ -2407,14 +2404,16 @@ version 1.5 are:
       Both types are represented using document encoding in the
       \elem{TABLEDATA} serialization.
       Furthermore the \literalvalue{unicodeChar} type is deprecated.
+      See sections \ref{sec:primitives}, \ref{sec:dim} and
+      \ref{sec:datatypes} for details.
       These changes are entirely compatible with earlier VOTable versions
       (any legal VOTable document of an earlier version
       will be correctly interpreted by a VOTable 1.6 parser)
-      but enables inclusion of arbitrary Unicode content
+      but enable inclusion of arbitrary Unicode content
       using the usual UTF-8 encoding.
 \item Related to the above, the \attr{width} attribute now has a meaning
       for character data, namely string length in code points
-      (as opposed to code units).
+      as opposed to code units (\Aref{sec:form}).
 \item \ARef{sec:mime} is renamed from ``MIME Type'' to ``Media Type''.
 \item The {\tt content} parameter is defined for the
       {\tt application/x-votable+xml} media type (\Aref{sec:mime}).
