@@ -23,7 +23,7 @@
 <FIELD datatype="unicodeChar" arraysize="*" name="utxt"/>
 <FIELD datatype="unicodeChar" arraysize="5" name="uword10"/>
 <FIELD datatype="unicodeChar" arraysize="5x2" name="uwords"/>
-<FIELD datatype="int" name="ialph"/>
+<FIELD datatype="int" name="ialph"><VALUES null="-2147483648"/></FIELD>
 <DATA>
 <BINARY>
 <STREAM encoding='base64'>
